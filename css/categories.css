@@ -1,0 +1,219 @@
+
+		.left
+		{
+			float:right;
+			width:60%;
+			height:60%;
+			border-radius: 5px;
+		}
+		img.left
+		{
+			height: 350px;
+			width: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+		.outerdiv
+		{
+			width: 30%;
+			position: relative;
+			overflow: hidden;
+			border-radius: 5px;
+			height:350px;
+		}
+		.heading
+		{
+			width: 60%;
+		}
+		.jumbotron
+		{
+			display: inline-flex;
+			border-radius: 5px;
+
+		}
+		.zoom 
+		{
+		  transition: transform .4s ease-in; /* Animation */
+		  height: 200px;
+		  margin: 0 auto;
+		}
+		.zoom:hover
+		 {
+  			transform: scale(1.2);
+  			cursor: pointer;
+  			opacity: 0.8 /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+		 }
+		 .jumbotron .h1, .jumbotron h1 {
+    font-size: 20px;
+}
+		 .jumbotext
+		 {
+		 	padding-top: 100px;
+		 	padding-left: 100px;
+		 	font-family: 'Montserrat', sans-serif;
+		 	font-size: 14px;
+		 	font-weight: bold;
+		 	text-transform: uppercase;
+		 }
+		 .pd-10
+		{
+			padding-top: 10;
+			font-size: 32px;
+			text-transform: lowercase;
+		}
+		.tit
+		{
+			background-color:#5b37a794; 
+			position: sticky;
+			top:0;	
+			z-index: 2;
+		}
+		
+		.tittext
+		{
+			padding-top: 10px;
+			padding-bottom: 10px;
+			color:white;
+			font-family: 'Pacifico',cursive;
+			font-size: 30px;
+
+		}
+		.tags
+		{
+			font-family: 'Lato', serif;
+			background-color: #e2f3f7;
+			font-size: 40px;
+			font-weight: bold;
+			
+		}
+		img.trending
+		{
+			width: 100%;
+			height: 40px;
+			position: absolute;
+			float:left;
+		}
+		.trending
+		{
+			position:relative;
+		}
+		footer  .Company-logo
+		{
+			font-family: 'Pacifico', cursive;
+			font-size:3rem;
+			font-weight: bold;
+			text-shadow:2px 4px black;
+			color:linen;
+			text-align: center;
+			width:100%;
+			padding:3% 3% 0% 3%;
+			letter-spacing: 4px;
+		}
+		footer
+		{
+background: linear-gradient(to left, #d9a7c7, #eee1ef);
+		}
+		footer .tagline
+		{
+			font-family: 'Pacifico', cursive;
+			font-size:1.3rem;
+			font-weight: bold;
+			color:black;
+			letter-spacing: 10px;
+			text-align: center;
+			width:100%;
+			padding:1%;
+		}
+		footer .email-subscription
+		{
+   			width:100%;
+		}
+		footer .email-subscription .emailinput input[type=email]
+		{
+			padding:2%;
+			font-size: 1.05rem;
+			font-family: 'Merienda', cursive;
+			border:none;
+			outline: none;
+			border-top-left-radius: 5px; 
+			border-bottom-left-radius: 5px;
+		   	width:270px;
+		}
+		footer .email-subscription .signup input[type=Submit]
+		{
+			padding: 7%;
+			font-family: 'Merienda', cursive;
+			font-weight:bolder;
+			border:none;
+			outline: none;
+			border-top-right-radius: 5px; 
+			border-bottom-right-radius: 5px;
+			background:lightskyblue;
+			color:#ffffff;
+		}
+		footer .email-subscription .econtainer
+		{
+			box-shadow: -2px 1px 9px -1px black;
+			display: inline-flex;
+			margin-left: 50%;
+    		transform: translateX(-50%);
+    		margin-top: 2%;
+   			margin-bottom: 2%;
+		}
+		.social-media-logos
+		{
+			display: inline-flex;
+
+			width: 100%;
+			margin-top:2%;
+			margin-bottom: 2%;
+			font-size:3rem;
+		}
+		a.snapchat{
+			color: white;
+		}
+		a.facebook
+		{
+
+		}
+		.social-icons
+		{
+			margin-left:50%;
+			transform:translateX(-50%);
+		}
+		a.snapchat
+		{
+			color: white
+		}
+		a.twitter
+		{
+			color: white
+		}
+		a.instagram
+		{
+			color: white
+		}
+		a.facebook
+		{
+			color:white;
+		}
+		a.snapchat:hover
+		{
+			color:yellow;
+		}
+		a.twitter:hover
+		{
+			color: #1da1f2;
+		}
+		a.instagram:hover
+		{
+			color: #fb3958;
+		}
+		a.facebook:hover
+		{
+			color:#1da1f2;
+		}
+
+
+		
