@@ -17,7 +17,13 @@
 		font: inherit;
 		vertical-align: baseline;
 	}
-
+	#logo
+{
+  width:200px;
+  margin-left:50%;
+		transform: translateX(-50%);
+		margin-bottom:16%;
+}
 	article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
 		display: block;
 	}
@@ -1471,6 +1477,8 @@
 		background-color: #ffffff;
 		border-radius: 4px;
 		text-align: center;
+		margin-left:50%;
+		transform: translateX(-50%);
 	}
 
 		@media screen and (max-width: 736px) {
