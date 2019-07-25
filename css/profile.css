@@ -154,13 +154,13 @@ box-shadow: 3px 3px 5px 0px rgba(0,0,0,0.05);
 }
 .user-name {
   font-weight: bold;
-  font-size: 14px;
+  font-size: 25px;
   color:black;
   font-family: 'Pacifico'
 }
 .text-faded {
   font-size: 10px;
-  color: #8E8E8E;
+  color: black;
   }
 
 .follows .followings, .follows .followers {

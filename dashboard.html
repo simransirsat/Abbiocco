@@ -331,6 +331,10 @@
    
     margin-top: 10px;
     border-radius: 20px;
+    position: relative;
+    left:14px;
+      background: linear-gradient(to right, #ada996, #f2f2f2, #dbdbdb, #eaeaea); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 
         }
       
@@ -349,10 +353,11 @@
           width: 13rem;
           height: 12rem;
           border-radius:10px;
+
         }
         #subheading
         {
-          font-family: 'Pacifico';
+          font-family: 'Lobster';
           font-size:1.2rem;
           text-align:left;
           position: relative;
@@ -376,7 +381,7 @@
 #button_anim {
   background: transparent;
   color: black;
-  border: 3px solid black;
+  border: 3px solid #28bbdeba;
   border-radius: 50px;
   padding: 0.4rem 1.7rem;
   font: 18px "Margarine", sans-serif;
@@ -386,7 +391,8 @@
   transition: 0.2s ease-in-out;
   letter-spacing: 2px;
   font-family: 'Lobster';
-  background: linear-gradient(to right, #56ab2f, #a8e063); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right, #56ab2f, #a8e063); 
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     
 
 }
@@ -394,6 +400,8 @@
 
 .button-jittery button {
   animation: jittery 4s infinite;
+  box-shadow: 0 0 8px #00BCD4, inset 0 0 8px #00BCD4;
+  -webkit-animation: pulse 2s linear 1s infinite;
 }
 .button-jittery button:hover {
   animation: heartbeat 0.2s infinite;
@@ -444,18 +452,28 @@
   text-align: center;
   font-family: 'Darker Grotesque', sans-serif;
   background: #30E8BF;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #FF8235, #30E8BF);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #FF8235, #30E8BF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(to right, #00d2ff, #928dab);
 margin-bottom:13%;
     margin-left: 50%;
     transform: translateX(-50%);
     font-weight: bold;
+    border-radius:50px;
 
 }
 @-webkit-keyframes pulse {
   0% { box-shadow:0 0 8px #00BCD4, inset 0 0 8px #00BCD4; }
   50% { box-shadow:0 0 16px #00BCD4, inset 0 0 14px #00BCD4; }
   100% { box-shadow:0 0 8px #00BCD4, inset 0 0 8px #00BCD4; }
+}
+@-webkit-keyframes glow {
+  0% { box-shadow:0 0 8px #00BCD4, inset 0 0 8px #00BCD4; }
+  50% { box-shadow:0 0 16px #00BCD4, inset 0 0 14px #00BCD4; }
+  100% { box-shadow:0 0 8px #00BCD4, inset 0 0 8px #00BCD4; }
+}
+.profile:after
+{
+  content:'';
+  border-bottom: 1px solid black;
 }
     </style>
 
@@ -533,22 +551,49 @@ margin-bottom:13%;
       <span id="subheading">Category 1</span>
       <br/>
       <br>
+
         <div class="container">
           <div class="row">
           <div class="col-sm">
-            <img id="cards" src="images/test1.jpg">
+            <img id="cards" src="images/image2.jpg">
           </div>
           <div class="col-sm">
-            <img id="cards" src="images/test1.jpg">
+            <img id="cards" src="images/image3.jpg">
           </div>
           <div class="col-sm">
-            <img id="cards" src="images/test1.jpg">
+            <img id="cards" src="images/image4.jpg">
           </div>
         </div>
         <br>
-       
+         <span id="subheading">Category 2</span>
+         <br>
+         <br>
+        <div class="row">
+          <div class="col-sm">
+            <img id="cards" src="images/image5.jpg">
+          </div>
+          <div class="col-sm">
+            <img id="cards" src="images/image6.jpg">
+          </div>
+          <div class="col-sm">
+            <img id="cards" src="images/image7.jpg">
+          </div>
+        </div>
         <br>
-       
+            <span id="subheading">Category 3</span>
+         <br>
+         <br> 
+       <div class="row">
+          <div class="col-sm">
+            <img id="cards" src="images/test1.jpg">
+          </div>
+          <div class="col-sm">
+            <img id="cards" src="images/desi.jpg">
+          </div>
+          <div class="col-sm">
+            <img id="cards" src="images/drinks.jpg">
+          </div>
+        </div>
         </div>
       </div>
       <br>
