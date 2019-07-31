@@ -24,18 +24,7 @@
 		transform: translateX(-50%);
 		margin-bottom:16%;
 }
-.right
-{
-  float:right;
-  width:30%;
-  background-color: black;
-}
-.left
-{
-  float:left;
-  width:30%;
-  background-color: black;
-}
+
 	article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
 		display: block;
 	}
@@ -1460,7 +1449,6 @@
 		padding: 4em 4em 2em 4em;
 		background-color: #ffffff;
 		border-radius: 4px;
-		display:inline-flex;
 	}
 
 		#main > header:first-child {

@@ -1,7 +1,30 @@
 <html><head><title>ABBIOCCO</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://kit.fontawesome.com/2c9c18f3bc.js"></script>
+
+<link rel="stylesheet" type="text/css" href="css/navbar.css">
+<link rel="stylesheet" type="text/css" href="css/categories.css">
+<link rel="stylesheet" type="text/css" href="css/bricks.css">
+<link rel="stylesheet" type="text/css" href="css/pen-button.css">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto+Slab|Ruda" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Amatic+SC&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Bree+Serif&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lobster&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Acme&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Inconsolata&display=swap" rel="stylesheet">
+
+  <link href="https://fonts.googleapis.com/css?family=Pacifico&display=swap" rel="stylesheet">
+
 <style>
-	.links
+  .top
+  {
+    width:100%;
+    
+    }
+    	.links
 	{
 border-radius:15px;
 	}
@@ -18,47 +41,255 @@ color: orange;
   text-align: center;
   list-style-position: inside;
 } 
-.recipe
+
+.recipe-header
 {
-  margin-left: 30%;
+  margin-left:2%;
+  padding-top:83px;
+  position:relative;
+  margin-top:20px;
+  float: left;
+  width:60%;
+  padding-bottom:71px;
+}
+.recipe-header h1
+{
+  font-family: 'Lobster';
+  font-weight: bold;
+  margin-left:50%;
+ 
+  transform: translateX(-50%);
+}
+.tagline
+{
+
+  font-family: 'Acme';
+  margin-left: 50%;
+  margin-top:2%;;
+  transform: translateX(-50%);
+  font-weight: bold;
+  color:#a7a3a3;
+}
+.stars
+{
+  margin-top:3%;
+  margin-left:25%;
+  margin-bottom: 3%;
+  font-size: 25px;
+}
+#read_link
+{
+  margin-left: 25%;
+  margin-bottom:3%;
+  transform:translateX(-32%);   
+  font-family: 'Inconsolata';                                                  
+}
+.image
+{
+  margin-top:20px;
+  width:38%;
+  float:right;
+    min-height: 27rem;
+
+}
+.action-button:active
+{
+  transform: translate(0px,5px);
+  -webkit-transform: translate(0px,5px);
+  border-bottom: 1px solid;
+}
+.red
+{
+  background-color: #E74C3C;
+  border-bottom: 5px solid #BD3E31;
+  text-shadow: 0px -2px #BD3E31;
+}
+.action-button
+{
+  position: relative;
+  padding: 2px 30px;
+    float: left;
+  border-radius: 10px;
+  font-family: 'Pacifico', cursive;
+  font-size: 21px;
+  color: #FFF;
+  text-decoration: none;  
+  margin-top:4%;
+  margin-left: 23%;
+}
+.animate_button
+{
+  transition: all 0.1s;
+  -webkit-transition: all 0.1s;
+}
+.instruct h1
+{
+  font-family: 'Bree Serif', serif;
+
+  text-align: left;
+  position: relative;
+  
+  margin-bottom: 2%;
+  
+
+}
+.summary-wrapper
+{
+  width:32em;
+  margin-left: 15%;
+  margin-top: 4%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.summary-wrapper .summary-item
+{
+    color: #4a4a4a;
+    flex: 1;
+    text-align: center;
+}
+.h2-text
+{
+  font-size: 40px;
+  line-height: 1.2;
+}
+.summary-item .unit
+{
+  border-left: 1px solid #bababa;
+    border-right: 1px solid #bababa;
+}
+.summary-item .value
+{
+  color:#4a4a4a;
+  display:inline-block;
+}
+.summary-item .unit
+{
+  position: relative;
+  top:-4px;
+  display: block;
+}
+.instruct
+{
+  float:left;
+  margin-top:-10%;
+  padding:50px;
+  width:70%;
+  margin-left:17%;
+  height: auto;
+  font-family: 'Amatic SC', cursive;
+  font-size:25px;
+  list-style-type: none;
+}
+.p3-text
+{
+  font-size:14px;
+  line-height: 1.17142;
+}
+.top .instruct li
+{
+  margin-bottom: 1%;
+}
+.rule
+{
+  position: relative;
+  clear:none;
+  float:left;
+  width:100%;
+  margin-top:-144px;
+}
+.top::after
+{
+  content: '';
+  clear:both;
+  display: table;
+}
+#image_recipe
+{
+    width: 88%;
+    border-radius: 28px;
+    margin-top: 50%;
+    transform: translateY(-50%);
+    height: 398px;
 }
 </style>
 </head>
 <body>
-<table border="1" width="100%" height="80" bgcolor="5b0690">&nbsp &nbsp &nbsp
-<tr>
-<td width="12.5%" align="center" class="links"> <font color="white">Home</td>
-<td width="12.5%" align="center" class="links"> <font color="white">Personal Interest</td>
-<td width="12.5%" align="center" class="links"> <font color="white">Followers</td>
-<td width="12.5%" align="center" class="links"> <font color="white">Following</td>
-<td width="12.5%" align="center" class="links"> <font color="white">asdfghj</td>
-<td width="12.5%" align="center" class="links"> <font color="white">sdfghj</td>
-<td width="12.5%" align="center" class="links"> <font color="white">asdfghj</td>
-<td width="12.5%" align="center" class="links"> <font color="white">asdfghj</td>
-</tr>
-</table>
-<br>
-<br>
-<hr>
-<br>
-<img src="s1.jpg" width="40%" height="50%"align="right"  border="1">
-<br>
-<b><center><font size="8">Shrimp Fry</font></center></b>
-<center><b><p>cook with us</p></b></center>
-<center><span class="fa fa-star checked"></span>
-<span class="fa fa-star checked"></span>
-<span class="fa fa-star checked"></span>
-<span class="fa fa-star"></span>
-<span class="fa fa-star"></span></center>
-<br>
-<center><a href="newcode.html" vlink="green">Read more</a></center><br>
-<b><center><p><font size="6">10 &nbsp &nbsp | &nbsp &nbsp 65 &nbsp &nbsp | &nbsp &nbsp650</p></font></center></b>
-<p>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  ingredients &nbsp &nbsp &nbsp &nbsp &nbsp Minutes  &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp Seconds</p></center>
-<br>
-<br>
-<br>
-<br><hr>
-<div class="recipe">
+
+<nav class="navbar navbar-expand-lg bg">
+    <a class="navbar-brand font_logo animated jello" href="#" style="font-size: 30px;">Abbiocco</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">My Recipes</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="#">About</a>
+      </li>
+       <li class="nav-item">
+        <a class="nav-link" href="#">Contact Us</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div class="top">
+  <div class="recipe-header">
+    <h1>Shrimp Fry</h1>
+    <div class="tagline">Author name</div>
+    <div class="stars">
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star checked"></span>
+      <span class="fa fa-star"></span>
+      <span class="fa fa-star"></span>
+    </div>
+    <a id="read_link"><b>Rahul Keluskar:</b>It tastes really good</a>
+    <div class="summary-wrapper">
+      <div class="summary-item h2-text">
+        <span class="value h2-text">9</span>
+        <span class="unit p3-text">Ingredients</span>
+      </div>
+      <div class="summary-item unit h2-text">
+        <span class="value h2-text">45</span>
+        <span class="unit p3-text">Minutes</span>
+      </div>
+      <div class="summary-item h2-text">
+        <span class="value h2-text">310</span>
+        <span class="unit p3-text">Calories</span>
+      </div>
+    </div>
+    <div class="button-grp">
+    <a href="#" class="action-button shadow animate red">How</a>  
+    <div class="button">
+    <svg version="1.1" id="pen" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+       width="50px" height="50px" viewBox="-27 -27 110 110" enable-background="new -27 -27 110 110" xml:space="preserve">
+       
+    <circle id="circle" fill="#cc0000" cx="31" cy="31" r="45"/>
+    
+    <path id="penline" fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" d="
+      M20.7,55.4L3,59l3.5-17.7c0,0,35.4-35.4,35.4-35.4C45.8,2,52.1,2,56.1,5.9s3.9,10.2,0,14.1L20.7,55.4z"/>
+      
+    <line id="penline" fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="41.6" y1="6.3" x2="55.7" y2="20.4"/>
+    <line id="penline" fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="13.3" y1="48.7" x2="45.1" y2="16.9"/>
+    <line id="penline" fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="38.1" y1="9.8" x2="52.2" y2="23.9"/>
+    <line id="penline" fill="none" stroke="#000000" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" x1="20.4" y1="55.7" x2="6.3" y2="41.6"/>
+    </svg>
+    </div>
+  </div>
+  </div>
+  <div class="image">
+    <img src="images/this.jpg" id="image_recipe">
+  </div>
+<div class="rule">
+  <hr size="100px">
+</div>
+<div class="instruct">
 <b><h1>Ingredients</h1></b>
   <li>1 pound raw shrimp, peeled and deveined with the tails attached (I used 31-40 count shrimp. This means that there’s 31-40 shrimp per pound)</li>
   <li>1/2 cup flour</li>
@@ -70,14 +301,43 @@ color: orange;
   <li>vegetable oil or canola oil for frying</li>
   <li>lemon slices for garnish</li>
   <li>cocktail sauce for dipping</li>
- </div>
+</div>
+</div>
 <br>
 <br>
 <center><form >
 <b><h3><p>Did you make this &nbsp &nbsp <input type="checkbox" id="check" onclick="checked()" style="width:30px;height:30px;"/></p></h3></b>
 </form></center>
 <br>
-<h2><b><p>&nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp  &nbsp &nbsp &nbsp &nbsp  &nbsp Nutrition </p></b></h2>
+<footer>
+  <div class="Company-logo"><img src="images/logo.png"></div>
+  <div class="tagline">The Everyday CookBook</div>
+  <div class="email-subscription">
+    <div class="econtainer">
+    <div class="emailinput">
+    <input type="email" placeholder="Your Good email">
+    </div>
+    <div class="signup"><input type="Submit" value="Sign Up!"></div>
+    </div>
+  </div>
+  <div class="social-media-logos">
+    <div class="social-icons">
+  <a href="#" class="snapchat">
+    <i class="fab fa-snapchat"></i>
+  </a>
+  <a href="#" class="facebook">
+    <i class="fab fa-facebook"></i>
+  </a>
+
+  <a href="#" class="twitter">
+    <i class="fab fa-twitter"></i>
+  </a>
+  <a href="#" class="instagram">
+    <i class="fab fa-instagram"></i>
+  </a>
+  </div>
+</div>
+</footer>
 </body>
 </html>
 
