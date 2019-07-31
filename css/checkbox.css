@@ -1,0 +1,26 @@
+.recipe .recipe-info>.wrapper.recipe-ingredients, .recipe>.wrapper.recipe-ingredients {
+    margin: 42px auto 38px;
+}
+.recipe .recipe-info>.wrapper, .recipe>.wrapper {
+    max-width: 760px;
+    width: 100%;
+    margin: 0 auto;
+}
+.made-it-button .made-it-checkmark {
+    border-radius: 50%;
+    border: 2px solid #bababa;
+    margin: 0 24px;
+    padding: 4px 8px;
+}
+.greyscale-3, .text-light {
+    color: #bababa;
+}
+.y-icon {
+    font-family: y-icon;
+}
+.y-icon, .y-pref {
+    display: inline-block;
+    font-style: normal;
+    speak: none;
+    font-weight: 400;
+}

@@ -6,6 +6,8 @@
 <link rel="stylesheet" type="text/css" href="css/categories.css">
 <link rel="stylesheet" type="text/css" href="css/bricks.css">
 <link rel="stylesheet" type="text/css" href="css/pen-button.css">
+<link rel="stylesheet" type="text/css" href="css/checkbox.css">
+<link href="https://fonts.googleapis.com/css?family=Bitter&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
@@ -212,6 +214,115 @@ color: orange;
     transform: translateY(-50%);
     height: 398px;
 }
+.save
+{
+  width:100%;
+  margin-left: 20%;
+  font-size: 1.8rem;
+  font-family: 'Bree Serif';
+  margin-bottom: 7%;
+}
+#cutlery
+{
+  padding: 11px;
+    border-radius: 50%;
+    background-color: #3eff3e;
+    font-size: 30px;
+    margin-left: 3%;
+    color: white;
+}
+
+.recipe-nutrition
+{
+  margin-top: 9px;
+  font-size: .75rem;
+    cursor: default;
+    padding: 0;
+    height: 140px;
+    font-family: 'Amatic';
+    margin-left: 17%;
+}
+.nutrition-title
+{
+  margin-top:10px;
+  font-family: 'Bree Serif', serif;
+  margin-left:20%;
+  text-align: left;
+  position: relative;
+  font-size:2.5rem;
+  margin-bottom: 2%;
+}
+.nutrition-bubble-flat-value {
+    top: 10px;
+}
+.nutrition-bubble, .nutrition-bubble-flat-value {
+    position: relative;
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    border-radius: 6em;
+    margin-right: .4em;
+    background: #f5f5f5;
+    text-align: center;
+}
+.nutrition-bubble-flat-value span, .nutrition-bubble span {
+    display: block;
+    line-height: 1.25;
+    position: relative;
+    top: 1.33em;
+}
+.nutrition-bubble-flat-value .value {
+    font-size: 24px;
+    top: 31px;
+}
+.nutrition-bubble-flat-value .label {
+    text-transform: capitalize;
+    top: 24px;
+}
+.nutrition-bubble-flat-value .label, .nutrition-bubble .label {
+    line-height: 1.5;
+    text-transform: uppercase;
+    top: 3em;
+}
+.nutrition-bubble-flat-value span, .nutrition-bubble span {
+    display: block;
+    line-height: 1.25;
+    position: relative;
+    top: 1.33em;
+}
+.micro-caps, .micro-text {
+    font-size: 12px;
+    line-height: 1;
+}
+.nutrition-bubble .label {
+    line-height: 1.5;
+    text-transform: uppercase;
+    top: 3.5em;
+}
+.nutrition-bubble span {
+    display: block;
+    line-height: 1.25;
+    position: relative;
+    top: 1.33em;
+}
+.micro-caps {
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.micro-caps, .micro-text {
+    font-size: 12px;
+    line-height: 1;
+}
+.nutrition-bubble .value {
+    top: 3.5em;
+}
+.nutrition-bubble span.raw-value {
+    position: absolute;
+    top: 110%;
+    width: 125%;
+    margin: 0 -1em;
+}
+
 </style>
 </head>
 <body>
@@ -282,6 +393,7 @@ color: orange;
     </svg>
     </div>
   </div>
+  
   </div>
   <div class="image">
     <img src="images/this.jpg" id="image_recipe">
@@ -305,9 +417,28 @@ color: orange;
 </div>
 <br>
 <br>
-<center><form >
-<b><h3><p>Did you make this &nbsp &nbsp <input type="checkbox" id="check" onclick="checked()" style="width:30px;height:30px;"/></p></h3></b>
-</form></center>
+<div class="save">
+  Have you made this recipe?
+  <i class="fa fa-cutlery" id="cutlery" aria-hidden="true"></i>
+</div>
+<span class="nutrition-title">Nutrition</span>
+  <div class="recipe-nutrition">
+
+    <div class="nutrition-bubble-flat-value" style="background-image: linear-gradient(to top, rgb(190, 218, 217) 5%, rgb(245, 245, 245) 5%);"><span class="value font-light">90</span><span class="label font-bold micro-text">Calories</span>
+    </div>
+    <div class="nutrition-bubble" style="background-image: linear-gradient(to top, rgb(190, 218, 217) 5%, rgb(245, 245, 245) 5%);"><span class="label font-bold micro-caps">Sodium</span><span class="value font-light micro-text">5% DV</span><span class="raw-value micro-text">130mg</span>
+    </div>
+    <div class="nutrition-bubble" style="background-image: linear-gradient(to top, rgb(190, 218, 217) 12%, rgb(245, 245, 245) 12%);"><span class="label font-bold micro-caps">Fat</span><span class="value font-light micro-text">12% DV</span><span class="raw-value micro-text">8g</span>
+    </div>
+    <div class="nutrition-bubble" style="background-image: linear-gradient(to top, rgb(190, 218, 217) 8%, rgb(245, 245, 245) 8%);"><span class="label font-bold micro-caps">Protein</span><span class="value font-light micro-text">8% DV</span><span class="raw-value micro-text">4g</span>
+    </div>
+    <div class="nutrition-bubble" style="background-image: linear-gradient(to top, rgb(190, 218, 217) 8%, rgb(245, 245, 245) 8%);"><span class="label font-bold micro-caps">Protein</span><span class="value font-light micro-text">8% DV</span><span class="raw-value micro-text">4g</span>
+    </div>
+    <div class="nutrition-bubble" style="background-image: linear-gradient(to top, rgb(190, 218, 217) 1%, rgb(245, 245, 245) 1%);"><span class="label font-bold micro-caps">Carbs</span><span class="value font-light micro-text">1% DV</span><span class="raw-value micro-text">2g</span>
+    </div>
+    <div class="nutrition-bubble" style="background-image: linear-gradient(to top, rgb(190, 218, 217) 3%, rgb(245, 245, 245) 3%);"><span class="label font-bold micro-caps">Fiber</span><span class="value font-light micro-text">3% DV</span><span class="raw-value micro-text">&lt;1g</span></div>
+  </div>
+
 <br>
 <footer>
   <div class="Company-logo"><img src="images/logo.png"></div>
@@ -338,6 +469,16 @@ color: orange;
   </div>
 </div>
 </footer>
+<script>
+  var toggle = document.querySelector('.toggleButton input')
+var animate = setInterval(() => {
+    toggle.checked = !toggle.checked
+}, 3000)
+
+document.querySelector('body').addEventListener('click', () => {
+  clearInterval(animate);
+})
+</script>
 </body>
 </html>
 
