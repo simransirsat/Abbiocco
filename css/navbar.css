@@ -5,6 +5,8 @@
     top: -32px;
     left: 16px;*/
     font-family: 'Pacifico';
+    font-size: 35px;
+    color:black;
 }
 .navbar
 {
@@ -38,7 +40,7 @@
 			transition:0.2s;
 			font-size:20px;
 			color:black;
-			font-family: 'Pacifico';
+			font-family: 'Lobster';
 			padding-right:20px;
 		}
 		.dropdown-item.active, .dropdown-item:active
@@ -51,14 +53,15 @@
 		}
 		.bg
 		{
-			background: linear-gradient(to left, #d9a7c7, #eee1ef);
-}
+			  background: linear-gradient(to right, #ece9e6, #ffffff); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
 		}
+		
 		a.nav-link 
 		{
-			font-family: 'Fredoka One', cursive;
+			font-family: 'Lobster', cursive;
 			padding-right: 10px;
-			color:aliceblue;
+			color:black;
 		}
 		a.nav-link:hover
 		{

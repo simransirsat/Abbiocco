@@ -34,6 +34,8 @@
 		}
 		.zoom 
 		{
+
+			
 		  transition: transform .4s ease-in; /* Animation */
 		  height: 200px;
 		  margin: 0 auto;
