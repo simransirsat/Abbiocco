@@ -1,0 +1,263 @@
+{% extends "base.html" %}
+{% block linkages %}
+    <script src="https://kit.fontawesome.com/2c9c18f3bc.js"></script>
+    <style type="text/css">
+        .bookmark
+        {
+                text-align: right;
+    position: absolute;
+    right: 10px;
+    top: 0px;
+    font-size: 46px;
+
+        }
+    </style>
+    {% endblock %}
+{% block content %}
+
+    <!-- ##### Search Area Start ##### -->
+    <div class="bueno-search-area section-padding-100-0 pb-70 bg-img" style="background-image: url(../static/img/core-img/pattern.png);">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <form action="#" method="post">
+                        <div class="row">
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                <div class="form-group mb-30">
+                                    <select class="form-control" id="recipe">
+                                      <option value="">Recipe</option>
+                                      <option value="">Recipe 1</option>
+                                      <option value="">Recipe 2</option>
+                                      <option value="">Recipe 3</option>
+                                      <option value="">Recipe 4</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                <div class="form-group mb-30">
+                                    <select class="form-control" id="vegan">
+                                      <option value="">Vegan</option>
+                                      <option value="">Vegan 1</option>
+                                      <option value="">Vegan 2</option>
+                                      <option value="">Vegan 3</option>
+                                      <option value="">Vegan 4</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                <div class="form-group mb-30">
+                                    <select class="form-control" id="ingredients">
+                                      <option value="">Ingredients</option>
+                                      <option value="">Ingredients 1</option>
+                                      <option value="">Ingredients 2</option>
+                                      <option value="">Ingredients 3</option>
+                                      <option value="">Ingredients 4</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6 col-lg-3">
+                                <div class="form-group mb-30">
+                                    <button class="btn bueno-btn w-100">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- ##### Search Area End ##### -->
+
+    <!-- ##### Post Details Area Start ##### -->
+    <section class="post-news-area section-padding-100-0 mb-70">
+        <div class="container">
+            <div class="row justify-content-center">
+                <!-- Post Details Content Area -->
+                <div class="col-12 col-lg-4 col-xl-5">
+                    <div class="post-details-content mb-100">
+                        <div class="blog-thumbnail mb-50">
+                            <img src="{{ img }}" alt="">
+                        </div>
+                        <div class="blog-content">
+                            <a href="#" class="post-tag">Healthy Food</a>
+                            <h4 class="post-title">{{ title }}</h4>
+                            <div class="post-meta mb-50">
+                                <a href="#" class="post-date">July 11, 2018</a>
+                                <a href="#" class="post-author">By {{source}}</a>
+                            </div>
+                            {% for a in ins %}
+                            <h5 class="mb-30">Step {{a.step}}
+                            </h5> 
+                            <p class="mb-30">
+                                {{a.val}}
+                            </p>
+                            {% endfor %}
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-4 col-xl-4">
+                    <!-- Info -->
+                    <div class="recipe-info">
+                        <h5>Info</h5>
+                        <form action="" method="POST">
+                            {% if bookmark %}
+                        <button class="bookmark" name="bookmark" value="bookmark" 
+                        style="color:green;"><i class="far fa-bookmark"></i>
+                            {% else %}
+                                <button class="bookmark" name="bookmark" value="bookmark"><i class="far fa-bookmark"></i>
+                            {% endif %}
+                        </button>
+
+                        </form>
+                        <ul class="info-data">
+                            <li><img src="../static/img/core-img/eye.png" alt=""> <span>{{likes}}</span></li>
+                            <li><img src="../static/img/core-img/alarm-clock.png" alt=""> <span>{{time}} mins</span></li>
+                            <li><img src="../static/img/core-img/tray.png" alt=""> <span>Serves {{ servings }}</span></li>
+                            <li><img src="../static/img/core-img/sandwich.png" alt=""> <span>Easy</span></li>
+                            <li><img src="../static/img/core-img/compass.png" alt=""> <span>200F</span></li>
+                        </ul>
+                    </div>
+
+                    <!-- Ingredients -->
+                    <div class="ingredients">
+                        <h5>Ingredients</h5>
+                    {% set i = 0 %}
+                    {% for ingredient in ingredients %}
+                        <!-- Custom Checkbox -->
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="customCheck{{ loop.index }}">
+                            <label class="custom-control-label" for="customCheck{{ loop.index }}">{{ ingredient['originalString'] }}</label>
+                        </div>
+                        {% endfor %}
+
+                        <!-- Custom Checkbox -->
+                        
+                    </div>
+                </div>
+
+                <!-- Sidebar Widget -->
+                <div class="col-12 col-sm-9 col-md-6 col-lg-4 col-xl-3">
+                    <div class="sidebar-area">
+
+                        <!-- Single Widget Area -->
+                        <div class="single-widget-area author-widget mb-30">
+                            <div class="background-pattern bg-img" style="background-image: url(../static/img/core-img/pattern2.png);">
+                                <div class="author-thumbnail">
+                                    <img src="{{ user.avatar(256) }}" alt="">
+                                </div>
+                                <p>My name is <span>Jessica Smith</span>, I’m a passionate cook with a love for vegan food.</p>
+                            </div>
+                            <div class="social-info">
+                                <a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                <a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                            </div>
+                        </div>
+
+                        <!-- Single Widget Area -->
+                        <div class="single-widget-area add-widget mb-30">
+                            <img src="../static/img/bg-img/add.png" alt="">
+                        </div>
+
+                        <!-- Single Widget Area -->
+                        <div class="single-widget-area post-widget mb-30">
+                            <!-- Single Post Area -->
+                            <div class="single-post-area d-flex">
+                                <!-- Blog Thumbnail -->
+                                <div class="blog-thumbnail">
+                                    <img src="../static/img/bg-img/12.jpg" alt="">
+                                </div>
+                                <!-- Blog Content -->
+                                <div class="blog-content">
+                                    <a href="#" class="post-title">Friend eggs with ham</a>
+                                    <div class="post-meta">
+                                        <a href="#" class="post-date">July 11, 2018</a>
+                                        <a href="#" class="post-author">By Mehak Gupta</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Single Post Area -->
+                            <div class="single-post-area d-flex">
+                                <!-- Blog Thumbnail -->
+                                <div class="blog-thumbnail">
+                                    <img src="../static/img/bg-img/13.jpg" alt="">
+                                </div>
+                                <!-- Blog Content -->
+                                <div class="blog-content">
+                                    <a href="#" class="post-title">Burger with fries</a>
+                                    <div class="post-meta">
+                                        <a href="#" class="post-date">July 11, 2018</a>
+                                        <a href="#" class="post-author">By Mehak Gupta</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Single Post Area -->
+                            <div class="single-post-area d-flex">
+                                <!-- Blog Thumbnail -->
+                                <div class="blog-thumbnail">
+                                    <img src="../static/img/bg-img/14.jpg" alt="">
+                                </div>
+                                <!-- Blog Content -->
+                                <div class="blog-content">
+                                    <a href="#" class="post-title">Avocado &amp; Oisters</a>
+                                    <div class="post-meta">
+                                        <a href="#" class="post-date">July 11, 2018</a>
+                                        <a href="#" class="post-author">By Mehak Gupta</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Single Post Area -->
+                            <div class="single-post-area d-flex">
+                                <!-- Blog Thumbnail -->
+                                <div class="blog-thumbnail">
+                                    <img src="../static/img/bg-img/15.jpg" alt="">
+                                </div>
+                                <!-- Blog Content -->
+                                <div class="blog-content">
+                                    <a href="#" class="post-title">Tortilla prawns</a>
+                                    <div class="post-meta">
+                                        <a href="#" class="post-date">July 11, 2018</a>
+                                        <a href="#" class="post-author">By Mehak Gupta</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Single Post Area -->
+                            <div class="single-post-area d-flex">
+                                <!-- Blog Thumbnail -->
+                                <div class="blog-thumbnail">
+                                    <img src="../static/img/bg-img/16.jpg" alt="">
+                                </div>
+                                <!-- Blog Content -->
+                                <div class="blog-content">
+                                    <a href="#" class="post-title">Burger with fries</a>
+                                    <div class="post-meta">
+                                        <a href="#" class="post-date">July 11, 2018</a>
+                                        <a href="#" class="post-author">By Mehak Gupta</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Single Widget Area -->
+                        <div class="single-widget-area newsletter-widget mb-30">
+                            <h6>Subscribe to newsletter</h6>
+                            <form action="#" method="post">
+                                <input type="search" name="widget-search" id="widgetSearch" placeholder="E-mail">
+                                <button type="submit" class="btn bueno-btn w-100">Subscribe</button>
+                            </form>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
