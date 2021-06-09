@@ -24,3 +24,7 @@ class RegistrationForm(FlaskForm):
 		if user is not None:
 			raise ValidationError('Please use a different email address.')
 
+class Recipe(FlaskForm):
+	username = StringField('Username', validators=[DataRequired()])
+	email = StringField('Email', validators=[DataRequired(), Email()])
+
