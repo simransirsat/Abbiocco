@@ -19,6 +19,7 @@ The above command initialises the mysql db and connects it with the adminer visu
 3. The next step is to point the db url from the flask application. There are 2 ways to do it:
     1. export the environment variable  DATABASE_URL=mysql+mysqlconnector://root:rootpassword@localhost:3306/abiocco
     2. Hard code the value in [config.py](https://github.com/RahulKeluskar/Abbiocco/blob/master/config.py#L6)
+Also log in to adminer and create db abioco or whatever name you wish after logging in.
 4. Run the following commands in your virtual environment
 *Note: Please remove the migrations directory before running these commands.*
 ```bash
