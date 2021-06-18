@@ -170,12 +170,20 @@ def view_profile():
 	form = RegistrationForm()
 	try:
 		if request.method == "POST" and form.validate():
-			form.populate_obj(profile)
-			profile.save()
+			current_user.weight= form.weight.data
+			current_user.height = form.height.data
+			current_user.dob = form.dob.data
+			current_user.gender = form.gender.data
+			db.session.commit()
 			return render_template("profile.html", form=form)
 	except:
 		pass
-	return render_template("profile.html", form=profile)
+	if request.method == "GET":
+		form.weight.data = current_user.weight
+		form.height.data = current_user.height
+		form.dob.data = current_user.dob
+		form.gender.data = current_user.gender
+	return render_template("profile.html", form=form)
 
 @app.route("/profile/edit/", methods=["GET","POST"])
 @login_required
