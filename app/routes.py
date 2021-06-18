@@ -162,3 +162,24 @@ def process_recipe_bookmark_button(recipe_id):
     # Return error message to bookmark-recipe.js ajax success fn
     error_message = "You've already bookmarked this recipe."
     return error_message
+
+@app.route("/profile/",  methods=["GET","POST"])
+@login_required
+def view_profile():
+	profile = User.query.filter_by(username=current_user.username).first()
+	form = RegistrationForm()
+	try:
+		if request.method == "POST" and form.validate():
+			form.populate_obj(profile)
+			profile.save()
+			return render_template("profile.html", form=form)
+	except:
+		pass
+	return render_template("profile.html", form=profile)
+
+@app.route("/profile/edit/", methods=["GET","POST"])
+@login_required
+def edit_profile(request):
+	user  = User.query.filter_by(username=current_user.username).first()
+	
+	return render_template('profile.html', form=form, user=user)
