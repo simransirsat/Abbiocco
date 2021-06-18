@@ -26,10 +26,14 @@ class User(UserMixin,db.Model):
 		primaryjoin=(followers.c.follower_id == id),
 		secondaryjoin=(followers.c.followed_id == id),
 		backref=db.backref('followers', lazy='dynamic'),lazy='dynamic')
-	def __init__(self,username,email):
-		self.username = username
-		self.email = email
-	
+	def __init__(self,**kwargs):
+		self.username = kwargs.get('username')
+		self.email = kwargs.get('email')
+		self.weight = kwargs.get('weight')
+		self.height = kwargs.get('height')
+		self.dob = kwargs.get('dob')
+		self.gender = kwargs.get('gender')
+		self.name = kwargs.get('name')
 	def __repr__(self):
 		return '<User {}>'.format(self.username)
 	
