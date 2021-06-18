@@ -54,7 +54,7 @@ def register():
 		return redirect(url_for('index'))
 	form = RegistrationForm()
 	if form.validate_on_submit():
-		user = User(username=form.username.data, email=form.email.data)
+		user = User(username=form.username.data, email=form.email.data,  dob=form.dob.data, name=form.name.data, height=form.height.data, weight=form.weight.data, gender= form.gender.data)
 		user.set_password(form.password.data)
 		db.session.add(user)
 		db.session.commit()
