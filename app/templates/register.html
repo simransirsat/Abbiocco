@@ -1,65 +1,78 @@
 <!DOCTYPE html>
 <html>
 <head>
-   <title>Login</title>
-   <link rel="stylesheet" type="text/css" href="../static/css/register.css">
+   <title>Register</title>
+   <link rel="stylesheet" type="text/css" href="../static/css/logina.css">
    <script
   src="https://code.jquery.com/jquery-3.4.1.min.js"
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous"></script>
-
+     <script type="text/javascript" src="../static/js/login.js"></script>
 
 </head>
 <body>
-  {% with messages=get_flashed_messages() %}
-  {% if messages %}
-  {% for message in messages %}
-  <li> {{message}} </li>
-  {% endfor %}
-  {% endif %}
-  {% endwith %}
-  <form action="" method="POST">
-    {{ form.hidden_tag() }}
-  <div class="container">
-  <div class="bullets">
-    <span class="active"></span>
-    <span></span>
-    <span></span>
-  </div>
-  <div class="form">
-    
-    <div class="title">
-      Register
-    </div>    
-    <div class="row visible">
-      {{ form.username() }}
-      <div class="fa fa-user"></div>
-      <div class="nextBtn"><i class="fa fa-chevron-right"></i></div>
-      {% for error in form.username.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
+  <h1>Register</h1>
+  <form action="" method="post">
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        {{ form.name.label(class_='form-label') }}<br>
+        {{ form.name(size=32, class_='form-control') }}<br>
+        {% for error in form.name.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
     </div>
-    <div class="row">
-      {{ form.email() }}
-      <div class="fa fa-envelope"></div>
-      <div class="nextBtn"><i class="fa fa-chevron-right"></i></div>
-    </div> 
-    <div class="row lastField">
-     {{ form.password() }}
-      <div class="fa fa-key"></div>
-      <div class="nextBtn">
-      <button type="submit"><i class="fa fa-chevron-right"></i></button></div>
-    </div>    
-  </div>
-</div>
-</form>
-<div class="spinnerWrapper" style="display:none;">
-  <svg class="spinner" width="65px" height="65px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-     <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
-  </svg>
-</div>
-
-   <script type="text/javascript" src="../static/js/register.js"></script>
+    <div class="form-group">
+        {{ form.dob.label(class_='form-label')  }}<br>
+        {{ form.dob(size=32, class_='form-control') }}<br>
+        {% for error in form.dob.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <div class="form-group">
+        {{ form.height.label(class_='form-label')  }}<br>
+        {{ form.height(size=32, class_='form-control') }}<br>
+        {% for error in form.height.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <div class="form-group">
+        {{ form.weight.label(class_='form-label')  }}<br>
+        {{ form.weight(size=32, class_='form-control') }}<br>
+        {% for error in form.weight.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <div class="form-group">
+        {{ form.gender.label(class_='form-label')  }}<br>
+        {{ form.gender(class_='form-control')}}<br>
+        {% for error in form.gender.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+    </div>
+    <div class="form-group">
+          {{ form.username.label(class_='form-label')  }}<br>
+          {{ form.username(size=32, class_='form-control') }}<br>
+          {% for error in form.username.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.email.label(class_='form-label')  }}<br>
+          {{ form.email(size=32, class_='form-control') }}<br>
+          {% for error in form.email.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+        </div>
+        <div class="form-group">
+          {{ form.password.label(class_='form-label')  }}<br>
+          {{ form.password(size=32, class_='form-control') }}<br>
+          {% for error in form.password.errors %}
+          <span style="color: red;">[{{ error }}]</span>
+          {% endfor %}
+        </div>
+     
+      <p>{{ form.submit() }}</p>
+  </form>
 
 </body>
 
