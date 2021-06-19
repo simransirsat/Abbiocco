@@ -111,9 +111,14 @@
                                 <ul>
                                     <li><a href="{{ url_for('index') }}">Home</a></li>
                                     <li><a href="#">About Us</a></li>
-                                    {%  if current_user.is_authenticated %}
-                                            <li><a href="{{ url_for('view_profile') }}">Profile</a></li>
-                                    {% endif %}
+                                    
+                                    <!-- {%  if current_user.is_authenticated %} -->
+                                    <li><a href="{{ url_for('view_profile') }}">Profile</a></li>
+                                    <li><a href="{{ url_for('pantry') }}">Pantry</a></li>
+                                    <!-- {% endif %} -->
+                                    
+                                    <li><a href="{{ url_for('pantry') }}">Pantry</a></li>
+
                                     <li><a href="#">Pages</a>
                                         <ul class="dropdown">
                                             <li><a href="{{ url_for('index') }}">Home</a></li>
@@ -168,7 +173,7 @@
                                     <li><a href="/user/bookmarks">Blog</a></li>
                                     <li><a href=" {{ url_for('contacts') }} ">Contact</a></li>
                                 </ul>
-
+                             
                                 <!-- Login/Register -->
                                 <div class="login-area">
                                     {% if current_user.is_anonymous %}
@@ -189,6 +194,7 @@
             </div>
         </div>
     </header>
+
     {% block trend %}
     <div class="treading-post-area" id="treadingPost">
         <div class="close-icon">
@@ -300,9 +306,11 @@
         </div>
     </div>
     {% endblock %}
+    
     {% block content %}
     	Content
     {% endblock %}
+    
     <footer class="footer-area">
         <div class="container">
             <div class="row">

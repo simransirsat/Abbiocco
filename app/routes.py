@@ -210,3 +210,7 @@ def edit_profile():
 		form.email.data = current_user.email
 		#form.password.data = current_user.password
 	return render_template('edit_profile.html', title='Edit Profile',form=form)
+
+@app.route('/pantry')
+def pantry():
+	return render_template('pantry.html')
