@@ -168,16 +168,16 @@ def process_recipe_bookmark_button(recipe_id):
 def view_profile():
 	profile = User.query.filter_by(username=current_user.username).first()
 	form = RegistrationForm()
-	try:
-		if request.method == "POST" and form.validate():
-			current_user.weight= form.weight.data
-			current_user.height = form.height.data
-			current_user.dob = form.dob.data
-			current_user.gender = form.gender.data
-			db.session.commit()
-			return render_template("profile.html", form=form)
-	except:
-		pass
+	# try:
+	# 	if request.method == "POST" and form.validate():
+	# 		current_user.weight= form.weight.data
+	# 		current_user.height = form.height.data
+	# 		current_user.dob = form.dob.data
+	# 		current_user.gender = form.gender.data
+	# 		db.session.commit()
+	# 		return render_template("profile.html", form=form)
+	# except:
+	#	pass
 	if request.method == "GET":
 		form.weight.data = current_user.weight
 		form.height.data = current_user.height

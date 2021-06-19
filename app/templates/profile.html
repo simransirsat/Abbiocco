@@ -391,7 +391,7 @@
                             </label>
                             <img src="https://i.ibb.co/yNGW4gg/avatar.png" id="blah" alt="Avatar">
                         </section>
-                        <h1>{{ form.username }}</h1>
+                        <h1>{{ current_user.username }}</h1>
                         <h3>{{ form.description }}</h3>
                     </td>
 
@@ -401,22 +401,34 @@
                         <h2 style="text-align:center;">Personal Information</h2>
                         <ul>
                             <li>
-                                {{ form.weight }}
+                                <h9>Name</h9><br>
+                                {{ current_user.name }}
                             </li>
                             <li>
-                                {{ form.height }}
+                                <h9>Weight in Kgs</h9><br>
+                                {{ current_user.weight }}
                             </li>
                             <li>
-                                {{form.dob}}
+                                <h9>Height in cms</h9><br>
+                                {{ current_user.height }}
                             </li>
                             <li>
-                                {{ form.gender }}
+                                <h9>Date of Birth</h9><br>
+                                {{ current_user.dob }}
+                            </li>
+                            <li>
+                                <h9>Gender</h9><br>
+                                {{ current_user.gender }}
+                            </li>
+                            <li>
+                                <h9>Email</h9><br>
+                                {{ current_user.email }}
                             </li>
                             <li>
                                 {% if form.submit is defined %}
                                 {{ form.submit() }}
                                 {% else %}
-                                <button text="Submit" class='btn'>Submit</button>
+                                <button text="Edit" class='btn'>Edit</button>
                             {% endif %}
 
                             </li>
