@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block prompt %}
     {% if current_user.username %}
-    <h1> Hi, {{current_user.name }}!</h1>
+    <h4> Hi, {{current_user.name }}!</h4>
     {% else %}
-    <h1> Welcome </h1>
+    <h4> Welcome </h4>
     {% endif %}
     {% endblock %}
 
