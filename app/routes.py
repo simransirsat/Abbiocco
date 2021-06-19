@@ -199,7 +199,7 @@ def edit_profile():
 		current_user.email = form.email.data
 		current_user.set_password(form.password.data)
 		db.session.commit()
-		return redirect(url_for('profile'))
+		return redirect(url_for('view_profile'))
 	elif request.method == 'GET':
 		form.weight.data = current_user.weight
 		form.height.data = current_user.height
