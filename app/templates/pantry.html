@@ -1,6 +1,4 @@
 {% extends "base.html" %}
-{% block linkages %}
-{% endblock %}
 {% block content %}
 
 <!DOCTYPE html>
@@ -104,8 +102,8 @@ if (document.location.search.match(/type=embed/gi)) {
     </ol>
       
     <input type="text" id="item" onfocus="this.value=''">
-    <button type="submit" onclick="addItem()">Add item</button>
-    <button type="submit" onclick="removeItem()">Delete item</button>
+    <button onclick="addItem()">Add item</button>
+    <button onclick="removeItem()">Delete item</button>
 
     <script>
     function addItem() {
