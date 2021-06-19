@@ -425,13 +425,14 @@
                                 {{ current_user.email }}
                             </li>
                             <li>
-                                <!-- {% if form.submit is defined %}
-                                {{ form.submit() }}
-                                {% else %} -->
-                                <button text="Edit" class='btn'>Edit</button>
-                            <!-- {% endif %} -->
-
+                                <h9>Your Basal Metabolic Rate(BMR)</h9><br>
+                                {{ current_user.bmr }}
                             </li>
+                            <li>
+                                <h9>Calories to mainatin bodyweight</h9><br>
+                                {{ current_user.cal_req }}
+                            </li>
+                            
                         </ul>
                         <a href="{{ url_for('edit_profile') }}">Edit</a>
                     </td>

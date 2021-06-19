@@ -20,6 +20,9 @@ class User(UserMixin,db.Model):
 	dob = db.Column(db.Date)
 	age = db.Column(db.Integer)
 	gender = db.Column(db.String(10))
+	bmr = db.Column(db.Float)
+	activity_f = db.Column(db.String(5))
+	cal_req = db.Column(db.Float)
 	password_hash = db.Column(db.String(128))
 	about_me = db.Column(db.String(140))
 	followed = db.relationship(
@@ -41,10 +44,25 @@ class User(UserMixin,db.Model):
 	def set_password(self, password):
 		self.password_hash = generate_password_hash(password)
 	
-	def set_age(self, dob):
+	def set_age(self, dob, weight, height, gender, activity):
 		today=date.today()
 		self.age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
-	
+		if gender == 'M':
+			self.bmr = (10*weight) + (6.25*height) - (5*self.age) + 5
+		elif gender == 'F':
+			self.bmr = (10*weight) + (6.25*height) - (5*self.age) -161
+
+		if activity == '1.2':
+			self.cal_req = self.bmr * 1.2
+		elif activity == '1.375':
+			self.cal_req = self.bmr * 1.375
+		elif activity == '1.55':
+			self.cal_req = self.bmr * 1.55
+		elif activity == '1.725':
+			self.cal_req = self.bmr * 1.725
+		elif activity == '1.9':
+			self.cal_req = self.bmr * 1.9
+
 	def check_password(self, password):
 		return check_password_hash(self.password_hash, password)
 

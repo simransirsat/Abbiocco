@@ -54,9 +54,9 @@ def register():
 		return redirect(url_for('index'))
 	form = RegistrationForm()
 	if form.validate_on_submit():
-		user = User(username=form.username.data, email=form.email.data,  dob=form.dob.data, name=form.name.data, height=form.height.data, weight=form.weight.data, gender= form.gender.data)
+		user = User(username=form.username.data, email=form.email.data,  dob=form.dob.data, name=form.name.data, height=form.height.data, weight=form.weight.data, gender= form.gender.data, activity_f=form.activity_f.data)
 		user.set_password(form.password.data)
-		user.set_age(form.dob.data)
+		user.set_age(form.dob.data, form.weight.data, form.height.data, form.gender.data, form.activity_f.data)
 		db.session.add(user)
 		db.session.commit()
 		flash('Congratulations, you are now a registered user!')
@@ -199,6 +199,7 @@ def edit_profile():
 		current_user.username = form.username.data
 		current_user.email = form.email.data
 		current_user.set_password(form.password.data)
+		current_user.set_age(form.dob.data, form.weight.data, form.height.data, form.gender.data, form.activity_f.data)
 		db.session.commit()
 		return redirect(url_for('view_profile'))
 	elif request.method == 'GET':
