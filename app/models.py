@@ -18,6 +18,7 @@ class User(UserMixin,db.Model):
 	weight = db.Column(db.Float)
 	height = db.Column(db.Float)
 	dob = db.Column(db.Date)
+	age = db.Column(db.Integer)
 	gender = db.Column(db.String(10))
 	password_hash = db.Column(db.String(128))
 	about_me = db.Column(db.String(140))
@@ -39,6 +40,10 @@ class User(UserMixin,db.Model):
 	
 	def set_password(self, password):
 		self.password_hash = generate_password_hash(password)
+	
+	def set_age(self, dob):
+		today=date.today()
+		self.age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
 	
 	def check_password(self, password):
 		return check_password_hash(self.password_hash, password)
