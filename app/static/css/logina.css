@@ -231,6 +231,21 @@ form {
   z-index: 500;
   border: 1px solid #eee;
 }
+.form-register {
+  display: none;
+  max-width: 400px;
+  padding: 20px 40px;
+  background: #fff;
+  margin: auto;
+  display: block;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.15);
+  transition: 0.3s;
+  position: relative;
+  -webkit-transform: translateY(-100px);
+  transform: translateY(-100px);
+  z-index: 500;
+  border: 1px solid #eee;
+}
 form.up {
   -webkit-transform: translateY(-180px);
   transform: translateY(-180px);

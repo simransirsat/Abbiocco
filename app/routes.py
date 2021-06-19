@@ -7,7 +7,7 @@ from flask_login import current_user, login_user, login_required
 from werkzeug.urls import url_parse
 from app.models import User
 from app import db
-from app.forms import RegistrationForm
+from app.forms import RegistrationForm, EditProfileForm
 from app import api_calls
 import helper_functions
 @app.route('/')
@@ -54,8 +54,9 @@ def register():
 		return redirect(url_for('index'))
 	form = RegistrationForm()
 	if form.validate_on_submit():
-		user = User(username=form.username.data, email=form.email.data)
+		user = User(username=form.username.data, email=form.email.data,  dob=form.dob.data, name=form.name.data, height=form.height.data, weight=form.weight.data, gender= form.gender.data, activity_f=form.activity_f.data)
 		user.set_password(form.password.data)
+		user.set_age(form.dob.data, form.weight.data, form.height.data, form.gender.data, form.activity_f.data)
 		db.session.add(user)
 		db.session.commit()
 		flash('Congratulations, you are now a registered user!')
@@ -162,3 +163,52 @@ def process_recipe_bookmark_button(recipe_id):
     # Return error message to bookmark-recipe.js ajax success fn
     error_message = "You've already bookmarked this recipe."
     return error_message
+
+@app.route("/profile/",  methods=["GET","POST"])
+@login_required
+def view_profile():
+	profile = User.query.filter_by(username=current_user.username).first()
+	form = RegistrationForm()
+	#try:
+	# 	if request.method == "POST" and form.validate():
+	# 		current_user.weight= form.weight.data
+	# 		current_user.height = form.height.data
+	# 		current_user.dob = form.dob.data
+	# 		current_user.gender = form.gender.data
+	# 		db.session.commit()
+	# 		return render_template("profile.html", form=form)
+	# except:
+	#	pass
+	if request.method == "GET":
+		form.weight.data = current_user.weight
+		form.height.data = current_user.height
+		form.dob.data = current_user.dob
+		form.gender.data = current_user.gender
+	return render_template("profile.html", form=form)
+
+@app.route('/edit_profile', methods=['GET', 'POST'])
+@login_required
+def edit_profile():
+	form = EditProfileForm(current_user.username)
+	if form.validate_on_submit():
+		current_user.weight= form.weight.data
+		current_user.height = form.height.data
+		current_user.dob = form.dob.data
+		current_user.gender = form.gender.data
+		current_user.name = form.name.data
+		current_user.username = form.username.data
+		current_user.email = form.email.data
+		current_user.set_password(form.password.data)
+		current_user.set_age(form.dob.data, form.weight.data, form.height.data, form.gender.data, form.activity_f.data)
+		db.session.commit()
+		return redirect(url_for('view_profile'))
+	elif request.method == 'GET':
+		form.weight.data = current_user.weight
+		form.height.data = current_user.height
+		form.dob.data = current_user.dob
+		form.gender.data = current_user.gender
+		form.name.data = current_user.name
+		form.username.data = current_user.username
+		form.email.data = current_user.email
+		#form.password.data = current_user.password
+	return render_template('edit_profile.html', title='Edit Profile',form=form)

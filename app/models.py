@@ -3,7 +3,7 @@ from hashlib import md5
 from app import login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-from datetime import datetime
+from datetime import datetime, date
 followers = db.Table(
     'followers',
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
@@ -13,7 +13,16 @@ followers = db.Table(
 class User(UserMixin,db.Model):
 	id = db.Column(db.Integer, autoincrement=True,primary_key=True)
 	username = db.Column(db.String(64), index=True, unique=True)
+	name = db.Column(db.String(64))
 	email = db.Column(db.String(120), index=True,unique=True)
+	weight = db.Column(db.Float)
+	height = db.Column(db.Float)
+	dob = db.Column(db.Date)
+	age = db.Column(db.Integer)
+	gender = db.Column(db.String(10))
+	bmr = db.Column(db.Float)
+	activity_f = db.Column(db.String(5))
+	cal_req = db.Column(db.Float)
 	password_hash = db.Column(db.String(128))
 	about_me = db.Column(db.String(140))
 	followed = db.relationship(
@@ -21,16 +30,39 @@ class User(UserMixin,db.Model):
 		primaryjoin=(followers.c.follower_id == id),
 		secondaryjoin=(followers.c.followed_id == id),
 		backref=db.backref('followers', lazy='dynamic'),lazy='dynamic')
-	def __init__(self,username,email):
-		self.username = username
-		self.email = email
-	
+	def __init__(self,**kwargs):
+		self.username = kwargs.get('username')
+		self.email = kwargs.get('email')
+		self.weight = kwargs.get('weight')
+		self.height = kwargs.get('height')
+		self.dob = kwargs.get('dob')
+		self.gender = kwargs.get('gender')
+		self.name = kwargs.get('name')
 	def __repr__(self):
 		return '<User {}>'.format(self.username)
 	
 	def set_password(self, password):
 		self.password_hash = generate_password_hash(password)
 	
+	def set_age(self, dob, weight, height, gender, activity):
+		today=date.today()
+		self.age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
+		if gender == 'M':
+			self.bmr = (10*weight) + (6.25*height) - (5*self.age) + 5
+		elif gender == 'F':
+			self.bmr = (10*weight) + (6.25*height) - (5*self.age) -161
+
+		if activity == '1.2':
+			self.cal_req = self.bmr * 1.2
+		elif activity == '1.375':
+			self.cal_req = self.bmr * 1.375
+		elif activity == '1.55':
+			self.cal_req = self.bmr * 1.55
+		elif activity == '1.725':
+			self.cal_req = self.bmr * 1.725
+		elif activity == '1.9':
+			self.cal_req = self.bmr * 1.9
+
 	def check_password(self, password):
 		return check_password_hash(self.password_hash, password)
 
@@ -57,8 +89,8 @@ class Recipe(db.Model):
 
 	recipe_id = db.Column(db.String(64),nullable=False, primary_key=True)
 	recipe_name = db.Column(db.String(200), nullable=True)
-	img_url = db.Column(db.String(10000),nullable = True)
-	instructions = db.Column(db.String(10000), nullable=True)
+	img_url = db.Column(db.String(5000),nullable = True)
+	instructions = db.Column(db.String(5000), nullable=True)
 	user_id = db.Column(db.Integer,db.ForeignKey('user.id'))
 
 	# Relationships
