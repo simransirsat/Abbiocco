@@ -7,7 +7,7 @@ from flask_login import current_user, login_user, login_required
 from werkzeug.urls import url_parse
 from app.models import User
 from app import db
-from app.forms import RegistrationForm
+from app.forms import RegistrationForm, EditProfileForm
 from app import api_calls
 import helper_functions
 @app.route('/')
@@ -168,7 +168,7 @@ def process_recipe_bookmark_button(recipe_id):
 def view_profile():
 	profile = User.query.filter_by(username=current_user.username).first()
 	form = RegistrationForm()
-	# try:
+	#try:
 	# 	if request.method == "POST" and form.validate():
 	# 		current_user.weight= form.weight.data
 	# 		current_user.height = form.height.data
@@ -185,9 +185,28 @@ def view_profile():
 		form.gender.data = current_user.gender
 	return render_template("profile.html", form=form)
 
-@app.route("/profile/edit/", methods=["GET","POST"])
+@app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
-def edit_profile(request):
-	user  = User.query.filter_by(username=current_user.username).first()
-	
-	return render_template('profile.html', form=form, user=user)
+def edit_profile():
+	form = EditProfileForm()
+	if form.validate_on_submit():
+		current_user.weight= form.weight.data
+		current_user.height = form.height.data
+		current_user.dob = form.dob.data
+		current_user.gender = form.gender.data
+		current_user.name = form.name.data
+		current_user.username = form.username.data
+		current_user.email = form.email.data
+		current_user.set_password(form.password.data)
+		db.session.commit()
+		return redirect(url_for('profile'))
+	elif request.method == 'GET':
+		form.weight.data = current_user.weight
+		form.height.data = current_user.height
+		form.dob.data = current_user.dob
+		form.gender.data = current_user.gender
+		form.name.data = current_user.name
+		form.username.data = current_user.username
+		form.email.data = current_user.email
+		#form.password.data = current_user.password
+	return render_template('edit_profile.html', title='Edit Profile',form=form)
