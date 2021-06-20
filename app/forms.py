@@ -21,7 +21,8 @@ class RegistrationForm(FlaskForm):
 	email = StringField('Email', validators=[DataRequired(), Email()])
 	password = PasswordField('Password', validators=[DataRequired()])
 	activity_f = SelectField('Activity Factor', choices=[('1.2', 'Sedentary(little or no exercise)'), ('1.375','Light(light exercise/sports 1-3 days/week)'), ('1.55', 'Moderate(moderate exercise/sports 3-5 days/week)'), ('1.725', 'Heavy(hard exercise/sports 6-7 days a week)'), ('1.9', 'Very Heavy(very hard exercise/sports or physical job)')], validators=[DataRequired()])
-	
+	wt_choice = SelectField('Weight Choice', choices=[('A', 'Maintain Weight'), ('B','Mild Weight Loss'), ('C', 'Weight Loss'), ('D', 'Extreme Weight Loss'), ('E', 'Mild Weight Gain'), ('F', 'Weight Gain'), ('G', 'Fast Weight Gain')], validators=[DataRequired()])
+
 
 	submit = SubmitField('Register')
 
@@ -50,6 +51,7 @@ class EditProfileForm(FlaskForm):
 	email = StringField('Email', validators=[DataRequired(), Email()])
 	password = PasswordField('Password', validators=[DataRequired()])
 	activity_f = SelectField('Activity Factor', choices=[('1.2', 'Sedentary(little or no exercise)'), ('1.375','Light(light exercise/sports 1-3 days/week)'), ('1.55', 'Moderate(moderate exercise/sports 3-5 days/week)'), ('1.725', 'Heavy(hard exercise/sports 6-7 days a week)'), ('1.9', 'Very Heavy(very hard exercise/sports or physical job)')], validators=[DataRequired()])
+	wt_choice = SelectField('Weight Choice', choices=[('A', 'Maintain Weight'), ('B','Mild Weight Loss'), ('C', 'Weight Loss'), ('D', 'Extreme Weight Loss'), ('E', 'Mild Weight Gain'), ('F', 'Weight Gain'), ('G', 'Fast Weight Gain')], validators=[DataRequired()])
 
 	submit = SubmitField('Save')
 
