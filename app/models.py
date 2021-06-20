@@ -44,24 +44,41 @@ class User(UserMixin,db.Model):
 	def set_password(self, password):
 		self.password_hash = generate_password_hash(password)
 	
-	def set_age(self, dob, weight, height, gender, activity):
+	def set_age(self, dob, weight, height, gender, activity, wt_choice):
 		today=date.today()
 		self.age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
 		if gender == 'M':
 			self.bmr = (10*weight) + (6.25*height) - (5*self.age) + 5
 		elif gender == 'F':
 			self.bmr = (10*weight) + (6.25*height) - (5*self.age) -161
+		
+		if wt_choice == 'A':
+			wt_mlt = 1
+		elif wt_choice == 'B':
+			wt_mlt = 0.87
+		elif wt_choice == 'C':
+			wt_mlt = 0.74
+		elif wt_choice == 'D':
+			wt_mlt = 0.48
+		elif wt_choice == 'E':
+			wt_mlt = 1.13
+		elif wt_choice == 'F':
+			wt_mlt = 1.26
+		elif wt_choice == 'G':
+			wt_mlt = 1.52
+
+		
 
 		if activity == '1.2':
-			self.cal_req = self.bmr * 1.2
+			self.cal_req = self.bmr * 1.2 * wt_mlt
 		elif activity == '1.375':
-			self.cal_req = self.bmr * 1.375
+			self.cal_req = self.bmr * 1.375 * wt_mlt
 		elif activity == '1.55':
-			self.cal_req = self.bmr * 1.55
+			self.cal_req = self.bmr * 1.55 * wt_mlt
 		elif activity == '1.725':
-			self.cal_req = self.bmr * 1.725
+			self.cal_req = self.bmr * 1.725 * wt_mlt
 		elif activity == '1.9':
-			self.cal_req = self.bmr * 1.9
+			self.cal_req = self.bmr * 1.9 * wt_mlt
 
 	def check_password(self, password):
 		return check_password_hash(self.password_hash, password)

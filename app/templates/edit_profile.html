@@ -484,6 +484,13 @@
                                 {% endfor %}
                             </div>
                             <div class="form-group">
+                                {{ form.wt_choice.label(class_='form-label')  }}<br>
+                                {{ form.wt_choice(class_='form-control')}}<br>
+                                {% for error in form.wt_choice.errors %}
+                                <span style="color: red;">[{{ error }}]</span>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
                                   {{ form.username.label(class_='form-label')  }}<br>
                                   {{ form.username(size=32, class_='form-control') }}<br>
                                   {% for error in form.username.errors %}
