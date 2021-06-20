@@ -3,17 +3,19 @@ import os
 
 # Library for API calls
 import requests
-headers = {
-    'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com",
-    'x-rapidapi-key': "1abe10a1b3msh02b3c0f61f6c4dcp15ba14jsn8ab132fd1d94"
-    }
+# headers = {
+#     'content-type': "application/json",
+#     'x-rapidapi-key': "6bf38c61c4msh937fbf99aa9f9edp1b2772jsn88471f3e2ead",
+#     'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
+#     }
+headers = {}
 
 def recipe_search(recipe_search, number_of_results):
     """Extracts recipe search results from Spoonacular API."""
     print(recipe_search)
     #Set up parameters for API call, then call Spoonacular API
     payload = {'query': recipe_search, 'number': number_of_results}
-    spoonacular_endpoint = 'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/search'
+    spoonacular_endpoint = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search'
     response = requests.get(spoonacular_endpoint,
                             params=payload,
                             headers=headers)
@@ -24,7 +26,7 @@ def recipe_search(recipe_search, number_of_results):
 
 def summary_info(recipe_id):
     #call Spoonacular API, inserting recipe_id into endpoint
-    summary_response = (requests.get('https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/'+ recipe_id + '/summary',headers=headers))
+    summary_response = (requests.get('https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/'+ recipe_id + '/summary',headers=headers))
     return summary_response.json()
     
 
@@ -416,7 +418,14 @@ def recipe_info(recipe_id):
 
     # return example_recipe_info
     info_response = requests.get(
-        'https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/'
+        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/'
         + recipe_id + '/information', headers=headers)
 
     return info_response.json()
+
+
+def some_function(payload):
+    url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/visualizeRecipe'
+    headers['content-type'] = 'multipart/form-data; boundary=---011000010111000001101001'
+    response = requests.request("POST", url, data=payload, headers=headers)
+    return response
