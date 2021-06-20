@@ -213,7 +213,38 @@ def edit_profile():
 		#form.password.data = current_user.password
 	return render_template('edit_profile.html', title='Edit Profile',form=form)
 
+@app.route('/meal_planner', methods=['GET', 'POST'])
+@login_required
+def meal_planner():
+	meals = [
+		{
+			'type':'Breakfast',
+			'recipe_name':'Eggs & Bacon',
+			'content': 'Blah Blah Blah Blah Blah'
+		},
+		{
+			'type':'Lunch',
+			'recipe_name':'Greek Salad',
+			'content': 'Blah Blah Blah Blah Blah'
+		},
+		{
+			'type':'Evening Snack',
+			'recipe_name':'Coffee',
+			'content': 'Blah Blah Blah Blah Blah'
+		},
+		{
+			'type':'Dinner',
+			'recipe_name':'Tomato Soup',
+			'content': 'Blah Blah Blah Blah Blah'
+		}
+	]
+	
+    
+	profile = User.query.filter_by(username=current_user.username).first()
+	return render_template('meal_planner.html',title='Meal Planner', meals = meals)
+
+
 @app.route('/pantry')
 @login_required
 def pantry():
-	return render_template('pantry.html')
+	return render_template('pantry.html',title='Pantry')
