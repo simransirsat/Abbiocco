@@ -1,0 +1,170 @@
+{% extends "base.html" %}
+{% block content %}
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Meal Planner</title>
+    <link rel="stylesheet" href="../static/css/owl.carousel.min.css">
+    <!-- <link rel="stylesheet" href="../static/css/owl.theme.default.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
+    <link rel="stylesheet" href="../static/css/meal_planner.css">
+    <style>
+        .day-of-week-group {
+            padding: 2px;
+            border: 2px solid #afa939;
+        }
+
+        .hover-day :hover {
+            background-color: #afa939;
+            color: white;
+        }
+
+        .btn-group :hover {
+            background-color: #afa939;
+            color: white;
+            border: #afa939;
+        }
+
+        .day-of-week {
+            margin: 0;
+            margin-bottom: 0;
+        }
+
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-light">Meal Planner</h1>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+    <div class="row mb-2">
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                <div class="col p-4 d-flex flex-column position-static">
+                    <strong class="d-inline-block mb-2 text-primary">World</strong>
+                    <h3 class="mb-0">Featured post</h3>
+                    <div class="mb-1 text-muted">Nov 12</div>
+                    <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to
+                        additional content.</p>
+                    <a href="#" class="stretched-link">Continue reading</a>
+                </div>
+                
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+                
+                
+            </div>
+        </div>
+    </div>
+    </div>
+
+
+    <div class="py-2 text-center container">
+        <div class="row hover-day" style="justify-content: space-evenly;">
+            <div class="col-lg-2.5">
+                <p class="days-of-week"></p>
+                <p></p>
+            </div>
+            <div class="col-lg-1 day-of-week-group">
+                <p class="days-of-week hover-day" style="margin-bottom: 0;"><b>MON</b><br>21/6/21</p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-1 day-of-week-group">
+                <p class="days-of-week hover-day" style="margin-bottom: 0;"><b>TUE</b><br>21/6/21</p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-1 day-of-week-group">
+                <p class="days-of-week hover-day" style="margin-bottom: 0;"><b>WED</b><br>21/6/21</p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-1 day-of-week-group">
+                <p class="days-of-week hover-day" style="margin-bottom: 0;"><b>THU</b><br>21/6/21</p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-1 day-of-week-group">
+                <p class="days-of-week hover-day" style="margin-bottom: 0;"><b>FRI</b><br>21/6/21</p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-1 day-of-week-group">
+                <p class="days-of-week hover-day" style="margin-bottom: 0;"><b>SAT</b><br>21/6/21</p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-1 day-of-week-group">
+                <p class="days-of-week hover-day" style="margin-bottom: 0;"><b>SUN</b><br>21/6/21</p>
+            </div><!-- /.col-lg-4 -->
+            <div class="col-lg-2.5">
+                <p class="days-of-week"></p>
+                <p></p>
+            </div>
+        </div><!-- /.row -->
+    </div>
+
+
+
+    <section class="ftco-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <h2 class="heading-section mb-5">Meals For The Day</h2>
+                </div>
+                <div class="col-md-12">
+                    <div class="featured-carousel owl-carousel">
+
+                        {% for meal in meals %}
+                        <div class="item">
+                            <div class="testimony-wrap">
+                                <div class="user-img"
+                                    style="background-image: url(../static/img/bg-img/2.jpg); width: 100%; height: 215px; border-radius: 0;">
+                                </div>
+                                <div class="text" style="width: 100%;">
+                                    <p class="name">{{ meal.recipe_name }}</p>
+                                    <span class="position">{{ meal.type }}</span>
+                                    <p>This is a wider card with supporting text below as a natural lead-in to
+                                        additional content. This content is a little bit longer.</p>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                    </div>
+                                    <small class="text-muted">9 mins</small>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="../static/js/jquery/jquery-2.2.4.min.js"></script>
+    <script src="../static/js/bootstrap/popper.min.js"></script>
+    <script src="../static/js/bootstrap/bootstrap.min.js"></script>
+    <script src="../static/js/bootstrap/owl.carousel.min.js"></script>
+    <script src="../static/js/meal_planner.js"></script>
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
+        data-cf-beacon='{"rayId":"661ff0755e146981","token":"cd0b4b3a733644fc843ef0b185f98241","version":"2021.5.2","si":10}'></script>
+
+
+</body>
+
+
+{% endblock %}
