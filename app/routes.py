@@ -214,5 +214,6 @@ def edit_profile():
 	return render_template('edit_profile.html', title='Edit Profile',form=form)
 
 @app.route('/pantry')
+@login_required
 def pantry():
 	return render_template('pantry.html')

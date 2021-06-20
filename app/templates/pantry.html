@@ -72,6 +72,16 @@ span{
   .button:hover{
     box-shadow: rgba(159, 207, 96, 0.5);
   }
+
+  li {
+  display: list-item;
+  list-style-position: inside;
+  }
+
+  .listtype{
+    list-style-type: decimal;
+    padding: 5px;
+  }
 </style>
 
 <script>
@@ -98,20 +108,20 @@ if (document.location.search.match(/type=embed/gi)) {
     <div id="d1" class="col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-app="myGroceryList" ng-controller="myCtrl">
     
     <h1>PANTRY LIST</h1>
-    <ol id="itemList">
-      <li>water</li>
-      <li>milk</li>
+    <ol id="itemList" class="listtype">
+      <!-- <li>water</li>
+      <li>milk</li> -->
     </ol>
       
     <input type="text" id="item" onfocus="this.value=''">
     <button type="submit" onclick="addItem()">Add item</button>
     <button type="submit" onclick="removeItem()">Delete item</button>
 
-    <!-- <script>
+    <script>
     function addItem() {
       var a = document.getElementById("itemList");
       var candidate = document.getElementById("item");
-      var li = document.createElement("li");
+      var li = document.createElement("LI");
       li.setAttribute('id', item.value);
       li.appendChild(document.createTextNode(candidate.value));
       a.appendChild(li);
@@ -123,7 +133,7 @@ if (document.location.search.match(/type=embed/gi)) {
       var item = document.getElementById(candidate.value);
       a.removeChild(item);
     }
-    </script> -->
+    </script>
     </div>
   </div>
 </body>
