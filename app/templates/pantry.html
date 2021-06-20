@@ -112,28 +112,48 @@ if (document.location.search.match(/type=embed/gi)) {
       <!-- <li>water</li>
       <li>milk</li> -->
     </ol>
-      
+    
     <input type="text" id="item" onfocus="this.value=''">
-    <button type="submit" onclick="addItem()">Add item</button>
-    <button type="submit" onclick="removeItem()">Delete item</button>
+   
+    
+    <button type="submit" onclick="addItem()" value="Add Item" id="add">Add Item</button>
+    <button type="submit" onclick="removeItem()" value="Remove Item" id="remove">Remove Item</button> 
+    
+    
 
     <script>
+    
+    var input = document.getElementById("item");
+    input.addEventListener("keyup", function(event) {
+    if (event.keyCode === 13) 
+    {
+        event.preventDefault();
+        document.getElementById("add").click();
+    }
+});
+    let x=0;
+
     function addItem() {
+      x=x+1;
       var a = document.getElementById("itemList");
       var candidate = document.getElementById("item");
       var li = document.createElement("LI");
       li.setAttribute('id', item.value);
       li.appendChild(document.createTextNode(candidate.value));
       a.appendChild(li);
+      document.getElementById("item").value='';
+
     }
 
     function removeItem() {
+      x=x-1;
       var a = document.getElementById("itemList");
       var candidate = document.getElementById("item");
       var item = document.getElementById(candidate.value);
       a.removeChild(item);
+      document.getElementById("item").value='';
     }
-    </script>
+    </script> 
     </div>
   </div>
 </body>

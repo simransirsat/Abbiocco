@@ -53,7 +53,7 @@ ol {
   margin: 0; } */
 ul li,
 ol li {
-  list-style: decimal; 
+  list-style: none; 
   padding-left: 10px;  } 
 
 img {
