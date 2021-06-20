@@ -247,5 +247,4 @@ def meal_planner():
 @app.route('/pantry')
 @login_required
 def pantry():
-	profile = User.query.filter_by(username=current_user.username).first()
-	return render_template('pantry.html',title='Home Page')
+	return render_template('pantry.html',title='Pantry')
