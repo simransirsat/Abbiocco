@@ -10,6 +10,12 @@ class LoginForm(FlaskForm):
 	password = PasswordField('Password',validators=[DataRequired()])
 	submit = SubmitField('Sign In')
 
+class AddRecipeForm(FlaskForm):
+	name = StringField('Recipe Name', validators=[DataRequired()])
+	ingredients = StringField('Ingredients')
+	instructions = StringField('Instructions', validators=[DataRequired()])
+	submit = SubmitField('Save')
+
 
 class RegistrationForm(FlaskForm):
 	name = StringField('Full Name', validators=[DataRequired()])
@@ -22,8 +28,6 @@ class RegistrationForm(FlaskForm):
 	password = PasswordField('Password', validators=[DataRequired()])
 	activity_f = SelectField('Activity Factor', choices=[('1.2', 'Sedentary(little or no exercise)'), ('1.375','Light(light exercise/sports 1-3 days/week)'), ('1.55', 'Moderate(moderate exercise/sports 3-5 days/week)'), ('1.725', 'Heavy(hard exercise/sports 6-7 days a week)'), ('1.9', 'Very Heavy(very hard exercise/sports or physical job)')], validators=[DataRequired()])
 	wt_choice = SelectField('Weight Choice', choices=[('A', 'Maintain Weight'), ('B','Mild Weight Loss'), ('C', 'Weight Loss'), ('D', 'Extreme Weight Loss'), ('E', 'Mild Weight Gain'), ('F', 'Weight Gain'), ('G', 'Fast Weight Gain')], validators=[DataRequired()])
-
-
 	submit = SubmitField('Register')
 
 	def validate_username(self, username):
@@ -64,3 +68,16 @@ class EditProfileForm(FlaskForm):
 			user = User.query.filter_by(username=self.username.data).first()
 			if user is not None:
 				raise ValidationError('Please use a different username.')
+
+
+class PantryList(FlaskForm):
+	list_name =  StringField('List name', validators=[DataRequired()])
+
+
+	submit = SubmitField('Pantry')
+
+	# def __init__(self, list_name, *args, **kwargs):
+	# 	super(PantryList, self).__init__(*args, **kwargs)
+	# 	self.list_name = list_name
+
+

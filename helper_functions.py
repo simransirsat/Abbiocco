@@ -177,9 +177,10 @@ def add_bookmark(user_id, recipe_id):
 
 def add_new_list(user_id, list_name):
     """Adds new list to List table."""
+    print("new list added")
 
     new_list = List(user_id=user_id, list_name=list_name)
-
+    print("new list added")
     db.session.add(new_list)
     db.session.commit()
 
