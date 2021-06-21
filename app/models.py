@@ -45,6 +45,7 @@ class User(UserMixin,db.Model):
 		self.password_hash = generate_password_hash(password)
 	
 	def set_age(self, dob, weight, height, gender, activity, wt_choice):
+		# Calcilating age, bmr and calories required
 		today=date.today()
 		self.age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
 		if gender == 'M':
@@ -104,9 +105,9 @@ class User(UserMixin,db.Model):
 class Recipe(db.Model):
 	__tablename__ = 'recipes'
 
-	recipe_id = db.Column(db.Integer,nullable=False, primary_key=True,autoincrement=True)
+	recipe_id = db.Column(db.String(64), primary_key=True, nullable=False)
 	recipe_name = db.Column(db.String(200), nullable=True)
-	img_url = db.Column(db.String(5000),nullable = True)
+	img_url = db.Column(db.String(1000),nullable = True)
 	instructions = db.Column(db.String(5000), nullable=True)
 	user_id = db.Column(db.Integer,db.ForeignKey('user.id'))
 
@@ -115,10 +116,10 @@ class Recipe(db.Model):
 
 	cuisines = db.relationship("Cuisine",secondary="recipe_cuisines",backref=db.backref("recipes"))
 	users = db.relationship("User",secondary="bookmarks",backref=db.backref("recipes"))
-	def __init__(self,**kwargs):
-		self.recipe_name = kwargs.get('recipe_name')
-		self.instructions = kwargs.get('instructions')
-		self.user_id= kwargs.get('user_id')
+	# def __init__(self,**kwargs):
+	# 	self.recipe_name = kwargs.get('recipe_name')
+	# 	self.instructions = kwargs.get('instructions')
+	# 	self.user_id= kwargs.get('user_id')
 
 	def __repr__(self):
 		return """<Recipe recipe_id={} recipe_name={} img_url={}
