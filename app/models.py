@@ -103,7 +103,6 @@ class User(UserMixin,db.Model):
 		return followed.union(own)
 class Recipe(db.Model):
 	__tablename__ = 'recipes'
-
 	recipe_id = db.Column(db.Integer,nullable=False, primary_key=True,autoincrement=True)
 	recipe_name = db.Column(db.String(200), nullable=True)
 	img_url = db.Column(db.String(5000),nullable = True)
@@ -128,7 +127,7 @@ class Recipe(db.Model):
 class Ingredient(db.Model):
 	__tablename__ = 'ingredients'
 
-	ing_id = db.Column(db.String(64), nullable=False, primary_key=True)
+	ing_id = db.Column(db.Integer, nullable=False, primary_key=True,autoincrement=True)
 	ing_name = db.Column(db.String(64),nullable=False)
 
 	def __repr__(self):
