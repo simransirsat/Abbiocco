@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+{% for meal in recom1 %}
+<ul>
+<li>
+<li>{{ meal.title }} </li>
+<li> {{ meal['readyInMinutes'] }} </li>
+<li> {{ meal['servings'] }} </li>
+<a href="{{ meal['sourceUrl'] }}">Link </a>
+{% endfor %}
+{% for meal in recom2 %}
+<ul>
+<li>
+ <li>{{ meal.title }} </li>
+<li> {{ meal['readyInMinutes'] }} </li>
+<li> {{ meal['servings'] }} </li>
+<a href="{{ meal['sourceUrl'] }}">Link </a>
+{% endfor %}
+{% for meal in recom3 %}
+<ul>
+<li>
+ <li>{{ meal.title }} </li>
+<li> {{ meal['readyInMinutes'] }} </li>
+<li> {{ meal['servings'] }} </li>
+<a href="{{ meal['sourceUrl'] }}">Link </a>
+{% endfor %}
+{% endblock %}
