@@ -5,9 +5,9 @@ from app.forms import LoginForm
 from flask_login import logout_user
 from flask_login import current_user, login_user, login_required
 from werkzeug.urls import url_parse
-from app.models import User
+from app.models import User,Recipe, List
 from app import db
-from app.forms import RegistrationForm, EditProfileForm
+from app.forms import RegistrationForm, EditProfileForm , AddRecipeForm, PantryList
 from app import api_calls
 import helper_functions
 @app.route('/')
@@ -62,6 +62,18 @@ def register():
 		flash('Congratulations, you are now a registered user!')
 		return redirect(url_for('login'))
 	return render_template('register.html', title='Register', form=form)
+
+@app.route('/user/add-recipe', methods=["GET","POST"])
+@login_required
+def addrecipe():
+	form = AddRecipeForm()
+	if request.method=='POST' and form.validate_on_submit():
+		recipe = Recipe(recipe_name=form.name.data,instructions=form.instructions.data,user_id=current_user.id)
+		db.session.add(recipe)
+		db.session.commit()
+		flash('You added a recipe')
+		return redirect(url_for('quickView'))
+	return render_template( 'addrecipe_recipebook.html', title='Add Recipe', form=form)		
 
 @app.route('/logout')
 def logout():
@@ -244,7 +256,13 @@ def meal_planner():
 	return render_template('meal_planner.html',title='Meal Planner', meals = meals)
 
 
-@app.route('/pantry')
+@app.route('/list/pantry', methods=['GET', 'POST'])
 @login_required
 def pantry():
-	return render_template('pantry.html',title='Pantry')
+	form = PantryList()
+	if request.method=='POST':
+		print("Something")
+		helper_functions.add_new_list(current_user.id,form.list_name.data)
+		print("something")
+
+	return render_template('pantry2.html',title='Pantry',form=form)
