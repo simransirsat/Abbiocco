@@ -12,7 +12,7 @@ class LoginForm(FlaskForm):
 
 class AddRecipeForm(FlaskForm):
 	name = StringField('Recipe Name', validators=[DataRequired()])
-	ingredients = StringField('Ingredients')
+	ingredients = StringField('Ingredients',validators=[DataRequired()])
 	instructions = StringField('Instructions', validators=[DataRequired()])
 	submit = SubmitField('Save')
 
@@ -72,8 +72,6 @@ class EditProfileForm(FlaskForm):
 
 class PantryList(FlaskForm):
 	list_name =  StringField('List name', validators=[DataRequired()])
-
-
 	submit = SubmitField('Pantry')
 
 	# def __init__(self, list_name, *args, **kwargs):

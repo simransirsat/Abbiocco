@@ -5,7 +5,7 @@ from app.forms import LoginForm
 from flask_login import logout_user
 from flask_login import current_user, login_user, login_required
 from werkzeug.urls import url_parse
-from app.models import User,Recipe, List
+from app.models import User,Recipe, List, Ingredient
 from app import db
 from app.forms import RegistrationForm, EditProfileForm , AddRecipeForm, PantryList
 from app import api_calls
@@ -59,7 +59,7 @@ def register():
 		user.set_age(form.dob.data, form.weight.data, form.height.data, form.gender.data, form.activity_f.data, form.wt_choice.data)
 		db.session.add(user)
 		db.session.commit()
-		flash('Congratulations, you are now a registered user!')
+		# flash('Congratulations, you are now a registered user!')
 		return redirect(url_for('login'))
 	return render_template('register.html', title='Register', form=form)
 
@@ -70,6 +70,9 @@ def addrecipe():
 	if request.method=='POST' and form.validate_on_submit():
 		recipe = Recipe(recipe_name=form.name.data,instructions=form.instructions.data,user_id=current_user.id)
 		db.session.add(recipe)
+		db.session.commit()
+		ingredients=Ingredient(ing_name=form.ingredients.data)
+		db.session.add(ingredients)
 		db.session.commit()
 		flash('You added a recipe')
 		return redirect(url_for('quickView'))
@@ -261,9 +264,8 @@ def meal_planner():
 def pantry():	
 	form = PantryList()
 	if request.method=='POST':
-		print("Something")
 		helper_functions.add_new_list(current_user.id,form.list_name.data)
-		print("something")
+		
 
 	return render_template('pantry2.html',title='Pantry',form=form)
 
