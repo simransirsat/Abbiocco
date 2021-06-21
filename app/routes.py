@@ -272,7 +272,11 @@ def pantry():
 @login_required
 def get_meals_from_cals():
 	current_user_cals = current_user.cal_req 
-	response = api_calls.recommend_diet_based_on_cals(current_user_cals)
-	print(response)
-	return render_template("recommend.html", recommendation=response['meals'])
+	response1 = api_calls.recommend_diet_based_on_cals1(current_user_cals)
+	print(response1)
+	response2 = api_calls.recommend_diet_based_on_cals2(current_user_cals)
+	print(response2)
+	response3 = api_calls.recommend_diet_based_on_cals3(current_user_cals)
+	print(response3)	
+	return render_template("recommend.html", recom1=response1['meals'], recom2=response2['meals'], recom3=response3['meals'])
 
