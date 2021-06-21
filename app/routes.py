@@ -5,9 +5,9 @@ from app.forms import LoginForm
 from flask_login import logout_user
 from flask_login import current_user, login_user, login_required
 from werkzeug.urls import url_parse
-from app.models import User
+from app.models import User,Recipe, List
 from app import db
-from app.forms import RegistrationForm, EditProfileForm
+from app.forms import RegistrationForm, EditProfileForm , AddRecipeForm, PantryList
 from app import api_calls
 import helper_functions
 @app.route('/')
@@ -62,6 +62,18 @@ def register():
 		flash('Congratulations, you are now a registered user!')
 		return redirect(url_for('login'))
 	return render_template('register.html', title='Register', form=form)
+
+@app.route('/user/add-recipe', methods=["GET","POST"])
+@login_required
+def addrecipe():
+	form = AddRecipeForm()
+	if request.method=='POST' and form.validate_on_submit():
+		recipe = Recipe(recipe_name=form.name.data,instructions=form.instructions.data,user_id=current_user.id)
+		db.session.add(recipe)
+		db.session.commit()
+		flash('You added a recipe')
+		return redirect(url_for('quickView'))
+	return render_template( 'addrecipe_recipebook.html', title='Add Recipe', form=form)		
 
 @app.route('/logout')
 def logout():
@@ -244,16 +256,27 @@ def meal_planner():
 	return render_template('meal_planner.html',title='Meal Planner', meals = meals)
 
 
-@app.route('/pantry')
+@app.route('/list/pantry', methods=['GET', 'POST'])
 @login_required
-def pantry():
-	return render_template('pantry.html',title='Pantry')
+def pantry():	
+	form = PantryList()
+	if request.method=='POST':
+		print("Something")
+		helper_functions.add_new_list(current_user.id,form.list_name.data)
+		print("something")
+
+	return render_template('pantry2.html',title='Pantry',form=form)
 
 
 @app.route("/user/cals")
 @login_required
 def get_meals_from_cals():
 	current_user_cals = current_user.cal_req 
-	response = api_calls.recommend_diet_based_on_cals(current_user_cals)
-	print(response)
-	return render_template("recommend.html", recommendation=response['meals'])
+	response1 = api_calls.recommend_diet_based_on_cals1(current_user_cals)
+	print(response1)
+	response2 = api_calls.recommend_diet_based_on_cals2(current_user_cals)
+	print(response2)
+	response3 = api_calls.recommend_diet_based_on_cals3(current_user_cals)
+	print(response3)	
+	return render_template("recommend.html", recom1=response1['meals'], recom2=response2['meals'], recom3=response3['meals'])
+

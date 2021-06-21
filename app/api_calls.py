@@ -3,12 +3,12 @@ import os
 
 # Library for API calls
 import requests
-# headers = {
-#     'content-type': "application/json",
-#     'x-rapidapi-key': "6bf38c61c4msh937fbf99aa9f9edp1b2772jsn88471f3e2ead",
-#     'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
-# }
-headers = {}
+headers = {
+    'content-type': "application/json",
+    'x-rapidapi-key': "6bf38c61c4msh937fbf99aa9f9edp1b2772jsn88471f3e2ead",
+    'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
+}
+# headers = {}
 
 def recipe_search(recipe_search, number_of_results):
     """Extracts recipe search results from Spoonacular API."""
@@ -430,19 +430,54 @@ def recipe_info(recipe_id):
 #     return response
 
 
-def recommend_diet_based_on_cals(target_calories, default_time="day"):
+def recommend_diet_based_on_cals1(target_calories, default_time="day"):
 
     # url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/mealplans/generate"
     # query_string = {
-    #     "targetCalories": target_calories,
-    #     "timeFrame": default_time
+    # "timeFrame": default_time,
+    # "targetCalories": target_calories,
+    # "diet":"vegan"
+        
     # }
     # response = requests.request(
     #     "GET", url, headers=headers, params=query_string)
     # response = response.text
 
-    response = {"meals": 
-    [{"id": 1117296, "imageType": "jpg", "title": "Classic Vodka Martini", "readyInMinutes": 5, "servings": 1, "sourceUrl": "https://www.simplyrecipes.com/recipes/classic_vodka_martini/"},
-     {"id": 162606, "imageType": "jpg", "title": "London Broil Sandwiches with Lemon Mayonnaise", "readyInMinutes": 25, "servings": 4,
-                                                                                                                                                                                                                   "sourceUrl": "http://www.BettyCrocker.com/recipes/london-broil-sandwiches-with-lemon-mayonnaise/e634ad28-4a2d-4ec9-8087-e8c41a0c0f8e"}, {"id": 644813, "imageType": "jpg", "title": "Gluten Free Coconut Chicken Salad", "readyInMinutes": 45, "servings": 5, "sourceUrl": "https://spoonacular.com/gluten-free-coconut-chicken-salad-644813"}], "nutrients": {"calories": 2622.52, "protein": 115.02, "fat": 142.33, "carbohydrates": 163.75}}
+
+    response = {"meals":
+    [{"id":596996,"imageType":"jpg","title":"Homemade Vanilla Extract","readyInMinutes":5,"servings":2,"sourceUrl":"http://leitesculinaria.com/82842/recipes-homemade-vanilla-extract.html"},
+    {"id":249642,"imageType":"jpg","title":"Giraffeâ€™s Love No-Bake Vegan Cheesecake","readyInMinutes":30,"servings":8,"sourceUrl":"http://www.godairyfree.org/recipes/giraffes-love-no-bake-vegan-qcheesecakeq-too"},{"id":647638,"imageType":"jpg","title":"Hummus Wrap With Carrots and Cucumbers","readyInMinutes":45,"servings":1,"sourceUrl":"https://spoonacular.com/hummus-wrap-with-carrots-and-cucumbers-647638"}],"nutrients":{"calories":2827.57,"protein":57.14,"fat":106.51,"carbohydrates":174.23}}
+    
+    return response
+
+def recommend_diet_based_on_cals2(target_calories, default_time="day"):
+
+    # url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/mealplans/generate"
+    # query_string = {
+    # "timeFrame": default_time,
+    # "targetCalories": target_calories,
+    # "diet":"gluten free"
+        
+    # }
+    # response = requests.request(
+    #     "GET", url, headers=headers, params=query_string)
+    # response = response.text
+
+    response = {"meals":[{"id":1177043,"imageType":"jpg","title":"Overnight Blueberry Banana Cheesecake Oats","readyInMinutes":120,"servings":4,"sourceUrl":"https://slimfast.com/recipes/overnight-blueberry-cheesecake-oats/"},{"id":1102572,"imageType":"jpg","title":"Steak and Scallops with Lime-Dill Hollandaise","readyInMinutes":30,"servings":2,"sourceUrl":"https://cookingwithcurls.com/2019/04/05/steak-and-scallops-with-lime-dill-hollandaise/"},{"id":73587,"imageType":"jpg","title":"Coffee-Marinated Bison Short Ribs","readyInMinutes":45,"servings":6,"sourceUrl":"http://www.epicurious.com/recipes/food/views/Coffee-Marinated-Bison-Short-Ribs-241342"}],"nutrients":{"calories":2694.66,"protein":150.58,"fat":174.22,"carbohydrates":141.75}}
+    return response
+
+def recommend_diet_based_on_cals3(target_calories, default_time="day"):
+
+    # url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/mealplans/generate"
+    # query_string = {
+    # "timeFrame": default_time,
+    # "targetCalories": target_calories,
+    # "diet":"gluten free"
+        
+    # }
+    # response = requests.request(
+    #     "GET", url, headers=headers, params=query_string)
+    # response = response.text
+
+    response = {"meals":[{"id":625935,"imageType":"jpg","title":"5 Ingredient Triple Decker Chocolate Peanut Butter Bars","readyInMinutes":45,"servings":16,"sourceUrl":"https://www.halfbakedharvest.com/5-ingredient-tripple-decker-chocolate-peanut-butter-bars/"},{"id":989730,"imageType":"jpg","title":"One Pan Skillet Honey Dijon Chicken","readyInMinutes":30,"servings":4,"sourceUrl":"https://www.lecremedelacrumb.com/one-pan-skillet-honey-dijon-chicken"},{"id":357733,"imageType":"jpeg","title":"Roasted Free Range Chicken","readyInMinutes":585,"servings":4,"sourceUrl":"http://www.foodnetwork.com/recipes/roasted-free-range-chicken-recipe.html"}],"nutrients":{"calories":2507.16,"protein":115.89,"fat":195.45,"carbohydrates":68.42}}
     return response
