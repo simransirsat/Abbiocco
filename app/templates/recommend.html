@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+{% for meal in recommendation %}
+<ul>
+<li>
+ <li>{{ meal.title }} </li>
+<li> {{ meal['readyInMinutes'] }} </li>
+<li> {{ meal['servings'] }} </li>
+<a href="{{ meal['sourceUrl'] }}">Link </a>
+{% endfor %}
+{% endblock %}

@@ -45,6 +45,7 @@ class User(UserMixin,db.Model):
 		self.password_hash = generate_password_hash(password)
 	
 	def set_age(self, dob, weight, height, gender, activity, wt_choice):
+		# Calcilating age, bmr and calories required
 		today=date.today()
 		self.age = today.year - dob.year - ((today.month, today.day) < (dob.month, dob.day))
 		if gender == 'M':

@@ -7,28 +7,27 @@ import requests
 #     'content-type': "application/json",
 #     'x-rapidapi-key': "6bf38c61c4msh937fbf99aa9f9edp1b2772jsn88471f3e2ead",
 #     'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
-#     }
+# }
 headers = {}
 
 def recipe_search(recipe_search, number_of_results):
     """Extracts recipe search results from Spoonacular API."""
     print(recipe_search)
-    #Set up parameters for API call, then call Spoonacular API
+    # Set up parameters for API call, then call Spoonacular API
     payload = {'query': recipe_search, 'number': number_of_results}
     spoonacular_endpoint = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search'
     response = requests.get(spoonacular_endpoint,
                             params=payload,
                             headers=headers)
-    print(response.json()['results'])   
+    print(response.json()['results'])
     return response.json()
 
 
-
 def summary_info(recipe_id):
-    #call Spoonacular API, inserting recipe_id into endpoint
-    summary_response = (requests.get('https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/'+ recipe_id + '/summary',headers=headers))
+    # call Spoonacular API, inserting recipe_id into endpoint
+    summary_response = (requests.get(
+        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/' + recipe_id + '/summary', headers=headers))
     return summary_response.json()
-    
 
 
 def recipe_info(recipe_id):
@@ -428,4 +427,22 @@ def some_function(payload):
     url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/visualizeRecipe'
     headers['content-type'] = 'multipart/form-data; boundary=---011000010111000001101001'
     response = requests.request("POST", url, data=payload, headers=headers)
+    return response
+
+
+def recommend_diet_based_on_cals(target_calories, default_time="day"):
+
+    # url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/mealplans/generate"
+    # query_string = {
+    #     "targetCalories": target_calories,
+    #     "timeFrame": default_time
+    # }
+    # response = requests.request(
+    #     "GET", url, headers=headers, params=query_string)
+    # response = response.text
+
+    response = {"meals": 
+    [{"id": 1117296, "imageType": "jpg", "title": "Classic Vodka Martini", "readyInMinutes": 5, "servings": 1, "sourceUrl": "https://www.simplyrecipes.com/recipes/classic_vodka_martini/"},
+     {"id": 162606, "imageType": "jpg", "title": "London Broil Sandwiches with Lemon Mayonnaise", "readyInMinutes": 25, "servings": 4,
+                                                                                                                                                                                                                   "sourceUrl": "http://www.BettyCrocker.com/recipes/london-broil-sandwiches-with-lemon-mayonnaise/e634ad28-4a2d-4ec9-8087-e8c41a0c0f8e"}, {"id": 644813, "imageType": "jpg", "title": "Gluten Free Coconut Chicken Salad", "readyInMinutes": 45, "servings": 5, "sourceUrl": "https://spoonacular.com/gluten-free-coconut-chicken-salad-644813"}], "nutrients": {"calories": 2622.52, "protein": 115.02, "fat": 142.33, "carbohydrates": 163.75}}
     return response

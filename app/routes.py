@@ -248,3 +248,12 @@ def meal_planner():
 @login_required
 def pantry():
 	return render_template('pantry.html',title='Pantry')
+
+
+@app.route("/user/cals")
+@login_required
+def get_meals_from_cals():
+	current_user_cals = current_user.cal_req 
+	response = api_calls.recommend_diet_based_on_cals(current_user_cals)
+	print(response)
+	return render_template("recommend.html", recommendation=response['meals'])
