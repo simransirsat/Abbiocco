@@ -3,12 +3,12 @@ import os
 
 # Library for API calls
 import requests
-headers = {
-    'content-type': "application/json",
-    'x-rapidapi-key': "6bf38c61c4msh937fbf99aa9f9edp1b2772jsn88471f3e2ead",
-    'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
-}
-# headers = {}
+#headers = {
+#    'content-type': "application/json",
+#    'x-rapidapi-key': "6bf38c61c4msh937fbf99aa9f9edp1b2772jsn88471f3e2ead",
+#    'x-rapidapi-host': "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com"
+#}
+headers = {}
 
 def recipe_search(recipe_search, number_of_results):
     """Extracts recipe search results from Spoonacular API."""
