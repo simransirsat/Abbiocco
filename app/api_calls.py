@@ -423,11 +423,11 @@ def recipe_info(recipe_id):
     return info_response.json()
 
 
-def some_function(payload):
-    url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/visualizeRecipe'
-    headers['content-type'] = 'multipart/form-data; boundary=---011000010111000001101001'
-    response = requests.request("POST", url, data=payload, headers=headers)
-    return response
+# def some_function(payload):
+#     url = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/visualizeRecipe'
+#     headers['content-type'] = 'multipart/form-data; boundary=---011000010111000001101001'
+#     response = requests.request("POST", url, data=payload, headers=headers)
+#     return response
 
 
 def recommend_diet_based_on_cals(target_calories, default_time="day"):
