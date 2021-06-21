@@ -105,16 +105,21 @@ class User(UserMixin,db.Model):
 class Recipe(db.Model):
 	__tablename__ = 'recipes'
 
-	recipe_id = db.Column(db.String(64),nullable=False, primary_key=True)
+	recipe_id = db.Column(db.Integer,nullable=False, primary_key=True,autoincrement=True)
 	recipe_name = db.Column(db.String(200), nullable=True)
 	img_url = db.Column(db.String(5000),nullable = True)
 	instructions = db.Column(db.String(5000), nullable=True)
 	user_id = db.Column(db.Integer,db.ForeignKey('user.id'))
 
+
 	# Relationships
 
 	cuisines = db.relationship("Cuisine",secondary="recipe_cuisines",backref=db.backref("recipes"))
 	users = db.relationship("User",secondary="bookmarks",backref=db.backref("recipes"))
+	def __init__(self,**kwargs):
+		self.recipe_name = kwargs.get('recipe_name')
+		self.instructions = kwargs.get('instructions')
+		self.user_id= kwargs.get('user_id')
 
 	def __repr__(self):
 		return """<Recipe recipe_id={} recipe_name={} img_url={}
