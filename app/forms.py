@@ -71,8 +71,8 @@ class EditProfileForm(FlaskForm):
 
 
 class PantryList(FlaskForm):
-	list_name =  StringField('List name', validators=[DataRequired()])
-	submit = SubmitField('Pantry')
+	ing_name =  StringField('Enter an ingredient', validators=[DataRequired()])
+	add = SubmitField('Add item')
 
 	# def __init__(self, list_name, *args, **kwargs):
 	# 	super(PantryList, self).__init__(*args, **kwargs)
