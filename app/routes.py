@@ -288,5 +288,5 @@ def get_meals_from_cals():
 	print(response2)
 	response3 = api_calls.recommend_diet_based_on_cals3(current_user_cals)
 	print(response3)	
-	return render_template("recommend.html", recom1=response1['meals'], recom2=response2['meals'], recom3=response3['meals'], current_user_cals=current_user_cals)
+	return render_template("recommend.html", recom1=response1["meals"], recom2=response2["meals"], recom3=response3["meals"], current_user_cals=current_user_cals)
 
