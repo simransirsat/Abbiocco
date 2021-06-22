@@ -1,1 +1,1 @@
-FLASK_APP=salubtreata.py
+FLASK_APP=salubreata.py
