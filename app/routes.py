@@ -5,7 +5,7 @@ from app.forms import LoginForm
 from flask_login import logout_user
 from flask_login import current_user, login_user, login_required
 from werkzeug.urls import url_parse
-from app.models import User,Recipe, List, Ingredient
+from app.models import User,Recipe, List, Ingredient, RecipeLocal
 from app import db
 from app.forms import RegistrationForm, EditProfileForm , AddRecipeForm, PantryList
 from app import api_calls
@@ -68,11 +68,8 @@ def register():
 def addrecipe():
 	form = AddRecipeForm()
 	if request.method=='POST' and form.validate_on_submit():
-		recipe = Recipe(recipe_name=form.name.data,instructions=form.instructions.data,user_id=current_user.id)
+		recipe = RecipeLocal(recipe_name=form.name.data,ing_name=form.ingredients.data,instructions=form.instructions.data,user_id=current_user.id)
 		db.session.add(recipe)
-		db.session.commit()
-		ingredients=Ingredient(ing_name=form.ingredients.data)
-		db.session.add(ingredients)
 		db.session.commit()
 		flash('You added a recipe')
 		return redirect(url_for('quickView'))

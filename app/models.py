@@ -11,6 +11,7 @@ followers = db.Table(
 )
 
 class User(UserMixin,db.Model):
+	__tablename__='user'
 	id = db.Column(db.Integer, autoincrement=True,primary_key=True)
 	username = db.Column(db.String(64), index=True, unique=True)
 	name = db.Column(db.String(64))
@@ -101,6 +102,27 @@ class User(UserMixin,db.Model):
 		followed = Recipe.query.join(followers, (followers.c.followed_id == Recipe.user_id)).filter(followers.c.follower_id == self.id)
 		own = Recipe.query.filter_by(user_id=self.id)
 		return followed.union(own)
+
+class RecipeLocal(db.Model):
+	__tablename__ = 'recipelocal'	
+	recipe_id = db.Column(db.Integer, primary_key=True, nullable=False,autoincrement=True)
+	recipe_name = db.Column(db.String(200), nullable=True)
+	instructions = db.Column(db.String(5000), nullable=True)
+	ing_name = db.Column(db.String(64),nullable=True)
+	# users = db.relationship("User",secondary="bookmarks",backref=db.backref("recipes"))
+	user_id = db.Column(db.Integer,db.ForeignKey('user.id'))
+	def __init__(self,**kwargs):
+		self.recipe_name = kwargs.get('recipe_name')
+		self.instructions = kwargs.get('instructions')
+		self.user_id= kwargs.get('user_id')
+		self.ing_name=kwargs.get('ing_name')	
+
+	def __repr__(self):
+	 	return """<Recipe recipe_id={} recipe_name={} instructions={} user_id={}  ing_	name={}""".format(self.recipe_id, self.recipe_name,
+                                               self.instructions, self.user_id , self.ing_name)
+
+										  
+
 class Recipe(db.Model):
 	__tablename__ = 'recipes'
 
@@ -128,7 +150,7 @@ class Recipe(db.Model):
 class Ingredient(db.Model):
 	__tablename__ = 'ingredients'
 
-	ing_id = db.Column(db.Integer, nullable=False, primary_key=True,autoincrement=True)
+	ing_id = db.Column(db.String(64), nullable=False, primary_key=True)
 	ing_name = db.Column(db.String(64),nullable=False)
 
 	def __repr__(self):
