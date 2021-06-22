@@ -226,6 +226,14 @@ class RecipeCuisine(db.Model):
 		return "<RecipeCuisine recipe_cuisine_id={} cuisine_id={} recipe_id={}>".format(
             self.recipe_cuisine_id, self.cuisine_id, self.recipe_id)
 
+class PantryList(db.Model):
+	__tablename__="pantry"
+	id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+	ing_name = db.Column(db.String(64))
+	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	def __repr__(self):
+		return "<PantryList id={} ing_name={} user_id={}>".format(self.id, self.ing_name, self.user_id)
+
 @login.user_loader
 def load_user(id):
 	return User.query.get(int(id))
