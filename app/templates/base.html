@@ -17,15 +17,7 @@
 	{% endblock %}
 </head>
 <body>
-	{% block prompt %}
-	{% with messages=get_flashed_messages() %}
-	{% if messages %}
-	{% for message in messages %}
-	<li> {{message}} </li>
-	{% endfor %}
-	{% endif %}
-	{% endwith %}
-	{% endblock %}
+
 	<div class="preloader d-flex align-items-center justify-content-center">
         <div class="preloader-content">
             <h3>Cooking in progress..</h3>
@@ -80,11 +72,13 @@
 
         <!-- Logo Area -->
         <div class="logo-area">
+
             <a href="{{ url_for('index') }}">SALUBREATA</a>
         </div>
 
         <!-- Navbar Area -->
         <div class="bueno-main-menu" id="sticker">
+            
             <div class="classy-nav-container breakpoint-off">
                 <div class="container">
                     <!-- Menu -->
@@ -210,6 +204,15 @@
             </div>
         </div>
     </header>
+    {% block prompt %}
+            {% with messages=get_flashed_messages() %}
+            {% if messages %}
+            {% for message in messages %}
+            <li > {{message}} </li>
+            {% endfor %}
+            {% endif %}
+            {% endwith %}
+            {% endblock %}
 
     {% block trend %}
     <div class="treading-post-area" id="treadingPost">
