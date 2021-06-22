@@ -1,0 +1,24 @@
+.back-addrecipe {
+    background: url("../img/1.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    text-align: center;
+    font-family: 'Roboto', sans-serif;
+    position: absolute;
+    width: -moz-available;
+    font-family: inherit;
+  }
+.form-text{
+    background-color: white;
+    margin: auto;
+    width: 60%;
+}
+.form-back {
+    width: 60%;
+    padding: 5em;
+    margin: 5em;
+}
+.form-group {
+    font-size: 14px;
+    font-weight: 300;
+}
