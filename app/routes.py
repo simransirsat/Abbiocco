@@ -5,7 +5,7 @@ from app.forms import LoginForm
 from flask_login import logout_user
 from flask_login import current_user, login_user, login_required
 from werkzeug.urls import url_parse
-from app.models import User,Recipe, List, Ingredient
+from app.models import User,Recipe, List, Ingredient, RecipeLocal
 from app import db
 from app.forms import RegistrationForm, EditProfileForm , AddRecipeForm, PantryList
 from app import api_calls
@@ -68,15 +68,26 @@ def register():
 def addrecipe():
 	form = AddRecipeForm()
 	if request.method=='POST' and form.validate_on_submit():
-		recipe = Recipe(recipe_name=form.name.data,instructions=form.instructions.data,user_id=current_user.id)
+		recipe = RecipeLocal(recipe_name=form.name.data,ing_name=form.ingredients.data,instructions=form.instructions.data,user_id=current_user.id)
 		db.session.add(recipe)
 		db.session.commit()
-		ingredients=Ingredient(ing_name=form.ingredients.data)
-		db.session.add(ingredients)
-		db.session.commit()
 		flash('You added a recipe')
-		return redirect(url_for('quickView'))
-	return render_template( 'addrecipe_recipebook.html', title='Add Recipe', form=form)		
+		return redirect(url_for('localView'))
+	return render_template( 'addrecipe_recipebook.html', title='Add Recipe', form=form)
+
+@app.route('/user/addedrecipes')
+@login_required
+def localView():
+	local_recipes = RecipeLocal.query.filter_by(user_id=current_user.id).all()
+	local=[]
+	for lr in local_recipes:
+		local.append({
+			'name' :lr.recipe_name,
+			'ingredients' : lr.ing_name,
+			'instructions' : lr.instructions,
+			})
+	return render_template('displaylocalrecipe.html',localrecipes=local)	
+
 
 @app.route('/logout')
 def logout():
@@ -267,7 +278,7 @@ def pantry():
 		helper_functions.add_new_list(current_user.id,form.list_name.data)
 		
 
-	return render_template('pantry2.html',title='Pantry',form=form)
+	return render_template('pantry.html',title='Pantry',form=form)
 
 
 @app.route("/user/cals")
