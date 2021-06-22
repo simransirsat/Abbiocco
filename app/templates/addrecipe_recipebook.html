@@ -1,43 +1,50 @@
-<!DOCTYPE html>
+{% extends "base.html" %}
+{% block content %}
 <html>
 <head>
-   <title>Recipe Book</title>
-   <!-- <link rel="stylesheet" type="text/css" href="../static/css/register.css"> -->
-   <script
-  src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-  crossorigin="anonymous"></script>
-        
+      <title>Recipe Book</title>
+      <link rel="stylesheet" type="text/css" href="../static/css/addrecipe.css">
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+
 
 </head>
-<body>
-  <h1>Add Recipe</h1>
-  <form action="" method="post">
-      {{ form.hidden_tag() }}
-      <div class="form-group">
-        {{ form.name.label(class_='form-label') }}<br>
-        {{ form.name(size=32, class_='form-control') }}<br>
-        {% for error in form.name.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-  </div>
-      <div class="form-group">
-        {{ form.ingredients.label(class_='form-label')  }}<br>
-        {{ form.ingredients(size=32, class_='form-control') }}<br>
-        {% for error in form.ingredients.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %} 
-  
-  <div class="form-group">
-        {{ form.instructions.label(class_='form-label')  }}<br>
-        {{ form.instructions(size=32, class_='form-control') }}<br>
-        {% for error in form.instructions.errors %}
-        <span style="color: red;">[{{ error }}]</span>
-        {% endfor %}
-  </div>
-        <p>{{ form.submit() }}</p>
-  </form>
 
-</body>
+<div class="back-addrecipe" style="position: absolute; width: -moz-available; height:595px;">
+      <div class="form-back container" style="position: relative; margin-top: 5em; width: 60%;">
+      <div class="form-text container  card-shadow-sm">
+            <div class="form-mid p-3">
+            <h1>Add Recipe</h1>
+            <form action="" method="post">
+                  {{ form.hidden_tag() }}
+                  <div class="form-group">
+                        {{ form.name.label(class_='form-label') }}<br>
+                        {{ form.name(size=32, class_='form-control') }}<br>
+                        {% for error in form.name.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
+                  </div>
+                  <div class="form-group">
+                        {{ form.ingredients.label(class_='form-label') }}<br>
+                        {{ form.ingredients(size=32, class_='form-control') }}<br>
+                        {% for error in form.ingredients.errors %}
+                        <span style="color: red;">[{{ error }}]</span>
+                        {% endfor %}
 
+                        <div class="form-group">
+                              {{ form.instructions.label(class_='form-label') }}<br>
+                              {{ form.instructions(size=32, class_='form-control') }}<br>
+                              {% for error in form.instructions.errors %}
+                              <span style="color: red;">[{{ error }}]</span>
+                              {% endfor %}
+                        </div>
+                        <p>{{ form.submit(class_="btn bueno-btn mt-30") }}</p>
+            </form>
+            </div>
+      </div>
+      </div>
+
+</div>
 </html>
+{% endblock %}
