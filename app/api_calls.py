@@ -456,7 +456,7 @@ def recommend_diet_based_on_cals2(target_calories, default_time="day"):
     # query_string = {
     # "timeFrame": default_time,
     # "targetCalories": target_calories,
-    # "diet":"gluten free"
+    # "diet":"keto"
         
     # }
     # response = requests.request(
