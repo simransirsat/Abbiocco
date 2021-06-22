@@ -3,20 +3,45 @@
 
 {% block content %}
 
-
-<div class="row">
-    {% for lr in localrecipes %}
-    <div class="col" style="width: 33%;">
-        <div class="localrecipes" style="width:100%;">
-            <p class="pie-name">Name:{{ lr.name }}</p>
-            <p class="pie-name">Ingredients:{{ lr.ingredients }}</p>
-            <p class="pie-name">Instructions:{{ lr.instructions }}</p>
-            <br>
-        </div>     
+<style>h5{text-align: center;}</style>
+<h5>My Recipes</h5>
+<div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for lr in localrecipes %}
+        <div class="col-md-4">
+            <div class="localrecipes border">
+                <div style="padding:10px;">
+                    <p class="pie-name"><b>Recipe</b></p>
+                    <p class="pie-name">Name:{{ lr.name }}</p>
+                    <p class="pie-name">Ingredients:{{ lr.ingredients }}</p>
+                    <p class="pie-name">Instructions:{{ lr.instructions }}</p>
+                    <br>
+                </div>
+            </div>     
+        </div>
+        {% endfor %}
     </div>
 
 </div>
     
-{% endfor %}
 
 {% endblock %}
+
+
+<!-- <div class="container">
+    <div class="row">
+        {% for lr in localrecipes %}
+        <div class="col-md-1.5">
+            <p class="card-text">Recipe Name<br>
+                Ingredients<br>
+                Instructions<br></p>
+        </div>
+        <div class="col-md-2.5">
+            <p class="card-text">:{{ lr.name }}<br>
+                :{{ lr.ingredients }}<br>
+                :{{ lr.instructions }}<br></p>
+        </div>
+        {% endfor %}
+    </div>
+</div>-->
+
