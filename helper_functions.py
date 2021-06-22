@@ -1,7 +1,7 @@
 """ SQL Alchemy queries used for Flask routes. """
 
 # Import model.py table definitions
-from app.models import User, Recipe, Ingredient, List, Cuisine
+from app.models import User, Recipe, Ingredient, List, Cuisine, PantryList
 from app.models import RecipeIngredient, ListIngredient, Bookmark, RecipeCuisine
 
 # Password hashing library
@@ -212,4 +212,12 @@ def add_to_list(recipe_id, list_id):
     # Return the list of ListIngredient objects
     return updated_list_ingredients
 
+def add_to_pantry(user_id, ing_name):
+    print("item added to pantry")
+    pantrylist = []
+    new_item = PantryList(user_id=user_id, ing_name=ing_name)
+    db.session.add(new_item)
+    db.session.commit()
+    pantrylist.append(new_item)
+    return pantrylist
 

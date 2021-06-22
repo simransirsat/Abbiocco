@@ -265,19 +265,16 @@ def meal_planner():
 		}
 	]
 	
-    
+
 	profile = User.query.filter_by(username=current_user.username).first()
 	return render_template('meal_planner.html',title='Meal Planner', meals = meals)
-
 
 @app.route('/list/pantry', methods=['GET', 'POST'])
 @login_required
 def pantry():	
 	form = PantryList()
 	if request.method=='POST':
-		helper_functions.add_new_list(current_user.id,form.list_name.data)
-		
-
+		helper_functions.add_to_pantry(current_user.id,form.ing_name.data)
 	return render_template('pantry.html',title='Pantry',form=form)
 
 
