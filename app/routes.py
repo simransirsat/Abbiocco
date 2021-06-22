@@ -72,8 +72,22 @@ def addrecipe():
 		db.session.add(recipe)
 		db.session.commit()
 		flash('You added a recipe')
-		return redirect(url_for('quickView'))
-	return render_template( 'addrecipe_recipebook.html', title='Add Recipe', form=form)		
+		return redirect(url_for('localView'))
+	return render_template( 'addrecipe_recipebook.html', title='Add Recipe', form=form)
+
+@app.route('/user/addedrecipes')
+@login_required
+def localView():
+	local_recipes = RecipeLocal.query.filter_by(user_id=current_user.id).all()
+	local=[]
+	for lr in local_recipes:
+		local.append({
+			'name' :lr.recipe_name,
+			'ingredients' : lr.ing_name,
+			'instructions' : lr.instructions,
+			})
+	return render_template('displaylocalrecipe.html',localrecipes=local)	
+
 
 @app.route('/logout')
 def logout():
@@ -264,7 +278,7 @@ def pantry():
 		helper_functions.add_new_list(current_user.id,form.list_name.data)
 		
 
-	return render_template('pantry2.html',title='Pantry',form=form)
+	return render_template('pantry.html',title='Pantry',form=form)
 
 
 @app.route("/user/cals")
