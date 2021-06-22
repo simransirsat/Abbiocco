@@ -108,9 +108,13 @@
 
                             <!-- Nav Start -->
                             <div class="classynav">
-                                <ul>
+                                <ul style="margin: 0;">
                                     <li><a href="{{ url_for('index') }}">Home</a></li>
+
+                                    
+
                                     <!-- <li><a href="#">About Us</a></li> -->
+
                                     
                                     {%  if current_user.is_authenticated %}
                                     <li><a href="{{ url_for('view_profile') }}">Profile</a></li>
@@ -123,6 +127,7 @@
                                             <li><a href="{{ url_for('addrecipe') }}">Add New Recipe</a></li>
                                         </ul>
                                     </li>
+                                    <li><a href="{{ url_for('get_meals_from_cals') }}">Recommendations</a></li>
                                     {% endif %}
                                     
                                     <!-- <li><a href="{{ url_for('pantry') }}">Pantry</a></li> -->
@@ -134,9 +139,10 @@
                                             <li><a href="{{ url_for('index') }}">Category Post</a></li>
                                             <li><a href="{{ url_for('details') }}">Single Post</a></li>
                                             <li><a href="/user/bookmarks">Recipe Book</a></li>
-                                            <li><a href=" {{ url_for('contacts') }} ">Contact</a></li>
-                                            
+                                            <li><a href=" {{ url_for('contacts') }} ">Contact</a></li> 
+                                            <li><a href="{{ url_for('contacts') }}">About Us</a></li>
                                         </ul>
+                                       
                                     </li>
                                     <!-- Random dropdown -->
                                     <!-- <li><a href="#">Recipes</a>
