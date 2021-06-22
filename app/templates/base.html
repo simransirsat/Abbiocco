@@ -110,7 +110,11 @@
                             <div class="classynav">
                                 <ul style="margin: 0;">
                                     <li><a href="{{ url_for('index') }}">Home</a></li>
+
                                     
+
+                                    <!-- <li><a href="#">About Us</a></li> -->
+
                                     
                                     {%  if current_user.is_authenticated %}
                                     <li><a href="{{ url_for('view_profile') }}">Profile</a></li>
@@ -118,8 +122,9 @@
                                     <li><a href="{{ url_for('meal_planner') }}">Meal Planner</a></li>
                                     <li><a href="#">Recipe Book</a>
                                         <ul class="dropdown">
-                                            <li><a href="/user/bookmarks">View Recipes</a></li>
-                                            <li><a href="{{ url_for('addrecipe') }}">Add Recipes</a></li>
+                                            <li><a href="/user/bookmarks">Saved Recipes</a></li>
+                                            <li><a href="{{ url_for('localView') }}">My Recipes</a></li>
+                                            <li><a href="{{ url_for('addrecipe') }}">Add New Recipe</a></li>
                                         </ul>
                                     </li>
                                     <li><a href="{{ url_for('get_meals_from_cals') }}">Recommendations</a></li>
