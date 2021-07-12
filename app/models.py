@@ -215,6 +215,19 @@ class Bookmark(db.Model):
 		return """<Bookmark bookmark_id={} user_id={} recipe_id={}>""".format(
             self.bookmark_id, self.user_id, self.recipe_id)
 
+
+class Planner(db.Model):
+	__tablename__ = "planner"
+	planner_id = db.Column(db.Integer,
+                            autoincrement=True,
+                            primary_key=True)
+	user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+	recipe_id = db.Column(db.String(64), db.ForeignKey('recipes.recipe_id'))
+	def __repr__(self):
+		return """<Planner planner_id={} user_id={} recipe_id={}>""".format(
+            self.bookmark_id, self.user_id, self.recipe_id)
+
+
 class RecipeCuisine(db.Model):
 	__tablename__ = "recipe_cuisines"
 	recipe_cuisine_id = db.Column(db.Integer,

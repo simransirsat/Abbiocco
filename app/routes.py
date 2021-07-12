@@ -143,6 +143,46 @@ def recipe(recipe_id):
 		message = process_recipe_bookmark_button(recipe_id)
 		flash(message)
 	return render_template("receipe.html",bookmark=bookmark,user=user,title=title,source=source,img=img,ingredients=ingredients,ins=ins,servings=servings,time=time,likes=likes)
+
+@app.route('/recipe/plan/<recipe_id>',methods=['GET','POST'])
+def recipe(recipe_id):
+	user = User.query.filter_by(username=current_user.username).first()
+	# bookmark = False
+	# if helper_functions.check_if_bookmark_exists(recipe_id,current_user.id):
+	# 	bookmark = True
+	# else:
+	# 	bookmark = False
+	recipe_info_json = api_calls.recipe_info(recipe_id)
+
+	title = recipe_info_json['title']
+	img = recipe_info_json['image']
+	ingredients = recipe_info_json['extendedIngredients']
+	cooking_instructions = recipe_info_json['analyzedInstructions'][0]
+	servings = recipe_info_json['servings']
+	source = recipe_info_json['sourceName']
+	time = 100
+	likes = recipe_info_json['aggregateLikes']
+	ins = []
+	print(cooking_instructions['steps'])
+	for element in cooking_instructions['steps']:
+		ins.append(
+		{
+			'step': element['number'],
+			'val': element['step']
+		})
+	if request.method == 'POST':
+		if helper_functions.check_if_bookmark_exists(recipe_id,current_user.id):
+			bookmark = True
+		else:
+			bookmark = False
+		message = process_recipe_bookmark_button(recipe_id)
+		flash(message)
+	return render_template("receipe.html",bookmark=bookmark,user=user,title=title,source=source,img=img,ingredients=ingredients,ins=ins,servings=servings,time=time,likes=likes)
+
+
+
+
+
 @app.route('/view/details')
 def details():
 	return render_template('single-post.html')
@@ -239,35 +279,90 @@ def edit_profile():
 		#form.password.data = current_user.password
 	return render_template('edit_profile.html', title='Edit Profile',form=form)
 
+# @app.route('/meal_planner', methods=['GET', 'POST'])
+# @login_required
+# def meal_planner():
+# 	meals = [
+# 		{
+# 			'type':'Breakfast',
+# 			'recipe_name':'Eggs & Bacon',
+# 			'content': 'Blah Blah Blah Blah Blah'
+# 		},
+# 		{
+# 			'type':'Lunch',
+# 			'recipe_name':'Greek Salad',
+# 			'content': 'Blah Blah Blah Blah Blah'
+# 		},
+# 		{
+# 			'type':'Evening Snack',
+# 			'recipe_name':'Coffee',
+# 			'content': 'Blah Blah Blah Blah Blah'
+# 		},
+# 		{
+# 			'type':'Dinner',
+# 			'recipe_name':'Tomato Soup',
+# 			'content': 'Blah Blah Blah Blah Blah'
+# 		}
+# 	]
+	
+
+# 	profile = User.query.filter_by(username=current_user.username).first()
+# 	return render_template('meal_planner.html',title='Meal Planner', meals = meals)
+
+
 @app.route('/meal_planner', methods=['GET', 'POST'])
 @login_required
 def meal_planner():
-	meals = [
-		{
-			'type':'Breakfast',
-			'recipe_name':'Eggs & Bacon',
-			'content': 'Blah Blah Blah Blah Blah'
-		},
-		{
-			'type':'Lunch',
-			'recipe_name':'Greek Salad',
-			'content': 'Blah Blah Blah Blah Blah'
-		},
-		{
-			'type':'Evening Snack',
-			'recipe_name':'Coffee',
-			'content': 'Blah Blah Blah Blah Blah'
-		},
-		{
-			'type':'Dinner',
-			'recipe_name':'Tomato Soup',
-			'content': 'Blah Blah Blah Blah Blah'
-		}
-	]
-	
+	planner_recipes = Planner.query.filter_by(user_id=current_user.id).all()
+	meals = []
+	for recipe in planner_recipes:
+		meals.append({
+			'title' : recipe.recipe_name,
+			'image' : recipe.img_url,
+			'servings' : '3 servings',
+			'id': recipe.recipe_id
+			})
 
 	profile = User.query.filter_by(username=current_user.username).first()
 	return render_template('meal_planner.html',title='Meal Planner', meals = meals)
+
+
+
+
+
+@app.route("/planner.json", methods=["POST"])
+@login_required
+def process_recipe_planner_button(recipe_id):
+    """Adds meal to DB, returning either a success or error message
+    back to ajax success function."""
+
+    # Unpack info from ajax
+
+    # Check if recipe in DB. If not, add new recipe to DB.
+    current_recipe = helper_functions.check_if_recipe_exists(recipe_id)
+
+    if not current_recipe:
+        current_recipe = helper_functions.add_recipe(recipe_id,current_user)
+
+    # Check if user already bookmarked recipe. If not, add to DB.
+    meal_exists = (helper_functions
+                       .check_if_meal_exists(recipe_id,
+                                                 current_user.id))
+
+    if not meal_exists:
+        helper_functions.add_meal(current_user.id,
+                                      recipe_id)
+        # Return success message to bookmark-recipe.js ajax success fn
+        success_message = "This recipe has been added to the Meal Planner!"
+        return success_message
+
+    # Return error message to bookmark-recipe.js ajax success fn
+    error_message = "You've already added this recipe."
+    return error_message
+
+
+
+
 
 @app.route('/list/pantry', methods=['GET', 'POST'])
 @login_required
