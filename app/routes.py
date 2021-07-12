@@ -142,11 +142,13 @@ def recipe(recipe_id):
 			bookmark = False
 		message = process_recipe_bookmark_button(recipe_id)
 		flash(message)
-	return render_template("receipe.html",bookmark=bookmark,user=user,title=title,source=source,img=img,ingredients=ingredients,ins=ins,servings=servings,time=time,likes=likes)
+	return render_template("receipe.html",bookmark=bookmark,user=user,title=title,source=source,img=img,ingredients=ingredients,ins=ins,servings=servings,time=time,likes=likes,recipe_id=recipe_id)
 
-@app.route('/recipe/plan/<recipe_id>',methods=['GET','POST'])
-def recipe(recipe_id):
+@app.route('/planner/<recipe_id>',methods=['GET'])
+def meal_planning(recipe_id):
 	user = User.query.filter_by(username=current_user.username).first()
+	bookmark = False
+	print("You have added this recipe to the planner")
 	# bookmark = False
 	# if helper_functions.check_if_bookmark_exists(recipe_id,current_user.id):
 	# 	bookmark = True
@@ -170,13 +172,15 @@ def recipe(recipe_id):
 			'step': element['number'],
 			'val': element['step']
 		})
-	if request.method == 'POST':
-		if helper_functions.check_if_bookmark_exists(recipe_id,current_user.id):
-			bookmark = True
-		else:
-			bookmark = False
-		message = process_recipe_bookmark_button(recipe_id)
-		flash(message)
+	#Todo Put checks for the request the way it is working now is agnostic of wether a meal has been added or not
+	#Todo Ideally this must be checked first
+	bookmark = True #! This statement is hard coded
+	#TODO uncomment the above and reference functions in context of meal planner
+	message = process_meal_planner_button(recipe_id, user.id)
+	flash(message)
+
+	#TODO instead of using render template we can use redirect and send the user back to the recipe page as expected
+	# return redirect()
 	return render_template("receipe.html",bookmark=bookmark,user=user,title=title,source=source,img=img,ingredients=ingredients,ins=ins,servings=servings,time=time,likes=likes)
 
 
@@ -229,6 +233,21 @@ def process_recipe_bookmark_button(recipe_id):
     # Return error message to bookmark-recipe.js ajax success fn
     error_message = "You've already bookmarked this recipe."
     return error_message
+
+@login_required
+def process_meal_planner_button(user_id,recipe_id):
+	'''
+	Function to add a meal to the meal planner similar to bookmarks
+	'''
+	helper_functions.add_meal(user_id, recipe_id)
+	# Check if the recipe exists
+
+	# Add recipe to meal planner in case it doesnt exist
+	#TODO add helper functions for meal planner to check if it exists or not
+
+	# Render error message or success message
+	dummy_return_value = "Congrats, This is added to your meal planner"
+	return dummy_return_value
 
 @app.route("/profile/",  methods=["GET","POST"])
 @login_required

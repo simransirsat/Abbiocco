@@ -2,7 +2,7 @@
 
 # Import model.py table definitions
 from app.models import User, Recipe, Ingredient, List, Cuisine, PantryList
-from app.models import RecipeIngredient, ListIngredient, Bookmark, RecipeCuisine
+from app.models import RecipeIngredient, ListIngredient, Bookmark, RecipeCuisine, Planner
 
 # Password hashing library
 
@@ -190,7 +190,7 @@ def add_meal(user_id, recipe_id):
 
     db.session.add(new_meal)
     db.session.commit()
-
+    print("Added successfully")
     return new_meal
 
 
