@@ -39,6 +39,14 @@ def check_if_bookmark_exists(recipe_id, user_id):
     return Bookmark.query.filter((Bookmark.recipe_id == recipe_id) &
                                  (Bookmark.user_id == user_id)).first()
 
+def check_if_meal_exists(recipe_id, user_id):
+    """Check if bookmark exists in DB. If so, returns instantiated Bookmark
+    object. Returns none if bookmark not found."""
+
+    return Planner.query.filter((Planner.recipe_id == recipe_id) &
+                                 (Planner.user_id == user_id)).first()
+
+
 
 def check_if_ingredient_exists(ingredient_id):
     """Check if ingredient exists in DB. If so, returns instantiated Ingredient
@@ -173,6 +181,17 @@ def add_bookmark(user_id, recipe_id):
     db.session.commit()
 
     return new_bookmark
+
+
+def add_meal(user_id, recipe_id):
+    """Adds recipe to Bookmarks table. Returns instantiated Bookmark object."""
+
+    new_meal = Planner(user_id=user_id, recipe_id=recipe_id)
+
+    db.session.add(new_meal)
+    db.session.commit()
+
+    return new_meal
 
 
 def add_new_list(user_id, list_name):
