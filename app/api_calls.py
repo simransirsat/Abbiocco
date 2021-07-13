@@ -10,6 +10,7 @@ headers = {
 }
 # headers = {}
 
+
 def recipe_search(recipe_search, number_of_results):
     """Extracts recipe search results from Spoonacular API."""
     print(recipe_search)
@@ -434,30 +435,30 @@ def recommend_diet_based_on_cals1(target_calories, default_time="day"):
 
     url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/mealplans/generate"
     query_string = {
-    "timeFrame": default_time,
-    "targetCalories": target_calories,
-    "diet":"vegan"
-        
+        "timeFrame": default_time,
+        "targetCalories": target_calories,
+        "diet": "vegan"
+
     }
     response = requests.request(
         "GET", url, headers=headers, params=query_string)
     # response = response.text
 
-
     # response = {"meals":
     # [{"id":596996,"imageType":"jpg","title":"Homemade Vanilla Extract","readyInMinutes":5,"servings":2,"sourceUrl":"http://leitesculinaria.com/82842/recipes-homemade-vanilla-extract.html"},
     # {"id":249642,"imageType":"jpg","title":"Giraffeâ€™s Love No-Bake Vegan Cheesecake","readyInMinutes":30,"servings":8,"sourceUrl":"http://www.godairyfree.org/recipes/giraffes-love-no-bake-vegan-qcheesecakeq-too"},{"id":647638,"imageType":"jpg","title":"Hummus Wrap With Carrots and Cucumbers","readyInMinutes":45,"servings":1,"sourceUrl":"https://spoonacular.com/hummus-wrap-with-carrots-and-cucumbers-647638"}],"nutrients":{"calories":2827.57,"protein":57.14,"fat":106.51,"carbohydrates":174.23}}
-    
+
     return response.json()
+
 
 def recommend_diet_based_on_cals2(target_calories, default_time="day"):
 
     url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/mealplans/generate"
     query_string = {
-    "timeFrame": default_time,
-    "targetCalories": target_calories,
-    "diet":"keto"
-        
+        "timeFrame": default_time,
+        "targetCalories": target_calories,
+        "diet": "keto"
+
     }
     response = requests.request(
         "GET", url, headers=headers, params=query_string)
@@ -466,14 +467,15 @@ def recommend_diet_based_on_cals2(target_calories, default_time="day"):
     # response = {"meals":[{"id":1177043,"imageType":"jpg","title":"Overnight Blueberry Banana Cheesecake Oats","readyInMinutes":120,"servings":4,"sourceUrl":"https://slimfast.com/recipes/overnight-blueberry-cheesecake-oats/"},{"id":1102572,"imageType":"jpg","title":"Steak and Scallops with Lime-Dill Hollandaise","readyInMinutes":30,"servings":2,"sourceUrl":"https://cookingwithcurls.com/2019/04/05/steak-and-scallops-with-lime-dill-hollandaise/"},{"id":73587,"imageType":"jpg","title":"Coffee-Marinated Bison Short Ribs","readyInMinutes":45,"servings":6,"sourceUrl":"http://www.epicurious.com/recipes/food/views/Coffee-Marinated-Bison-Short-Ribs-241342"}],"nutrients":{"calories":2694.66,"protein":150.58,"fat":174.22,"carbohydrates":141.75}}
     return response.json()
 
+
 def recommend_diet_based_on_cals3(target_calories, default_time="day"):
 
     url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/mealplans/generate"
     query_string = {
-    "timeFrame": default_time,
-    "targetCalories": target_calories,
-    "diet":"gluten free"
-        
+        "timeFrame": default_time,
+        "targetCalories": target_calories,
+        "diet": "gluten free"
+
     }
     response = requests.request(
         "GET", url, headers=headers, params=query_string)
