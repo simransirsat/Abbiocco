@@ -1,4 +1,3 @@
-from app import routes, models
 from flask import Flask
 import logging
 from config import Config
@@ -19,3 +18,5 @@ if app.config['LOG_TO_STDOUT']:
     app.logger.addHandler(stream_handler)
 app.logger.setLevel(logging.INFO)
 app.logger.info('Microblog startup')
+
+from app import routes, models
