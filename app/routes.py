@@ -130,8 +130,9 @@ def recipe(recipe_id):
         bookmark = True
     else:
         bookmark = False
-    if helper_functions.check_if_meal_exists_in_planner(recipe_id,current_user.id):
-    	planner = True
+    if helper_functions.check_if_meal_exists_in_planner(recipe_id, current_user.id):
+        planner = True
+        print(planner)
     else:
         planner = False
         print(False)
@@ -160,7 +161,7 @@ def recipe(recipe_id):
             bookmark = False
         message = process_recipe_bookmark_button(recipe_id)
         flash(message)
-    return render_template("receipe.html", planner=planner,bookmark=bookmark, user=user, title=title, source=source, img=img, ingredients=ingredients, ins=ins, servings=servings, time=time, likes=likes, recipe_id=recipe_id)
+    return render_template("receipe.html", planner=planner, bookmark=bookmark, user=user, title=title, source=source, img=img, ingredients=ingredients, ins=ins, servings=servings, time=time, likes=likes, recipe_id=recipe_id)
 
 
 @app.route('/planner/<recipe_id>', methods=['GET'])
@@ -168,10 +169,10 @@ def meal_planning(recipe_id):
     user = User.query.filter_by(username=current_user.username).first()
     bookmark = False
     planner = False
-    if helper_functions.check_if_meal_exists_in_planner(recipe_id,current_user.id):
-    	planner = True
+    if helper_functions.check_if_meal_exists_in_planner(recipe_id, current_user.id):
+        planner = True
     else:
-    	planner = False
+        planner = False
     recipe_info_json = api_calls.recipe_info(recipe_id)
 
     title = recipe_info_json['title']

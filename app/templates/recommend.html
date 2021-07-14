@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
     <style>
@@ -15,12 +16,11 @@
                 font-size: 3.5rem;
             }
         }
-        
+
         .view-button {
             margin-left: 8px;
             margin-top: 8px;
         }
-        
     </style>
 </head>
 {% block content %}
@@ -66,15 +66,16 @@
         <section class="text-center container" style="border-top: 0.1px solid lightgray;">
             <div class="row py-lg-3">
                 <div class="col-lg-6 col-md-8 mx-auto">
-                    
-                    <p class="lead text-muted" style="margin: auto;"><b style="font-weight: 500;">Recommended Target Calories for a Day</b> <br><b style="font-weight: 700;"> {{ current_user_cals }}</b></p>
+
+                    <p class="lead text-muted" style="margin: auto;"><b style="font-weight: 500;">Recommended Target
+                            Calories for a Day</b> <br><b style="font-weight: 700;"> {{ current_user_cals }}</b></p>
                 </div>
             </div>
         </section>
         <section class="text-center container" style="border-top: 0.1px solid lightgray;">
             <div class="row py-lg-3">
                 <div class="col-lg-6 col-md-8 mx-auto">
-                    
+
                     <p class="lead text-muted" style="margin: auto;">Vegan Meals</p>
                 </div>
             </div>
@@ -116,8 +117,10 @@
                                     </li>
                                 </ul>
 
-                                <div class="d-flex justify-content-between align-items-center view-button" style="margin: 8px;">
-                                    <a href="{{ meal['sourceUrl'] }}" class="btn-group btn btn-sm border view-button" style="font: inherit;">View</a>
+                                <div class="d-flex justify-content-between align-items-center view-button"
+                                    style="margin: 8px;">
+                                    <a href="{{ meal['sourceUrl'] }}" class="btn-group btn btn-sm border view-button"
+                                        style="font: inherit;">View</a>
                                 </div>
                             </div>
                         </div>
@@ -130,7 +133,7 @@
         <section class="text-center container">
             <div class="row py-lg-3">
                 <div class="col-lg-6 col-md-8 mx-auto">
-                    
+
                     <p class="lead text-muted" style="margin: auto;">Keto Meals</p>
                 </div>
             </div>
@@ -173,7 +176,8 @@
                                 </ul>
 
                                 <div class="d-flex justify-content-between align-items-center" style="margin: 8px;">
-                                    <a href="{{ meal['sourceUrl'] }}" class="btn-group btn btn-sm border view-button" style="font: inherit;">View</a>
+                                    <a href="{{ meal['sourceUrl'] }}" class="btn-group btn btn-sm border view-button"
+                                        style="font: inherit;">View</a>
                                 </div>
                             </div>
                         </div>
@@ -186,7 +190,7 @@
         <section class="text-center container">
             <div class="row py-lg-3">
                 <div class="col-lg-6 col-md-8 mx-auto">
-                    
+
                     <p class="lead text-muted" style="margin: auto;">Gluten-Free Meals</p>
                 </div>
             </div>
@@ -229,7 +233,8 @@
                                 </ul>
 
                                 <div class="d-flex justify-content-between align-items-center" style="margin: 8px;">
-                                    <a href="{{ meal['sourceUrl'] }}" class="btn-group btn btn-sm border view-button" style="font: inherit;">View</a>
+                                    <a href="{{ meal['sourceUrl'] }}" class="btn-group btn btn-sm border view-button"
+                                        style="font: inherit;">View</a>
                                 </div>
                             </div>
                         </div>

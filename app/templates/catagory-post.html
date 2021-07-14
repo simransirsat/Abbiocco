@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-    
-    <!-- ##### Treading Post Area End ##### -->
 
-    <!-- ##### Search Area Start ##### -->
+<!-- ##### Treading Post Area End ##### -->
+
+<!-- ##### Search Area Start ##### -->
 {% block content %}
-    <!-- <div class="bueno-search-area section-padding-100-0 pb-70 bg-img" style="background-image: url(../static/img/core-img/pattern.png);">
+<!-- <div class="bueno-search-area section-padding-100-0 pb-70 bg-img" style="background-image: url(../static/img/core-img/pattern.png);">
         <div class="container">
             <div class="row">
                 <div class="col-12">
@@ -56,41 +56,39 @@
             </div>
         </div>
     </div> -->
-    <!-- ##### Search Area End ##### -->
+<!-- ##### Search Area End ##### -->
 
-    <!-- ##### Catagory Post Area Start ##### -->
-    <div class="catagory-post-area section-padding-100">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 col-lg-8 col-xl-9">
-            {% for recipe in result %}
+<!-- ##### Catagory Post Area Start ##### -->
+<div class="catagory-post-area section-padding-100">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-8 col-xl-9">
+                {% for recipe in result %}
                 {% include '_recipe.html' %}
-            
-            {% endfor %}
+
+                {% endfor %}
             </div>
         </div>
     </div>
 </div>
 
-                <!-- Sidebar Area -->
-                <!-- -->
+<!-- Sidebar Area -->
+<!-- -->
 
-            <div class="row">
-                <div class="col-12">
-                    <div class="pagination-area mt-70">
-                        <nav aria-label="Page navigation example">
-                            <ul class="pagination">
-                                <li class="page-item"><a class="page-link" href="#">01</a></li>
-                                <li class="page-item active"><a class="page-link" href="#">02</a></li>
-                                <li class="page-item"><a class="page-link" href="#">03</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                </div>
-            </div>
+<div class="row">
+    <div class="col-12">
+        <div class="pagination-area mt-70">
+            <nav aria-label="Page navigation example">
+                <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="#">01</a></li>
+                    <li class="page-item active"><a class="page-link" href="#">02</a></li>
+                    <li class="page-item"><a class="page-link" href="#">03</a></li>
+                </ul>
+            </nav>
         </div>
     </div>
-    <!-- ##### Catagory Post Area End ##### -->
-    {% endblock %}
-
-    
+</div>
+</div>
+</div>
+<!-- ##### Catagory Post Area End ##### -->
+{% endblock %}
