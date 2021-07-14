@@ -5,88 +5,97 @@ from app.forms import LoginForm
 from flask_login import logout_user
 from flask_login import current_user, login_user, login_required
 from werkzeug.urls import url_parse
-from app.models import User,Recipe, List, Ingredient, RecipeLocal
+from app.models import User, Recipe, List, Ingredient, RecipeLocal, Planner
 from app import db
-from app.forms import RegistrationForm, EditProfileForm , AddRecipeForm, PantryList
+from app.forms import RegistrationForm, EditProfileForm, AddRecipeForm, PantryList
 from app import api_calls
 import helper_functions
+
+
 @app.route('/')
-@app.route('/index', methods=['GET','POST'])
+@app.route('/index', methods=['GET', 'POST'])
 def index():
-	if request.method == "POST":
-		result = request.form
-		recipe_search = result['top-search']
-		results_json = api_calls.recipe_search(recipe_search, 6)
-		print(results_json)
+    if request.method == "POST":
+        result = request.form
+        recipe_search = result['top-search']
+        results_json = api_calls.recipe_search(recipe_search, 6)
+        print(results_json)
 
-		for recipe in results_json['results']:
-			recipe_id = str(recipe['id'])
-			summary_response = api_calls.summary_info(recipe_id)
-			summary_json = summary_response
-			summary_text = summary_json['summary']
-			recipe['summary'] = summary_text
-			recipe['imgUrl'] = results_json['baseUri'] + recipe['image']
-		result = results_json['results']
-		return render_template('catagory-post.html',result=result)
-	else:
-		return render_template('index.html')
+        for recipe in results_json['results']:
+            recipe_id = str(recipe['id'])
+            summary_response = api_calls.summary_info(recipe_id)
+            summary_json = summary_response
+            summary_text = summary_json['summary']
+            recipe['summary'] = summary_text
+            recipe['imgUrl'] = results_json['baseUri'] + recipe['image']
+        result = results_json['results']
+        return render_template('catagory-post.html', result=result)
+    else:
+        return render_template('index.html')
 
-@app.route('/login', methods=['GET','POST'])
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-	if current_user.is_authenticated:
-		return redirect(url_for('index'))
-	form=LoginForm()
-	if form.validate_on_submit():
-		user = User.query.filter_by(username=form.username.data).first()
-		if user is None or not user.check_password(form.password.data):
-			flash('Invalid username or password')
-			return redirect(url_for('login'))
-		login_user(user,remember=False)
-		next_page = request.args.get('next')
-		if not next_page or url_parse(next_page).netloc!= '':
-			next_page = url_for('index')
-		return redirect(next_page)
-	return render_template('login.html',form=form)
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+        login_user(user, remember=False)
+        next_page = request.args.get('next')
+        if not next_page or url_parse(next_page).netloc != '':
+            next_page = url_for('index')
+        return redirect(next_page)
+    return render_template('login.html', form=form)
 
-@app.route('/register', methods=['GET','POST'])
+
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-	if current_user.is_authenticated:
-		return redirect(url_for('index'))
-	form = RegistrationForm()
-	if form.validate_on_submit():
-		user = User(username=form.username.data, email=form.email.data,  dob=form.dob.data, name=form.name.data, height=form.height.data, weight=form.weight.data, gender= form.gender.data, activity_f=form.activity_f.data)
-		user.set_password(form.password.data)
-		user.set_age(form.dob.data, form.weight.data, form.height.data, form.gender.data, form.activity_f.data, form.wt_choice.data)
-		db.session.add(user)
-		db.session.commit()
-		# flash('Congratulations, you are now a registered user!')
-		return redirect(url_for('login'))
-	return render_template('register.html', title='Register', form=form)
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = RegistrationForm()
+    if form.validate_on_submit():
+        user = User(username=form.username.data, email=form.email.data,  dob=form.dob.data, name=form.name.data,
+                    height=form.height.data, weight=form.weight.data, gender=form.gender.data, activity_f=form.activity_f.data)
+        user.set_password(form.password.data)
+        user.set_age(form.dob.data, form.weight.data, form.height.data,
+                     form.gender.data, form.activity_f.data, form.wt_choice.data)
+        db.session.add(user)
+        db.session.commit()
+        # flash('Congratulations, you are now a registered user!')
+        return redirect(url_for('login'))
+    return render_template('register.html', title='Register', form=form)
 
-@app.route('/user/add-recipe', methods=["GET","POST"])
+
+@app.route('/user/add-recipe', methods=["GET", "POST"])
 @login_required
 def addrecipe():
-	form = AddRecipeForm()
-	if request.method=='POST' and form.validate_on_submit():
-		recipe = RecipeLocal(recipe_name=form.name.data,ing_name=form.ingredients.data,instructions=form.instructions.data,user_id=current_user.id)
-		db.session.add(recipe)
-		db.session.commit()
-		flash('You added a recipe')
-		return redirect(url_for('localView'))
-	return render_template( 'addrecipe_recipebook.html', title='Add Recipe', form=form)
+    form = AddRecipeForm()
+    if request.method == 'POST' and form.validate_on_submit():
+        recipe = RecipeLocal(recipe_name=form.name.data, ing_name=form.ingredients.data,
+                             instructions=form.instructions.data, user_id=current_user.id)
+        db.session.add(recipe)
+        db.session.commit()
+        flash('You added a recipe')
+        return redirect(url_for('localView'))
+    return render_template('addrecipe_recipebook.html', title='Add Recipe', form=form)
+
 
 @app.route('/user/addedrecipes')
 @login_required
 def localView():
-	local_recipes = RecipeLocal.query.filter_by(user_id=current_user.id).all()
-	local=[]
-	for lr in local_recipes:
-		local.append({
-			'name' :lr.recipe_name,
-			'ingredients' : lr.ing_name,
-			'instructions' : lr.instructions,
-			})
-	return render_template('displaylocalrecipe.html',localrecipes=local)	
+    local_recipes = RecipeLocal.query.filter_by(user_id=current_user.id).all()
+    local = []
+    for lr in local_recipes:
+        local.append({
+            'name': lr.recipe_name,
+            'ingredients': lr.ing_name,
+            'instructions': lr.instructions,
+        })
+    return render_template('displaylocalrecipe.html', localrecipes=local)
 
 
 @app.route('/logout')
@@ -94,115 +103,126 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+
 @app.route('/user/bookmarks')
 @login_required
 def quickView():
-	bookmarked_recipes = current_user.recipes
-	bookmarks = []
-	for recipe in bookmarked_recipes:
-		bookmarks.append({
-			'title' : recipe.recipe_name,
-			'image' : recipe.img_url,
-			'servings' : '3 servings',
-			'id': recipe.recipe_id
-			})
+    bookmarked_recipes = current_user.recipes
+    bookmarks = []
+    for recipe in bookmarked_recipes:
+        bookmarks.append({
+            'title': recipe.recipe_name,
+            'image': recipe.img_url,
+            'servings': '3 servings',
+            'id': recipe.recipe_id
+        })
 
-	return render_template('explore.html',bookmarks=bookmarks)
+    return render_template('explore.html', bookmarks=bookmarks)
 
-@app.route('/recipe/<recipe_id>',methods=['GET','POST'])
+
+@app.route('/recipe/<recipe_id>', methods=['GET', 'POST'])
 def recipe(recipe_id):
-	user = User.query.filter_by(username=current_user.username).first()
-	bookmark = False
-	if helper_functions.check_if_bookmark_exists(recipe_id,current_user.id):
-		bookmark = True
-	else:
-		bookmark = False
-	recipe_info_json = api_calls.recipe_info(recipe_id)
+    user = User.query.filter_by(username=current_user.username).first()
+    bookmark = False
+    planner = False
 
-	title = recipe_info_json['title']
-	img = recipe_info_json['image']
-	ingredients = recipe_info_json['extendedIngredients']
-	cooking_instructions = recipe_info_json['analyzedInstructions'][0]
-	servings = recipe_info_json['servings']
-	source = recipe_info_json['sourceName']
-	time = 100
-	likes = recipe_info_json['aggregateLikes']
-	ins = []
-	print(cooking_instructions['steps'])
-	for element in cooking_instructions['steps']:
-		ins.append(
-		{
-			'step': element['number'],
-			'val': element['step']
-		})
-	if request.method == 'POST':
-		if helper_functions.check_if_bookmark_exists(recipe_id,current_user.id):
-			bookmark = True
-		else:
-			bookmark = False
-		message = process_recipe_bookmark_button(recipe_id)
-		flash(message)
-	return render_template("receipe.html",bookmark=bookmark,user=user,title=title,source=source,img=img,ingredients=ingredients,ins=ins,servings=servings,time=time,likes=likes,recipe_id=recipe_id)
+    if helper_functions.check_if_bookmark_exists(recipe_id, current_user.id):
+        bookmark = True
+    else:
+        bookmark = False
+    if helper_functions.check_if_meal_exists_in_planner(recipe_id, current_user.id):
+        planner = True
+        print(planner)
+    else:
+        planner = False
+        print(False)
+    recipe_info_json = api_calls.recipe_info(recipe_id)
 
-@app.route('/planner/<recipe_id>',methods=['GET'])
+    title = recipe_info_json['title']
+    img = recipe_info_json['image']
+    ingredients = recipe_info_json['extendedIngredients']
+    cooking_instructions = recipe_info_json['analyzedInstructions'][0]
+    servings = recipe_info_json['servings']
+    source = recipe_info_json['sourceName']
+    time = 100
+    likes = recipe_info_json['aggregateLikes']
+    ins = []
+    print(cooking_instructions['steps'])
+    for element in cooking_instructions['steps']:
+        ins.append(
+            {
+                'step': element['number'],
+                'val': element['step']
+            })
+    if request.method == 'POST':
+        if helper_functions.check_if_bookmark_exists(recipe_id, current_user.id):
+            bookmark = True
+        else:
+            bookmark = False
+        message = process_recipe_bookmark_button(recipe_id)
+        flash(message)
+    return render_template("receipe.html", planner=planner, bookmark=bookmark, user=user, title=title, source=source, img=img, ingredients=ingredients, ins=ins, servings=servings, time=time, likes=likes, recipe_id=recipe_id)
+
+
+@app.route('/planner/<recipe_id>', methods=['GET'])
 def meal_planning(recipe_id):
-	user = User.query.filter_by(username=current_user.username).first()
-	bookmark = False
-	print("You have added this recipe to the planner")
-	# bookmark = False
-	# if helper_functions.check_if_bookmark_exists(recipe_id,current_user.id):
-	# 	bookmark = True
-	# else:
-	# 	bookmark = False
-	recipe_info_json = api_calls.recipe_info(recipe_id)
+    user = User.query.filter_by(username=current_user.username).first()
+    bookmark = False
+    planner = False
+    if helper_functions.check_if_meal_exists_in_planner(recipe_id, current_user.id):
+        planner = True
+    else:
+        planner = False
+    recipe_info_json = api_calls.recipe_info(recipe_id)
 
-	title = recipe_info_json['title']
-	img = recipe_info_json['image']
-	ingredients = recipe_info_json['extendedIngredients']
-	cooking_instructions = recipe_info_json['analyzedInstructions'][0]
-	servings = recipe_info_json['servings']
-	source = recipe_info_json['sourceName']
-	time = 100
-	likes = recipe_info_json['aggregateLikes']
-	ins = []
-	print(cooking_instructions['steps'])
-	for element in cooking_instructions['steps']:
-		ins.append(
-		{
-			'step': element['number'],
-			'val': element['step']
-		})
-	#Todo Put checks for the request the way it is working now is agnostic of wether a meal has been added or not
-	#Todo Ideally this must be checked first
-	bookmark = True #! This statement is hard coded
-	#TODO uncomment the above and reference functions in context of meal planner
-	message = process_meal_planner_button(recipe_id, user.id)
-	flash(message)
+    title = recipe_info_json['title']
+    img = recipe_info_json['image']
+    ingredients = recipe_info_json['extendedIngredients']
+    cooking_instructions = recipe_info_json['analyzedInstructions'][0]
+    servings = recipe_info_json['servings']
+    source = recipe_info_json['sourceName']
+    time = 100
+    likes = recipe_info_json['aggregateLikes']
+    ins = []
+    print(cooking_instructions['steps'])
+    for element in cooking_instructions['steps']:
+        ins.append(
+            {
+                'step': element['number'],
+                'val': element['step']
+            })
+    # Todo Put checks for the request the way it is working now is agnostic of wether a meal has been added or not
+    # Todo Ideally this must be checked first
+    bookmark = True  # ! This statement is hard coded
+    # TODO uncomment the above and reference functions in context of meal planner
+    message = process_meal_planner_button(user.id, recipe_id)
+    flash(message)
 
-	#TODO instead of using render template we can use redirect and send the user back to the recipe page as expected
-	# return redirect()
-	return render_template("receipe.html",bookmark=bookmark,user=user,title=title,source=source,img=img,ingredients=ingredients,ins=ins,servings=servings,time=time,likes=likes)
-
-
-
+    # TODO instead of using render template we can use redirect and send the user back to the recipe page as expected
+    # return redirect()
+    return recipe(recipe_id)
 
 
 @app.route('/view/details')
 def details():
-	return render_template('single-post.html')
+    return render_template('single-post.html')
+
 
 @app.route('/contact')
 def contacts():
-	return render_template('contact.html')
+    return render_template('contact.html')
+
 
 @app.route('/category')
 def category():
-	return render_template('catagory.html')
+    return render_template('catagory.html')
+
 
 @app.route('/search')
 def recipe_search(result):
-	
-	return render_template('catagory-post.html',result=result)
+
+    return render_template('catagory-post.html', result=result)
+
 
 @app.route("/bookmark.json", methods=["POST"])
 @login_required
@@ -216,7 +236,7 @@ def process_recipe_bookmark_button(recipe_id):
     current_recipe = helper_functions.check_if_recipe_exists(recipe_id)
 
     if not current_recipe:
-        current_recipe = helper_functions.add_recipe(recipe_id,current_user)
+        current_recipe = helper_functions.add_recipe(recipe_id, current_user)
 
     # Check if user already bookmarked recipe. If not, add to DB.
     bookmark_exists = (helper_functions
@@ -234,69 +254,88 @@ def process_recipe_bookmark_button(recipe_id):
     error_message = "You've already bookmarked this recipe."
     return error_message
 
+
 @login_required
-def process_meal_planner_button(user_id,recipe_id):
-	'''
-	Function to add a meal to the meal planner similar to bookmarks
-	'''
-	helper_functions.add_meal(user_id, recipe_id)
-	# Check if the recipe exists
+def process_meal_planner_button(user_id, recipe_id):
+    '''
+    Function to add a meal to the meal planner similar to bookmarks
+    '''
+    current_recipe = helper_functions.check_if_recipe_exists(recipe_id)
 
-	# Add recipe to meal planner in case it doesnt exist
-	#TODO add helper functions for meal planner to check if it exists or not
+    if not current_recipe:
+        # This is the case if the recipe has been addded into local db or not
+        # If the recipe is not present in the db then we cannot add it to planner
+        current_recipe = helper_functions.add_recipe(recipe_id, current_user)
+        print("Meal not present in db.... \nAdding...")
+    helper_functions.add_meal(user_id, recipe_id)
 
-	# Render error message or success message
-	dummy_return_value = "Congrats, This is added to your meal planner"
-	return dummy_return_value
+    # Check if the recipe has already been added to planner
+    recipe_exists_in_planner = helper_functions.check_if_meal_exists_in_planner(
+        recipe_id, user_id)
 
-@app.route("/profile/",  methods=["GET","POST"])
+    if not recipe_exists_in_planner:
+        message = ""
+        try:
+            helper_functions.add_meal(recipe_id, current_user.id)
+            message = "Meal added to planner successfully"
+        except:
+            message = "Something went wrong in adding the meal to meal planner"
+        finally:
+            return message
+    failure_message = "This meal already exists in your planner"
+    return failure_message
+
+
+@app.route("/profile/",  methods=["GET", "POST"])
 @login_required
 def view_profile():
-	profile = User.query.filter_by(username=current_user.username).first()
-	form = RegistrationForm()
-	#try:
-	# 	if request.method == "POST" and form.validate():
-	# 		current_user.weight= form.weight.data
-	# 		current_user.height = form.height.data
-	# 		current_user.dob = form.dob.data
-	# 		current_user.gender = form.gender.data
-	# 		db.session.commit()
-	# 		return render_template("profile.html", form=form)
-	# except:
-	#	pass
-	if request.method == "GET":
-		form.weight.data = current_user.weight
-		form.height.data = current_user.height
-		form.dob.data = current_user.dob
-		form.gender.data = current_user.gender
-	return render_template("profile.html", form=form)
+    profile = User.query.filter_by(username=current_user.username).first()
+    form = RegistrationForm()
+    # try:
+    # 	if request.method == "POST" and form.validate():
+    # 		current_user.weight= form.weight.data
+    # 		current_user.height = form.height.data
+    # 		current_user.dob = form.dob.data
+    # 		current_user.gender = form.gender.data
+    # 		db.session.commit()
+    # 		return render_template("profile.html", form=form)
+    # except:
+    #	pass
+    if request.method == "GET":
+        form.weight.data = current_user.weight
+        form.height.data = current_user.height
+        form.dob.data = current_user.dob
+        form.gender.data = current_user.gender
+    return render_template("profile.html", form=form)
+
 
 @app.route('/edit_profile', methods=['GET', 'POST'])
 @login_required
 def edit_profile():
-	form = EditProfileForm(current_user.username)
-	if form.validate_on_submit():
-		current_user.weight= form.weight.data
-		current_user.height = form.height.data
-		current_user.dob = form.dob.data
-		current_user.gender = form.gender.data
-		current_user.name = form.name.data
-		current_user.username = form.username.data
-		current_user.email = form.email.data
-		current_user.set_password(form.password.data)
-		current_user.set_age(form.dob.data, form.weight.data, form.height.data, form.gender.data, form.activity_f.data, form.wt_choice.data)
-		db.session.commit()
-		return redirect(url_for('view_profile'))
-	elif request.method == 'GET':
-		form.weight.data = current_user.weight
-		form.height.data = current_user.height
-		form.dob.data = current_user.dob
-		form.gender.data = current_user.gender
-		form.name.data = current_user.name
-		form.username.data = current_user.username
-		form.email.data = current_user.email
-		#form.password.data = current_user.password
-	return render_template('edit_profile.html', title='Edit Profile',form=form)
+    form = EditProfileForm(current_user.username)
+    if form.validate_on_submit():
+        current_user.weight = form.weight.data
+        current_user.height = form.height.data
+        current_user.dob = form.dob.data
+        current_user.gender = form.gender.data
+        current_user.name = form.name.data
+        current_user.username = form.username.data
+        current_user.email = form.email.data
+        current_user.set_password(form.password.data)
+        current_user.set_age(form.dob.data, form.weight.data, form.height.data,
+                             form.gender.data, form.activity_f.data, form.wt_choice.data)
+        db.session.commit()
+        return redirect(url_for('view_profile'))
+    elif request.method == 'GET':
+        form.weight.data = current_user.weight
+        form.height.data = current_user.height
+        form.dob.data = current_user.dob
+        form.gender.data = current_user.gender
+        form.name.data = current_user.name
+        form.username.data = current_user.username
+        form.email.data = current_user.email
+        #form.password.data = current_user.password
+    return render_template('edit_profile.html', title='Edit Profile', form=form)
 
 # @app.route('/meal_planner', methods=['GET', 'POST'])
 # @login_required
@@ -323,7 +362,7 @@ def edit_profile():
 # 			'content': 'Blah Blah Blah Blah Blah'
 # 		}
 # 	]
-	
+
 
 # 	profile = User.query.filter_by(username=current_user.username).first()
 # 	return render_template('meal_planner.html',title='Meal Planner', meals = meals)
@@ -332,21 +371,18 @@ def edit_profile():
 @app.route('/meal_planner', methods=['GET', 'POST'])
 @login_required
 def meal_planner():
-	planner_recipes = Planner.query.filter_by(user_id=current_user.id).all()
-	meals = []
-	for recipe in planner_recipes:
-		meals.append({
-			'title' : recipe.recipe_name,
-			'image' : recipe.img_url,
-			'servings' : '3 servings',
-			'id': recipe.recipe_id
-			})
+    planner_recipes = Planner.query.filter_by(user_id=current_user.id).all()
+    meals = []
+    for recipe in planner_recipes:
+        meals.append({
+            'title': recipe.recipe_name,
+            'image': recipe.img_url,
+            'servings': '3 servings',
+            'id': recipe.recipe_id
+        })
 
-	profile = User.query.filter_by(username=current_user.username).first()
-	return render_template('meal_planner.html',title='Meal Planner', meals = meals)
-
-
-
+    profile = User.query.filter_by(username=current_user.username).first()
+    return render_template('meal_planner.html', title='Meal Planner', meals=meals)
 
 
 @app.route("/planner.json", methods=["POST"])
@@ -361,16 +397,16 @@ def process_recipe_planner_button(recipe_id):
     current_recipe = helper_functions.check_if_recipe_exists(recipe_id)
 
     if not current_recipe:
-        current_recipe = helper_functions.add_recipe(recipe_id,current_user)
+        current_recipe = helper_functions.add_recipe(recipe_id, current_user)
 
     # Check if user already bookmarked recipe. If not, add to DB.
     meal_exists = (helper_functions
-                       .check_if_meal_exists(recipe_id,
-                                                 current_user.id))
+                   .check_if_meal_exists(recipe_id,
+                                         current_user))
 
     if not meal_exists:
         helper_functions.add_meal(current_user.id,
-                                      recipe_id)
+                                  recipe_id)
         # Return success message to bookmark-recipe.js ajax success fn
         success_message = "This recipe has been added to the Meal Planner!"
         return success_message
@@ -380,27 +416,23 @@ def process_recipe_planner_button(recipe_id):
     return error_message
 
 
-
-
-
 @app.route('/list/pantry', methods=['GET', 'POST'])
 @login_required
-def pantry():	
-	form = PantryList()
-	if request.method=='POST':
-		helper_functions.add_to_pantry(current_user.id,form.ing_name.data)
-	return render_template('pantry.html',title='Pantry',form=form)
+def pantry():
+    form = PantryList()
+    if request.method == 'POST':
+        helper_functions.add_to_pantry(current_user.id, form.ing_name.data)
+    return render_template('pantry.html', title='Pantry', form=form)
 
 
 @app.route("/user/cals")
 @login_required
 def get_meals_from_cals():
-	current_user_cals = current_user.cal_req 
-	response1 = api_calls.recommend_diet_based_on_cals1(current_user_cals)
-	print(response1)
-	response2 = api_calls.recommend_diet_based_on_cals2(current_user_cals)
-	print(response2)
-	response3 = api_calls.recommend_diet_based_on_cals3(current_user_cals)
-	print(response3)	
-	return render_template("recommend.html", recom1=response1["meals"], recom2=response2["meals"], recom3=response3["meals"], current_user_cals=current_user_cals)
-
+    current_user_cals = current_user.cal_req
+    response1 = api_calls.recommend_diet_based_on_cals1(current_user_cals)
+    print(response1)
+    response2 = api_calls.recommend_diet_based_on_cals2(current_user_cals)
+    print(response2)
+    response3 = api_calls.recommend_diet_based_on_cals3(current_user_cals)
+    print(response3)
+    return render_template("recommend.html", recom1=response1["meals"], recom2=response2["meals"], recom3=response3["meals"], current_user_cals=current_user_cals)

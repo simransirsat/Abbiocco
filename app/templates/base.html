@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<title>
-		
-	</title>
+    <title>
+
+    </title>
     <meta charset="UTF-8">
     <meta name="description" content="">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Abbiocco</title>
     <link rel="icon" href="../static/img/core-img/favicon.ico">
     <link rel="stylesheet" href="../static/css/style.css">
-	{% block linkages %}
+    {% block linkages %}
 
-	{% endblock %}
+    {% endblock %}
 </head>
+
 <body>
 
-	<div class="preloader d-flex align-items-center justify-content-center">
+    <div class="preloader d-flex align-items-center justify-content-center">
         <div class="preloader-content">
             <h3>Cooking in progress..</h3>
             <div id="cooking">
@@ -39,7 +42,7 @@
             </div>
         </div>
     </div>
-     <header class="header-area">
+    <header class="header-area">
 
         <!-- Top Header Area -->
         <div class="top-header-area bg-img bg-overlay" style="background-image: url(../static/img/bg-img/header.jpg);">
@@ -48,12 +51,18 @@
                     <div class="col-12 col-sm-6">
                         <!-- Top Social Info -->
                         <div class="top-social-info">
-                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Pinterest"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Dribbble"><i class="fa fa-dribbble" aria-hidden="true"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Behance"><i class="fa fa-behance" aria-hidden="true"></i></a>
-                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Linkedin"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Pinterest"><i
+                                    class="fa fa-pinterest" aria-hidden="true"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Facebook"><i
+                                    class="fa fa-facebook" aria-hidden="true"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Twitter"><i
+                                    class="fa fa-twitter" aria-hidden="true"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Dribbble"><i
+                                    class="fa fa-dribbble" aria-hidden="true"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Behance"><i
+                                    class="fa fa-behance" aria-hidden="true"></i></a>
+                            <a href="#" data-toggle="tooltip" data-placement="bottom" title="Linkedin"><i
+                                    class="fa fa-linkedin" aria-hidden="true"></i></a>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6 col-lg-5 col-xl-4">
@@ -61,8 +70,8 @@
                         <div class="top-search-area">
                             <form action="{{url_for('index')}}" method="post" class="form">
                                 <input type="search" name="top-search" class="recipe_search" placeholder="Search">
-                                
-                                 <button type="submit" class="btn"><i class="fa fa-search"></i></button>
+
+                                <button type="submit" class="btn"><i class="fa fa-search"></i></button>
                             </form>
                         </div>
                     </div>
@@ -78,7 +87,7 @@
 
         <!-- Navbar Area -->
         <div class="bueno-main-menu" id="sticker">
-            
+
             <div class="classy-nav-container breakpoint-off">
                 <div class="container">
                     <!-- Menu -->
@@ -105,8 +114,8 @@
                                 <ul style="margin: 0;">
                                     <li><a href="{{ url_for('index') }}">Home</a></li>
                                     <!-- <li><a href="#">About Us</a></li> -->
-                                    
-                                    {%  if current_user.is_authenticated %}
+
+                                    {% if current_user.is_authenticated %}
                                     <li><a href="{{ url_for('view_profile') }}">Profile</a></li>
                                     <li><a href="{{ url_for('pantry') }}">Pantry</a></li>
                                     <li><a href="{{ url_for('meal_planner') }}">Meal Planner</a></li>
@@ -119,7 +128,7 @@
                                     </li>
                                     <li><a href="{{ url_for('get_meals_from_cals') }}">Recommendations</a></li>
                                     {% endif %}
-                                    
+
                                     <!-- <li><a href="{{ url_for('pantry') }}">Pantry</a></li> -->
                                     <li><a href="{{ url_for('category') }}">Discover</a></li>
                                     <!-- <li><a href="#">Pages</a>
@@ -177,20 +186,20 @@
                                             </ul>
                                         </div>
                                     </li> -->
-                                    
+
 
                                     <li><a href=" {{ url_for('contacts') }} ">Contact</a></li>
                                 </ul>
-                             
+
                                 <!-- Login/Register -->
                                 <div class="login-area">
                                     {% if current_user.is_anonymous %}
-							        <a href="{{ url_for('login') }}">Login</a>
+                                    <a href="{{ url_for('login') }}">Login</a>
                                     <b>/</b>
                                     <a href=" {{ url_for('register') }}">Register</a>
-							        {% else %}
-							        <a href="{{ url_for('logout') }}">Logout</a>
-							        {% endif %}
+                                    {% else %}
+                                    <a href="{{ url_for('logout') }}">Logout</a>
+                                    {% endif %}
 
                                 </div>
                             </div>
@@ -203,14 +212,14 @@
         </div>
     </header>
     {% block prompt %}
-            {% with messages=get_flashed_messages() %}
-            {% if messages %}
-            {% for message in messages %}
-            <li > {{message}} </li>
-            {% endfor %}
-            {% endif %}
-            {% endwith %}
-            {% endblock %}
+    {% with messages=get_flashed_messages() %}
+    {% if messages %}
+    {% for message in messages %}
+    <li> {{message}} </li>
+    {% endfor %}
+    {% endif %}
+    {% endwith %}
+    {% endblock %}
 
     {% block trend %}
     <div class="treading-post-area" id="treadingPost">
@@ -323,13 +332,13 @@
         </div>
     </div>
     {% endblock %}
-    
+
     {% block pantry %}
     {% endblock %}
-    
+
     {% block content %}
     {% endblock %}
-    
+
     <footer class="footer-area">
         <div class="container">
             <div class="row">
@@ -348,18 +357,19 @@
             </div>
         </div>
     </footer>
-    
-     <script src="../static/js/jquery/jquery-2.2.4.min.js"></script>
-        <!-- Popper js -->
-        <script src="../static/js/bootstrap/popper.min.js"></script>
-        <!-- Bootstrap js -->
-        <script src="../static/js/bootstrap/bootstrap.min.js"></script>
-        <!-- All Plugins js -->
-        <script src="../static/js/plugins/plugins.js"></script>
-        <!-- Active js -->
-        <script src="../static/js/active.js"></script>
-        {% block includes %}
+
+    <script src="../static/js/jquery/jquery-2.2.4.min.js"></script>
+    <!-- Popper js -->
+    <script src="../static/js/bootstrap/popper.min.js"></script>
+    <!-- Bootstrap js -->
+    <script src="../static/js/bootstrap/bootstrap.min.js"></script>
+    <!-- All Plugins js -->
+    <script src="../static/js/plugins/plugins.js"></script>
+    <!-- Active js -->
+    <script src="../static/js/active.js"></script>
+    {% block includes %}
     {% endblock %}
 
 </body>
+
 </html>

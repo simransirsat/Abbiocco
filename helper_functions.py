@@ -39,7 +39,7 @@ def check_if_bookmark_exists(recipe_id, user_id):
     return Bookmark.query.filter((Bookmark.recipe_id == recipe_id) &
                                  (Bookmark.user_id == user_id)).first()
 
-def check_if_meal_exists(recipe_id, user_id):
+def check_if_meal_exists_in_planner(recipe_id, user_id):
     """Check if bookmark exists in DB. If so, returns instantiated Bookmark
     object. Returns none if bookmark not found."""
 
@@ -232,6 +232,15 @@ def add_to_list(recipe_id, list_id):
     return updated_list_ingredients
 
 def add_to_pantry(user_id, ing_name):
+    """This function adds the ingredient to pantry for the given user
+
+    Args:
+        user_id (integer): the id of the user whose pantry list it is
+        ing_name (str): the name of the ingredient to be displayed
+
+    Returns:
+        [list]: list of items in the users pantry
+    """
     print("item added to pantry")
     pantrylist = []
     new_item = PantryList(user_id=user_id, ing_name=ing_name)
