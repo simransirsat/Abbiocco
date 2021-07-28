@@ -268,12 +268,13 @@ class RecipeCuisine(db.Model):
 
 class PantryList(db.Model):
     __tablename__ = "pantry"
-    id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    ing_name = db.Column(db.String(64))
+    # id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    ing_name = db.Column(db.String(64), primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
-        return "<PantryList id={} ing_name={} user_id={}>".format(self.id, self.ing_name, self.user_id)
+        return "<PantryList ing_name={} user_id={}>".format(self.ing_name, self.user_id)
+        # return "<PantryList id={} ing_name={} user_id={}>".format(self.id, self.ing_name, self.user_id)
 
 
 @login.user_loader

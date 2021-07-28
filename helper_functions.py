@@ -231,6 +231,8 @@ def add_to_list(recipe_id, list_id):
     # Return the list of ListIngredient objects
     return updated_list_ingredients
 
+pantrylist = []
+
 def add_to_pantry(user_id, ing_name):
     """This function adds the ingredient to pantry for the given user
 
@@ -242,10 +244,18 @@ def add_to_pantry(user_id, ing_name):
         [list]: list of items in the users pantry
     """
     print("item added to pantry")
-    pantrylist = []
+    # pantrylist = []
     new_item = PantryList(user_id=user_id, ing_name=ing_name)
     db.session.add(new_item)
     db.session.commit()
-    pantrylist.append(new_item)
+    pantrylist.append(ing_name)
+    return pantrylist
+
+def delete_from_pantry(user_id, ing_name):
+    print("item deleted from pantry")
+    del_item = PantryList.query.filter_by(ing_name=ing_name).first()
+    pantrylist.remove(ing_name)
+    db.session.delete(del_item)
+    db.session.commit()
     return pantrylist
 
