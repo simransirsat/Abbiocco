@@ -146,6 +146,7 @@ class Recipe(db.Model):
         "Cuisine", secondary="recipe_cuisines", backref=db.backref("recipes"))
     users = db.relationship("User", secondary="bookmarks",
                             backref=db.backref("recipes"))
+
     # def __init__(self,**kwargs):
     # 	self.recipe_name = kwargs.get('recipe_name')
     # 	self.instructions = kwargs.get('instructions')
@@ -243,12 +244,13 @@ class Planner(db.Model):
     planner_id = db.Column(db.Integer,
                            autoincrement=True,
                            primary_key=True)
+    meal_type = db.Column(db.String(64))                       
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     recipe_id = db.Column(db.String(64), db.ForeignKey('recipes.recipe_id'))
 
     def __repr__(self):
-        return """<Planner planner_id={} user_id={} recipe_id={}>""".format(
-            self.bookmark_id, self.user_id, self.recipe_id)
+        return """<Planner planner_id={} user_id={} recipe_id={} meal_type={}>""".format(
+            self.planner_id, self.user_id, self.recipe_id, self.meal_type)
 
 
 class RecipeCuisine(db.Model):

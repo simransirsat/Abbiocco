@@ -417,6 +417,7 @@ def recipe_info(recipe_id):
     #                             }
 
     # return example_recipe_info
+    
     info_response = requests.get(
         'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/'
         + recipe_id + '/information', headers=headers)
