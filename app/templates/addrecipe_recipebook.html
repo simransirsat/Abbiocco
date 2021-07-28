@@ -33,24 +33,6 @@
       
       <!-- Custom styles for this template -->
       <link href="../static/css/addrecipe.css" rel="stylesheet">
-<<<<<<< HEAD
-</head>
-{% endblock %}
-{%block content%} 
-<body>
-
-
-      <div class="container py-3 back-img">
-            <header>
-                  <div class="pricing-header p-3 pb-md-4 mx-auto text-center">
-                        <h2 class="display-4 fw-normal" style="font-size: 2em;color: aliceblue;">Add Your own Recipe</h2>
-                  </div>
-            </header>
-
-            <main>
-                  <div class="row row-cols-1 row-cols-md-3 mb-3 text-center">
-                        <div class="col-md-2">
-=======
 
 </head>
 {% endblock %}
@@ -88,7 +70,6 @@
                                                 {% for error in form.ingredients.errors %}
                                                 <span style="color: red;">[{{ error }}]</span>
                                                 {% endfor %}
->>>>>>> 79211c92cc843554b0c38851087e321e48179b35
 
                                                 <div class="form-group">
                                                       {{ form.instructions.label(class_='form-label') }}<br>
