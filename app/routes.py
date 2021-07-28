@@ -268,7 +268,7 @@ def process_meal_planner_button(user_id, recipe_id):
         current_recipe = helper_functions.add_recipe(recipe_id, current_user)
         print("Meal not present in db.... \nAdding...")
     helper_functions.add_meal(user_id, recipe_id)
-
+ 
     # Check if the recipe has already been added to planner
     recipe_exists_in_planner = helper_functions.check_if_meal_exists_in_planner(
         recipe_id, user_id)
