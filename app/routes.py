@@ -274,15 +274,15 @@ def process_meal_planner_button(user_id, recipe_id):
         recipe_id, user_id)
 
     if not recipe_exists_in_planner:
-        message = ""
+        message = "This meal will be added to your Planner."
         try:
             helper_functions.add_meal(recipe_id, current_user.id)
-            message = "Meal added to planner successfully"
+            message = "Meal added to your Planner successfully"
         except:
-            message = "Something went wrong in adding the meal to meal planner"
+            message = "Something went wrong in adding the meal to the Meal Planner"
         finally:
             return message
-    failure_message = "This meal already exists in your planner"
+    failure_message = "This meal is in your Planner."
     return failure_message
 
 
@@ -373,11 +373,14 @@ def edit_profile():
 def meal_planner():
     planner_recipes = Planner.query.filter_by(user_id=current_user.id).all()
     meals = []
+
     for recipe in planner_recipes:
+        recipe_info_json = api_calls.recipe_info(recipe.recipe_id)
         meals.append({
-            'title': recipe.recipe_name,
-            'image': recipe.img_url,
-            'servings': '3 servings',
+            
+            'title': recipe_info_json['title'],
+            'image': recipe_info_json['image'],
+            'servings': recipe_info_json['servings'],
             'id': recipe.recipe_id
         })
 
