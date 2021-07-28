@@ -195,7 +195,7 @@ def meal_planning(recipe_id):
     # Todo Ideally this must be checked first
     bookmark = True  # ! This statement is hard coded
     # TODO uncomment the above and reference functions in context of meal planner
-    message = process_meal_planner_button(user.id, recipe_id, title, img, servings)
+    message = process_meal_planner_button(user.id, recipe_id)
     flash(message)
 
     # TODO instead of using render template we can use redirect and send the user back to the recipe page as expected
