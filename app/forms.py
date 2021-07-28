@@ -82,10 +82,10 @@ class EditProfileForm(FlaskForm):
                 raise ValidationError('Please use a different username.')
 
 
-class PantryList(FlaskForm):
+class PantryForm(FlaskForm):
     ing_name = StringField('Enter an ingredient', validators=[DataRequired()])
     add = SubmitField('Add item')
-
+    delete = SubmitField('Delete item')
     # def __init__(self, list_name, *args, **kwargs):
     # 	super(PantryList, self).__init__(*args, **kwargs)
     # 	self.list_name = list_name

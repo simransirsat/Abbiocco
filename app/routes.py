@@ -5,9 +5,9 @@ from app.forms import LoginForm
 from flask_login import logout_user
 from flask_login import current_user, login_user, login_required
 from werkzeug.urls import url_parse
-from app.models import User, Recipe, List, Ingredient, RecipeLocal, Planner
+from app.models import Ingredient, List, PantryList, Planner, Recipe, RecipeLocal, User
 from app import db
-from app.forms import RegistrationForm, EditProfileForm, AddRecipeForm, PantryList
+from app.forms import RegistrationForm, EditProfileForm, AddRecipeForm, PantryForm
 from app import api_calls
 import helper_functions
 
@@ -419,10 +419,23 @@ def process_recipe_planner_button(recipe_id):
 @app.route('/list/pantry', methods=['GET', 'POST'])
 @login_required
 def pantry():
-    form = PantryList()
-    if request.method == 'POST':
-        helper_functions.add_to_pantry(current_user.id, form.ing_name.data)
-    return render_template('pantry.html', title='Pantry', form=form)
+    outlist = PantryList.query.filter_by(user_id=current_user.id).all()
+    ings=[]
+    for item in outlist:
+        ings.append(item.ing_name)
+
+    form = PantryForm()
+    if form.add.data:
+        listupdate=helper_functions.add_to_pantry(current_user.id, form.ing_name.data)
+        ings.append(form.ing_name.data)
+    
+    if form.delete.data:
+        listupdate=helper_functions.delete_from_pantry(current_user.id, form.ing_name.data)
+        ings.remove(form.ing_name.data)
+
+    # if request.method == 'POST':
+    #     helper_functions.add_to_pantry(current_user.id, form.ing_name.data)
+    return render_template('pantry2.html', title='Pantry', form=form, inglist=ings)
 
 
 @app.route("/user/cals")
