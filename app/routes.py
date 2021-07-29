@@ -7,7 +7,7 @@ from flask_login import current_user, login_user, login_required
 from werkzeug.urls import url_parse
 from app.models import Ingredient, List, PantryList, Planner, Recipe, RecipeLocal, User
 from app import db
-from app.forms import RegistrationForm, EditProfileForm, AddRecipeForm, PantryForm
+from app.forms import RegistrationForm, EditProfileForm, AddRecipeForm, PantryForm, PlannerForm
 from app import api_calls
 import helper_functions
 
@@ -342,9 +342,11 @@ def edit_profile():
 def meal_planner():
     planner_recipes = Planner.query.filter_by(user_id=current_user.id).all()
     meals = []
-
+    form = PlannerForm()
+    
     for recipe in planner_recipes:
         recipe_info_json = api_calls.recipe_info(recipe.recipe_id)
+        print(recipe_info_json)
         meals.append({
             
             'title': recipe_info_json['title'],
@@ -352,9 +354,37 @@ def meal_planner():
             'servings': recipe_info_json['servings'],
             'id': recipe.recipe_id
         })
-
+    
+    # if form.delete.data:
+    #     rec_id = request.form.get("rec_id")
+    #     del_meal=helper_functions.delete_meal(current_user.id, rec_id)
+    #     meals.remove(del_meal)
+        
+    
     profile = User.query.filter_by(username=current_user.username).first()
     return render_template('meal_planner.html', title='Meal Planner', meals=meals)
+
+
+# @app.route("/meal_planner/delete", methods=["POST"])
+# def delete():
+#     rec_id = request.form.get("rec_id")
+#     del_meal=helper_functions.delete_meal(current_user.id, rec_id)
+#     return redirect(url_for('meal_planner'))
+
+@app.route('/deleteplan/<recipe_id>', methods=['GET'])
+def deleteplan(recipe_id):
+    
+    print(recipe_id)
+
+    del_meal = Planner.query.filter_by(user_id=current_user.id,recipe_id=recipe_id).first()
+    db.session.delete(del_meal)
+    db.session.commit()
+    print(recipe_id)
+    message = "Meal deleted from your Planner successfully."
+    flash(message)
+   
+    return redirect(url_for('meal_planner'))
+
 
 
 @app.route("/planner.json", methods=["POST"])

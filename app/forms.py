@@ -89,3 +89,6 @@ class PantryForm(FlaskForm):
     # def __init__(self, list_name, *args, **kwargs):
     # 	super(PantryList, self).__init__(*args, **kwargs)
     # 	self.list_name = list_name
+
+class PlannerForm(FlaskForm):
+    delete = SubmitField('Delete')
