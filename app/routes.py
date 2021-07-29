@@ -343,17 +343,23 @@ def meal_planner():
     planner_recipes = Planner.query.filter_by(user_id=current_user.id).all()
     meals = []
     form = PlannerForm()
-    
+    current_user_cals = current_user.cal_req
+    day_cals = 0
     for recipe in planner_recipes:
         recipe_info_json = api_calls.recipe_info(recipe.recipe_id)
+        print(recipe.recipe_id)
         print(recipe_info_json)
+        day_cals+=recipe_info_json['nutrition']['nutrients'][0]["amount"]
         meals.append({
             
             'title': recipe_info_json['title'],
             'image': recipe_info_json['image'],
             'servings': recipe_info_json['servings'],
-            'id': recipe.recipe_id
+            'id': recipe.recipe_id,
+            'cals':recipe_info_json['nutrition']['nutrients'][0]["amount"],
+            'readyInMinutes' : recipe_info_json['readyInMinutes']
         })
+
     
     # if form.delete.data:
     #     rec_id = request.form.get("rec_id")
@@ -362,7 +368,7 @@ def meal_planner():
         
     
     profile = User.query.filter_by(username=current_user.username).first()
-    return render_template('meal_planner.html', title='Meal Planner', meals=meals)
+    return render_template('meal_planner.html', title='Meal Planner', meals=meals, current_user_cals=current_user_cals,day_cals=day_cals)
 
 
 # @app.route("/meal_planner/delete", methods=["POST"])
