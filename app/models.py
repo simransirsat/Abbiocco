@@ -25,6 +25,7 @@ class User(UserMixin, db.Model):
     bmr = db.Column(db.Float)
     activity_f = db.Column(db.String(5))
     cal_req = db.Column(db.Float)
+    exclude = db.Column(db.String(64))
     password_hash = db.Column(db.String(128))
     about_me = db.Column(db.String(140))
     followed = db.relationship(
@@ -41,6 +42,7 @@ class User(UserMixin, db.Model):
         self.dob = kwargs.get('dob')
         self.gender = kwargs.get('gender')
         self.name = kwargs.get('name')
+        self.exclude = kwargs.get('exclude')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)

@@ -16,9 +16,11 @@ import helper_functions
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     if request.method == "POST":
+        user = User.query.filter_by(id=current_user.id).first()
+        exclude = user.exclude
         result = request.form
         recipe_search = result['top-search']
-        results_json = api_calls.recipe_search(recipe_search, 6)
+        results_json = api_calls.recipe_search(recipe_search, 6, exclude)
         print(results_json)
 
         for recipe in results_json['results']:
@@ -78,7 +80,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data,  dob=form.dob.data, name=form.name.data,
-                    height=form.height.data, weight=form.weight.data, gender=form.gender.data, activity_f=form.activity_f.data)
+                    height=form.height.data, weight=form.weight.data, gender=form.gender.data, activity_f=form.activity_f.data, exclude=form.exclude.data)
         user.set_password(form.password.data)
         user.set_age(form.dob.data, form.weight.data, form.height.data,
                      form.gender.data, form.activity_f.data, form.wt_choice.data)
@@ -337,6 +339,7 @@ def edit_profile():
         current_user.height = form.height.data
         current_user.dob = form.dob.data
         current_user.gender = form.gender.data
+        current_user.exclude = form.exclude.data
         current_user.name = form.name.data
         current_user.username = form.username.data
         current_user.email = form.email.data
@@ -350,6 +353,7 @@ def edit_profile():
         form.height.data = current_user.height
         form.dob.data = current_user.dob
         form.gender.data = current_user.gender
+        form.exclude.data = current_user.exclude
         form.name.data = current_user.name
         form.username.data = current_user.username
         form.email.data = current_user.email
@@ -469,10 +473,11 @@ def pantry():
 @login_required
 def get_meals_from_cals():
     current_user_cals = current_user.cal_req
-    response1 = api_calls.recommend_diet_based_on_cals1(current_user_cals)
+    exclude= current_user.exclude
+    response1 = api_calls.recommend_diet_based_on_cals1(current_user_cals, exclude)
     print(response1)
-    response2 = api_calls.recommend_diet_based_on_cals2(current_user_cals)
+    response2 = api_calls.recommend_diet_based_on_cals2(current_user_cals, exclude)
     print(response2)
-    response3 = api_calls.recommend_diet_based_on_cals3(current_user_cals)
+    response3 = api_calls.recommend_diet_based_on_cals3(current_user_cals, exclude)
     print(response3)
     return render_template("recommend.html", recom1=response1["meals"], recom2=response2["meals"], recom3=response3["meals"], current_user_cals=current_user_cals)
