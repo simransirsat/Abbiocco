@@ -83,6 +83,7 @@ class EditProfileForm(FlaskForm):
 
 
 class PantryForm(FlaskForm):
+    search = SubmitField('Search recipes')
     ing_name = StringField('Enter an ingredient', validators=[DataRequired()])
     add = SubmitField('Add item')
     delete = SubmitField('Delete item')
@@ -90,5 +91,10 @@ class PantryForm(FlaskForm):
     # 	super(PantryList, self).__init__(*args, **kwargs)
     # 	self.list_name = list_name
 
+
 class PlannerForm(FlaskForm):
     delete = SubmitField('Delete')
+
+class PantrySearch(FlaskForm):
+    search = SubmitField('DISCOVER RECIPES')
+

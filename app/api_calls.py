@@ -484,3 +484,14 @@ def recommend_diet_based_on_cals3(target_calories, default_time="day"):
 
     # response = {"meals":[{"id":625935,"imageType":"jpg","title":"5 Ingredient Triple Decker Chocolate Peanut Butter Bars","readyInMinutes":45,"servings":16,"sourceUrl":"https://www.halfbakedharvest.com/5-ingredient-tripple-decker-chocolate-peanut-butter-bars/"},{"id":989730,"imageType":"jpg","title":"One Pan Skillet Honey Dijon Chicken","readyInMinutes":30,"servings":4,"sourceUrl":"https://www.lecremedelacrumb.com/one-pan-skillet-honey-dijon-chicken"},{"id":357733,"imageType":"jpeg","title":"Roasted Free Range Chicken","readyInMinutes":585,"servings":4,"sourceUrl":"http://www.foodnetwork.com/recipes/roasted-free-range-chicken-recipe.html"}],"nutrients":{"calories":2507.16,"protein":115.89,"fat":195.45,"carbohydrates":68.42}}
     return response.json()
+
+def search_by_pantry(ingredient_list, num_ops=7):
+    
+    url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/findByIngredients"
+    querystring = {
+        "ingredients": ingredient_list,
+        "number": num_ops,
+    }
+    response = requests.request("GET", url, headers=headers, params=querystring)
+
+    return response.json()
