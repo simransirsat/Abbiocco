@@ -95,7 +95,33 @@
 
 
 
-    <section class="ftco-section">
+    <div class="container py-4">
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative text-center">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        
+                        <h5 class="" style="color: black;">Recommended Calories per Day</h5>
+                        <h4 class="" style="color: #afa939;"><b style="font-weight: 700;"> {{ current_user_cals }} kcals</b></h4>
+                        
+                        
+                    </div>
+                    
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm position-relative text-center">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <h5 class="" style="color: black;">Today's Calorie Summary</h5>
+                        <h4 class="" style="color: #afa939;"><b style="font-weight: 700;"> {{ day_cals }} kcals</b></h4>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="ftco-section py-4">
         <div class="container">
             <div class="row">
                 <div class="col-md-12 text-center">
@@ -114,15 +140,14 @@
                                 <div class="text" style="width: 100%;">
                                     <p class="name">{{ meal.title }}</p>
                                     <span class="position">Serves : {{ meal.servings }}</span>
-                                    <p>This is a wider card with supporting text below as a natural lead-in to
-                                        additional content. This content is a little bit longer.</p>
+                                    <p>Calories : {{ meal.cals }}</p>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary"> <a href="/recipe/{{ meal.id }}">View</a></button>
-                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" style="border-radius: 0;border-color: #afa939;"> <a href="/recipe/{{ meal.id }}">View</a></button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary" style="border-radius: 0;border-color: #afa939;"><a href="/deleteplan/{{meal.id }}">Delete</a></button>
                                     </div>
-                                    <small class="text-muted">9 mins</small>
+                                    <small class="text-muted">Time Req : {{ meal.readyInMinutes }} mins</small>
                                 </div>
                             </div>
                         </div>
