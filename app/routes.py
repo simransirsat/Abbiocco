@@ -7,7 +7,7 @@ from flask_login import current_user, login_user, login_required
 from werkzeug.urls import url_parse
 from app.models import Ingredient, List, PantryList, Planner, Recipe, RecipeLocal, User
 from app import db
-from app.forms import RegistrationForm, EditProfileForm, AddRecipeForm, PantryForm
+from app.forms import AddRecipeForm, EditProfileForm, PantryForm, PantrySearch, RegistrationForm
 from app import api_calls
 import helper_functions
 
@@ -32,6 +32,25 @@ def index():
         return render_template('catagory-post.html', result=result)
     else:
         return render_template('index.html')
+
+@app.route('/')
+@app.route('/index2', methods=['GET', 'POST'])
+def index2():
+    # if request.method == "POST":
+    result = request.form
+    recipe_search = ['apple','pear']
+    results_json = api_calls.search_by_pantry(recipe_search, 6)
+    print(results_json)
+
+    for recipe in results_json:
+        recipe_id = str(recipe['id'])
+        summary_response = api_calls.summary_info(recipe_id)
+        summary_json = summary_response
+        summary_text = summary_json['summary']
+        recipe['summary'] = summary_text
+        recipe['imgUrl'] = recipe['image']
+    result = results_json
+    return render_template('catagory-post.html', result=result)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -425,20 +444,25 @@ def pantry():
     outlist = PantryList.query.filter_by(user_id=current_user.id).all()
     ings=[]
     for item in outlist:
-        ings.append(item.ing_name)
+        ings.append(item.ing_name.upper())
 
-    form = PantryForm()
-    if form.add.data:
-        listupdate=helper_functions.add_to_pantry(current_user.id, form.ing_name.data)
-        ings.append(form.ing_name.data)
+    form1 = PantryForm()
+    if form1.add.data:
+        listupdate=helper_functions.add_to_pantry(current_user.id, form1.ing_name.data)
+        ings.append(form1.ing_name.data)
     
-    if form.delete.data:
-        listupdate=helper_functions.delete_from_pantry(current_user.id, form.ing_name.data)
-        ings.remove(form.ing_name.data)
+    if form1.delete.data:
+        listupdate=helper_functions.delete_from_pantry(current_user.id, form1.ing_name.data)
+        ings.remove(form1.ing_name.data)
 
+    if form1.search.data:
+        print("searching recipes")
+    # form2 = PantrySearch()
+    # if form2.search.data:
+    #     print("searching")
     # if request.method == 'POST':
     #     helper_functions.add_to_pantry(current_user.id, form.ing_name.data)
-    return render_template('pantry2.html', title='Pantry', form=form, inglist=ings)
+    return render_template('pantry2.html', title='Pantry', form=form1, inglist=ings)
 
 
 @app.route("/user/cals")

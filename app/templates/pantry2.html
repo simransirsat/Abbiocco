@@ -13,20 +13,84 @@
             text-shadow: 4px 4px 0px rgba(0, 0, 0, 0.1);
             text-align: center;
         }
+
+        .list-ppt {
+            font-family: 'Open Sans', sans-serif;
+            font-size: larger;
+            font-weight: bolder;
+            text-align: center;
+            padding-bottom: 50px;
+        }
+
+        .stylebtn {
+            background-color: rgb(159 207 96 / 75%);
+            border: none;
+            color: white;
+            border-radius: 4px;
+            text-align: center;
+            font-family: 'Open Sans', sans-serif;
+            font-weight: bolder;
+            font-size: 14px;
+            width: 110px;
+            margin-left: 10px;
+            padding: 5px;
+        }
+
+        .button {
+            transition-duration: 0.4s;
+            border-radius: 3px;
+            width: 100px;
+        }
+
+        .stylebtn:hover {
+            background-color: rgb(159 207 96 / 25%);
+            border: none;
+            color: rgb(4, 82, 56);
+            box-shadow: 0 0 10px rgba(5, 65, 42, 0.411);
+        }
+
+        .form-control {
+            display: inline-block;
+            width: 250px;
+            max-width: 60%;
+            min-width: 100px;
+            margin: 10px 0;
+        }
+
+        .btn-grp {
+            /* float: right; */
+            text-align: center;
+            width: 100px;
+        }
     </style>
 </head>
 <body>
     <h1>PANTRY LIST</h1>
-    <ol>
+    <ol class="list-ppt">
         {% for ing in inglist %}
         <li>
             {{ ing }}
         </li>
         {% endfor %}
     </ol>
+   
+    <!-- <form action="{{url_for('index2')}}" method="post" class="form">
+        <button type="submit" class="stylebtn" onclick="">Search</button>
+    </form> -->
 
-    <form method="POST">
+    <!-- <form method="POST" class="PantrySearch">
         {{ form.hidden_tag()}}
+        {{ form.search() }}
+    </form> -->
+
+    <div>
+        <a href="{{ url_for('index2')}}">Search</a>
+        <!-- <button type="submit" class="stylebtn" onclick="{{ url_for('index')}}" id="search">DISCOVER RECIPES</button> -->
+    </div>
+
+    <form method="POST" class="PantryList">
+        {{ form.hidden_tag()}}
+        <!-- {{ form.search() }} -->
         {{ form.ing_name.label(class_='form-label') }}<br>
         {{ form.ing_name(class_='form-control') }}<br>
         {{ form.add() }}

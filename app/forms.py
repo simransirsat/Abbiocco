@@ -83,9 +83,13 @@ class EditProfileForm(FlaskForm):
 
 
 class PantryForm(FlaskForm):
+    search = SubmitField('Search recipes')
     ing_name = StringField('Enter an ingredient', validators=[DataRequired()])
     add = SubmitField('Add item')
     delete = SubmitField('Delete item')
     # def __init__(self, list_name, *args, **kwargs):
     # 	super(PantryList, self).__init__(*args, **kwargs)
     # 	self.list_name = list_name
+
+class PantrySearch(FlaskForm):
+    search = SubmitField('DISCOVER RECIPES')
