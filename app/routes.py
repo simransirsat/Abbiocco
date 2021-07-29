@@ -7,7 +7,9 @@ from flask_login import current_user, login_user, login_required
 from werkzeug.urls import url_parse
 from app.models import Ingredient, List, PantryList, Planner, Recipe, RecipeLocal, User
 from app import db
-from app.forms import AddRecipeForm, EditProfileForm, PantryForm, PantrySearch, RegistrationForm
+
+from app.forms import AddRecipeForm, EditProfileForm, PantryForm, PantrySearch, RegistrationForm, PlannerForm
+
 from app import api_calls
 import helper_functions
 
@@ -134,7 +136,7 @@ def quickView():
         bookmarks.append({
             'title': recipe.recipe_name,
             'image': recipe.img_url,
-            'servings': '3 servings',
+            'servings': recipe.recipe_info_json['servings'],
             'id': recipe.recipe_id
         })
 
@@ -360,55 +362,60 @@ def edit_profile():
         #form.password.data = current_user.password
     return render_template('edit_profile.html', title='Edit Profile', form=form)
 
-# @app.route('/meal_planner', methods=['GET', 'POST'])
-# @login_required
-# def meal_planner():
-# 	meals = [
-# 		{
-# 			'type':'Breakfast',
-# 			'recipe_name':'Eggs & Bacon',
-# 			'content': 'Blah Blah Blah Blah Blah'
-# 		},
-# 		{
-# 			'type':'Lunch',
-# 			'recipe_name':'Greek Salad',
-# 			'content': 'Blah Blah Blah Blah Blah'
-# 		},
-# 		{
-# 			'type':'Evening Snack',
-# 			'recipe_name':'Coffee',
-# 			'content': 'Blah Blah Blah Blah Blah'
-# 		},
-# 		{
-# 			'type':'Dinner',
-# 			'recipe_name':'Tomato Soup',
-# 			'content': 'Blah Blah Blah Blah Blah'
-# 		}
-# 	]
-
-
-# 	profile = User.query.filter_by(username=current_user.username).first()
-# 	return render_template('meal_planner.html',title='Meal Planner', meals = meals)
-
-
 @app.route('/meal_planner', methods=['GET', 'POST'])
 @login_required
 def meal_planner():
     planner_recipes = Planner.query.filter_by(user_id=current_user.id).all()
     meals = []
-
+    form = PlannerForm()
+    current_user_cals = current_user.cal_req
+    day_cals = 0
     for recipe in planner_recipes:
         recipe_info_json = api_calls.recipe_info(recipe.recipe_id)
+        print(recipe.recipe_id)
+        print(recipe_info_json)
+        day_cals+=recipe_info_json['nutrition']['nutrients'][0]["amount"]
         meals.append({
             
             'title': recipe_info_json['title'],
             'image': recipe_info_json['image'],
             'servings': recipe_info_json['servings'],
-            'id': recipe.recipe_id
+            'id': recipe.recipe_id,
+            'cals':recipe_info_json['nutrition']['nutrients'][0]["amount"],
+            'readyInMinutes' : recipe_info_json['readyInMinutes']
         })
 
+    
+    # if form.delete.data:
+    #     rec_id = request.form.get("rec_id")
+    #     del_meal=helper_functions.delete_meal(current_user.id, rec_id)
+    #     meals.remove(del_meal)
+        
+    
     profile = User.query.filter_by(username=current_user.username).first()
-    return render_template('meal_planner.html', title='Meal Planner', meals=meals)
+    return render_template('meal_planner.html', title='Meal Planner', meals=meals, current_user_cals=current_user_cals,day_cals=day_cals)
+
+
+# @app.route("/meal_planner/delete", methods=["POST"])
+# def delete():
+#     rec_id = request.form.get("rec_id")
+#     del_meal=helper_functions.delete_meal(current_user.id, rec_id)
+#     return redirect(url_for('meal_planner'))
+
+@app.route('/deleteplan/<recipe_id>', methods=['GET'])
+def deleteplan(recipe_id):
+    
+    print(recipe_id)
+
+    del_meal = Planner.query.filter_by(user_id=current_user.id,recipe_id=recipe_id).first()
+    db.session.delete(del_meal)
+    db.session.commit()
+    print(recipe_id)
+    message = "Meal deleted from your Planner successfully."
+    flash(message)
+   
+    return redirect(url_for('meal_planner'))
+
 
 
 @app.route("/planner.json", methods=["POST"])
