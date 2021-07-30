@@ -249,10 +249,12 @@ class Planner(db.Model):
     # meal_type = db.Column(db.String(64))                       
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     recipe_id = db.Column(db.String(64), db.ForeignKey('recipes.recipe_id'), primary_key=True)
+    recipe_cals=db.Column(db.Float)
+    # date = db.Column(db.Date)
 
     def __repr__(self):
-        return """<Planner planner_id={} user_id={} recipe_id={} meal_type={}>""".format(
-             self.user_id, self.recipe_id)
+        return """<Planner planner_id={} user_id={} recipe_id={} recipe_cals={}>""".format(
+             self.user_id, self.recipe_id, self.recipe_cals)
 
 
 class RecipeCuisine(db.Model):
