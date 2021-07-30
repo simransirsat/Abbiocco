@@ -7,7 +7,7 @@ from flask_login import current_user, login_user, login_required
 from werkzeug.urls import url_parse
 from app.models import Ingredient, List, PantryList, Planner, Recipe, RecipeLocal, User
 from app import db
-from app.forms import AddRecipeForm, EditProfileForm, PantryForm, PantrySearch, RegistrationForm
+from app.forms import AddRecipeForm, EditProfileForm, PantryForm, RegistrationForm
 from app import api_calls
 import helper_functions
 
@@ -37,8 +37,9 @@ def index():
 @app.route('/index2', methods=['GET', 'POST'])
 def index2():
     # if request.method == "POST":
-    result = request.form
-    recipe_search = ['apple','pear']
+    # result = request.form
+    recipe_search = ['flour','butter','sugar']
+    # recipe_search = inglist
     results_json = api_calls.search_by_pantry(recipe_search, 6)
     print(results_json)
 
@@ -445,20 +446,25 @@ def pantry():
 
     form1 = PantryForm()
     if form1.add.data:
-        listupdate=helper_functions.add_to_pantry(current_user.id, form1.ing_name.data)
-        ings.append(form1.ing_name.data)
+        listupdate=helper_functions.add_to_pantry(current_user.id, form1.ing_name.data.upper())
+        ings.append(form1.ing_name.data.upper())
     
     if form1.delete.data:
-        listupdate=helper_functions.delete_from_pantry(current_user.id, form1.ing_name.data)
-        ings.remove(form1.ing_name.data)
+        listupdate=helper_functions.delete_from_pantry(current_user.id, form1.ing_name.data.upper())
+        ings.remove(form1.ing_name.data.upper())
 
     if form1.search.data:
         print("searching recipes")
-    # form2 = PantrySearch()
-    # if form2.search.data:
-    #     print("searching")
-    # if request.method == 'POST':
-    #     helper_functions.add_to_pantry(current_user.id, form.ing_name.data)
+        forsend = PantryList.query.filter_by(user_id=current_user.id).all()
+        # send=""
+        send=[]
+        for item in forsend:
+            send.append(item.ing_name.upper())
+            # send=send+','+(item.ing_name.upper())
+        print("sending")
+        # index2(send)
+        # return render_template('index2.html', title='Results', ingredients=send)
+
     return render_template('pantry2.html', title='Pantry', form=form1, inglist=ings)
 
 
