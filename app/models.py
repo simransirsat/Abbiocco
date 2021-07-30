@@ -25,6 +25,7 @@ class User(UserMixin, db.Model):
     bmr = db.Column(db.Float)
     activity_f = db.Column(db.String(5))
     cal_req = db.Column(db.Float)
+    exclude = db.Column(db.String(64))
     password_hash = db.Column(db.String(128))
     about_me = db.Column(db.String(140))
     followed = db.relationship(
@@ -41,6 +42,7 @@ class User(UserMixin, db.Model):
         self.dob = kwargs.get('dob')
         self.gender = kwargs.get('gender')
         self.name = kwargs.get('name')
+        self.exclude = kwargs.get('exclude')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -146,6 +148,7 @@ class Recipe(db.Model):
         "Cuisine", secondary="recipe_cuisines", backref=db.backref("recipes"))
     users = db.relationship("User", secondary="bookmarks",
                             backref=db.backref("recipes"))
+
     # def __init__(self,**kwargs):
     # 	self.recipe_name = kwargs.get('recipe_name')
     # 	self.instructions = kwargs.get('instructions')
@@ -240,15 +243,18 @@ class Bookmark(db.Model):
 
 class Planner(db.Model):
     __tablename__ = "planner"
-    planner_id = db.Column(db.Integer,
-                           autoincrement=True,
-                           primary_key=True)
+    # planner_id = db.Column(db.Integer,
+    #                        autoincrement=True,
+    #                        primary_key=True)
+    # meal_type = db.Column(db.String(64))                       
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    recipe_id = db.Column(db.String(64), db.ForeignKey('recipes.recipe_id'))
+    recipe_id = db.Column(db.String(64), db.ForeignKey('recipes.recipe_id'), primary_key=True)
+    recipe_cals=db.Column(db.Float)
+    # date = db.Column(db.Date)
 
     def __repr__(self):
-        return """<Planner planner_id={} user_id={} recipe_id={}>""".format(
-            self.bookmark_id, self.user_id, self.recipe_id)
+        return """<Planner planner_id={} user_id={} recipe_id={} recipe_cals={}>""".format(
+             self.user_id, self.recipe_id, self.recipe_cals)
 
 
 class RecipeCuisine(db.Model):
