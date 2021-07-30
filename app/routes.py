@@ -8,7 +8,7 @@ from werkzeug.urls import url_parse
 from app.models import Ingredient, List, PantryList, Planner, Recipe, RecipeLocal, User
 from app import db
 
-from app.forms import AddRecipeForm, EditProfileForm, PantryForm, PantrySearch, RegistrationForm, PlannerForm
+from app.forms import AddRecipeForm, EditProfileForm, PantryForm, PantrySearch, RegistrationForm
 
 from app import api_calls
 import helper_functions
@@ -198,11 +198,15 @@ def meal_planning(recipe_id):
         planner = False
     recipe_info_json = api_calls.recipe_info(recipe_id)
 
+    recipe_cals=recipe_info_json['nutrition']['nutrients'][0]["amount"]
     title = recipe_info_json['title']
     img = recipe_info_json['image']
     ingredients = recipe_info_json['extendedIngredients']
     cooking_instructions = recipe_info_json['analyzedInstructions'][0]
     servings = recipe_info_json['servings']
+
+    recipe_cals=recipe_cals/servings
+
     source = recipe_info_json['sourceName']
     time = 100
     likes = recipe_info_json['aggregateLikes']
@@ -214,15 +218,12 @@ def meal_planning(recipe_id):
                 'step': element['number'],
                 'val': element['step']
             })
-    # Todo Put checks for the request the way it is working now is agnostic of wether a meal has been added or not
-    # Todo Ideally this must be checked first
-    bookmark = True  # ! This statement is hard coded
-    # TODO uncomment the above and reference functions in context of meal planner
-    message = process_meal_planner_button(user.id, recipe_id)
+
+    bookmark = True 
+  
+    message = process_meal_planner_button(user.id, recipe_id, recipe_cals)
     flash(message)
 
-    # TODO instead of using render template we can use redirect and send the user back to the recipe page as expected
-    # return redirect()
     return recipe(recipe_id)
 
 
@@ -279,7 +280,7 @@ def process_recipe_bookmark_button(recipe_id):
 
 
 @login_required
-def process_meal_planner_button(user_id, recipe_id):
+def process_meal_planner_button(user_id, recipe_id, recipe_cals):
     '''
     Function to add a meal to the meal planner similar to bookmarks
     '''
@@ -290,7 +291,7 @@ def process_meal_planner_button(user_id, recipe_id):
         # If the recipe is not present in the db then we cannot add it to planner
         current_recipe = helper_functions.add_recipe(recipe_id, current_user)
         print("Meal not present in db.... \nAdding...")
-    helper_functions.add_meal(user_id, recipe_id)
+    helper_functions.add_meal(user_id, recipe_id, recipe_cals)
  
     # Check if the recipe has already been added to planner
     recipe_exists_in_planner = helper_functions.check_if_meal_exists_in_planner(
@@ -299,15 +300,29 @@ def process_meal_planner_button(user_id, recipe_id):
     if not recipe_exists_in_planner:
         message = "This meal will be added to your Planner."
         try:
-            helper_functions.add_meal(recipe_id, current_user.id)
-            message = "Meal added to your Planner successfully"
+            helper_functions.add_meal(recipe_id, current_user.id, recipe_cals)
         except:
             message = "Something went wrong in adding the meal to the Meal Planner"
         finally:
             return message
-    failure_message = "This meal is in your Planner."
-    return failure_message
 
+
+    day_cals=0          #cals of meals added in a day
+    current_user_cals = current_user.cal_req
+    planner_recipes = Planner.query.filter_by(user_id=current_user.id).all()
+
+    for recipe in planner_recipes :
+        day_cals+=recipe.recipe_cals
+
+    if day_cals>current_user_cals :
+        message = "You have exceded your calorific requirements for the day. If you wish to change your meals, visit the Meal Planner."
+
+    elif day_cals==current_user_cals :
+        message = "This meal is in your Planner! Your calorie requirements are fulfilled for today."
+            
+    else :
+        message = "This meal is in your Planner"
+    return message
 
 @app.route("/profile/",  methods=["GET", "POST"])
 @login_required
@@ -367,40 +382,28 @@ def edit_profile():
 def meal_planner():
     planner_recipes = Planner.query.filter_by(user_id=current_user.id).all()
     meals = []
-    form = PlannerForm()
-    current_user_cals = current_user.cal_req
+    
+    current_user_cals = round(current_user.cal_req,2)
     day_cals = 0
     for recipe in planner_recipes:
         recipe_info_json = api_calls.recipe_info(recipe.recipe_id)
         print(recipe.recipe_id)
         print(recipe_info_json)
-        day_cals+=recipe_info_json['nutrition']['nutrients'][0]["amount"]
+        day_cals+=recipe.recipe_cals
         meals.append({
             
             'title': recipe_info_json['title'],
             'image': recipe_info_json['image'],
             'servings': recipe_info_json['servings'],
             'id': recipe.recipe_id,
-            'cals':recipe_info_json['nutrition']['nutrients'][0]["amount"],
+            'cals':recipe.recipe_cals,
             'readyInMinutes' : recipe_info_json['readyInMinutes']
         })
 
+    day_cals=round(day_cals,2)
     
-    # if form.delete.data:
-    #     rec_id = request.form.get("rec_id")
-    #     del_meal=helper_functions.delete_meal(current_user.id, rec_id)
-    #     meals.remove(del_meal)
-        
-    
-    profile = User.query.filter_by(username=current_user.username).first()
     return render_template('meal_planner.html', title='Meal Planner', meals=meals, current_user_cals=current_user_cals,day_cals=day_cals)
 
-
-# @app.route("/meal_planner/delete", methods=["POST"])
-# def delete():
-#     rec_id = request.form.get("rec_id")
-#     del_meal=helper_functions.delete_meal(current_user.id, rec_id)
-#     return redirect(url_for('meal_planner'))
 
 @app.route('/deleteplan/<recipe_id>', methods=['GET'])
 def deleteplan(recipe_id):
@@ -420,12 +423,12 @@ def deleteplan(recipe_id):
 
 @app.route("/planner.json", methods=["POST"])
 @login_required
-def process_recipe_planner_button(recipe_id):
+def process_recipe_planner_button(recipe_id, recipe_cals):
     """Adds meal to DB, returning either a success or error message
     back to ajax success function."""
 
     # Unpack info from ajax
-
+   
     # Check if recipe in DB. If not, add new recipe to DB.
     current_recipe = helper_functions.check_if_recipe_exists(recipe_id)
 
@@ -439,12 +442,12 @@ def process_recipe_planner_button(recipe_id):
 
     if not meal_exists:
         helper_functions.add_meal(current_user.id,
-                                  recipe_id)
-        # Return success message to bookmark-recipe.js ajax success fn
+                                  recipe_id, recipe_cals)
+        # Return success message to planner-recipe.js ajax success fn
         success_message = "This recipe has been added to the Meal Planner!"
         return success_message
 
-    # Return error message to bookmark-recipe.js ajax success fn
+    # Return error message to planner-recipe.js ajax success fn
     error_message = "You've already added this recipe."
     return error_message
 
@@ -487,4 +490,5 @@ def get_meals_from_cals():
     print(response2)
     response3 = api_calls.recommend_diet_based_on_cals3(current_user_cals, exclude)
     print(response3)
+    current_user_cals = round(current_user.cal_req,2)
     return render_template("recommend.html", recom1=response1["meals"], recom2=response2["meals"], recom3=response3["meals"], current_user_cals=current_user_cals)

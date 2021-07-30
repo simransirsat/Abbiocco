@@ -183,25 +183,16 @@ def add_bookmark(user_id, recipe_id):
     return new_bookmark
 
 
-def add_meal(user_id, recipe_id):
+def add_meal(user_id, recipe_id, recipe_cals):
     """Adds recipe to Planner table. Returns instantiated Planner object."""
 
-    new_meal = Planner(user_id=user_id, recipe_id=recipe_id)
+    new_meal = Planner(user_id=user_id, recipe_id=recipe_id, recipe_cals=recipe_cals)
 
     db.session.add(new_meal)
     db.session.commit()
     print("Added successfully")
     return new_meal
 
-def delete_meal(recipe_id):
-    """Adds recipe to Planner table. Returns instantiated Planner object."""
-    
-    # del_meal = Planner(recipe_id=recipe_id)
-
-    db.session.delete(del_meal)
-    db.session.commit()
-    print("Deleted successfully")
-    return "Deleted successfully"
 
 def add_new_list(user_id, list_name):
     """Adds new list to List table."""
