@@ -39,10 +39,8 @@ def index():
 @app.route('/')
 @app.route('/index2', methods=['GET', 'POST'])
 def index2():
-    # if request.method == "POST":
-    # result = request.form
-    recipe_search = ['flour','butter','sugar']
-    
+   
+    # recipe_search = ['flour','butter','sugar']
     
     forsend = PantryList.query.filter_by(user_id=current_user.id).all()
     
@@ -51,12 +49,9 @@ def index2():
         send+(item.ing_name.upper())
         send=send+','+(item.ing_name.upper())
     
-    # recipe_search = inglist
     results_json = api_calls.search_by_pantry(send, 6)
-    # results_json = api_calls.search_by_pantry(recipe_search, 6)
+   
     print(results_json)
-
-
 
     for recipe in results_json:
         recipe_id = str(recipe['id'])
