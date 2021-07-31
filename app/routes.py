@@ -42,9 +42,21 @@ def index2():
     # if request.method == "POST":
     # result = request.form
     recipe_search = ['flour','butter','sugar']
+    
+    
+    forsend = PantryList.query.filter_by(user_id=current_user.id).all()
+    
+    send = ''
+    for item in forsend:
+        send+(item.ing_name.upper())
+        send=send+','+(item.ing_name.upper())
+    
     # recipe_search = inglist
-    results_json = api_calls.search_by_pantry(recipe_search, 6)
+    results_json = api_calls.search_by_pantry(send, 6)
+    # results_json = api_calls.search_by_pantry(recipe_search, 6)
     print(results_json)
+
+
 
     for recipe in results_json:
         recipe_id = str(recipe['id'])
@@ -473,13 +485,13 @@ def pantry():
         print("searching recipes")
         forsend = PantryList.query.filter_by(user_id=current_user.id).all()
         # send=""
-        send=[]
-        for item in forsend:
-            send.append(item.ing_name.upper())
-            # send=send+','+(item.ing_name.upper())
+        # send=[]
+        # for item in forsend:
+        #     send.append(item.ing_name.upper())
+        #     # send=send+','+(item.ing_name.upper())
         print("sending")
         # index2(send)
-        # return render_template('index2.html', title='Results', ingredients=send)
+        return render_template('index2.html', title='Results')
 
     return render_template('pantry2.html', title='Pantry', form=form1, inglist=ings)
 
