@@ -34,6 +34,7 @@ class RegistrationForm(FlaskForm):
         '1.55', 'Moderate(moderate exercise/sports 3-5 days/week)'), ('1.725', 'Heavy(hard exercise/sports 6-7 days a week)'), ('1.9', 'Very Heavy(very hard exercise/sports or physical job)')], validators=[DataRequired()])
     wt_choice = SelectField('Weight Choice', choices=[('A', 'Maintain Weight'), ('B', 'Mild Weight Loss'), ('C', 'Weight Loss'), (
         'D', 'Extreme Weight Loss'), ('E', 'Mild Weight Gain'), ('F', 'Weight Gain'), ('G', 'Fast Weight Gain')], validators=[DataRequired()])
+    exclude = StringField('Allergens/Intolerances/Exclusions')
     submit = SubmitField('Register')
 
     def validate_username(self, username):
@@ -68,7 +69,7 @@ class EditProfileForm(FlaskForm):
         '1.55', 'Moderate(moderate exercise/sports 3-5 days/week)'), ('1.725', 'Heavy(hard exercise/sports 6-7 days a week)'), ('1.9', 'Very Heavy(very hard exercise/sports or physical job)')], validators=[DataRequired()])
     wt_choice = SelectField('Weight Choice', choices=[('A', 'Maintain Weight'), ('B', 'Mild Weight Loss'), ('C', 'Weight Loss'), (
         'D', 'Extreme Weight Loss'), ('E', 'Mild Weight Gain'), ('F', 'Weight Gain'), ('G', 'Fast Weight Gain')], validators=[DataRequired()])
-
+    exclude = StringField('Allergens/Intolerances/Exclusions')
     submit = SubmitField('Save')
 
     def __init__(self, original_username, *args, **kwargs):
@@ -91,5 +92,6 @@ class PantryForm(FlaskForm):
     # 	super(PantryList, self).__init__(*args, **kwargs)
     # 	self.list_name = list_name
 
-# class PantrySearch(FlaskForm):
-#     search = SubmitField('DISCOVER RECIPES')
+class PantrySearch(FlaskForm):
+    search = SubmitField('DISCOVER RECIPES')
+

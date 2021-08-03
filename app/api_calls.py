@@ -11,11 +11,12 @@ headers = {
 # headers = {}
 
 
-def recipe_search(recipe_search, number_of_results):
+def recipe_search(recipe_search, number_of_results, exclude):
     """Extracts recipe search results from Spoonacular API."""
     print(recipe_search)
     # Set up parameters for API call, then call Spoonacular API
-    payload = {'query': recipe_search, 'number': number_of_results}
+
+    payload = {'query': recipe_search, 'number': number_of_results, "excludeIngredients": exclude}
     spoonacular_endpoint = 'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search'
     response = requests.get(spoonacular_endpoint,
                             params=payload,
@@ -417,10 +418,11 @@ def recipe_info(recipe_id):
     #                             }
 
     # return example_recipe_info
+    querystring = {"includeNutrition":"true"}
     info_response = requests.get(
-        'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/'
-        + recipe_id + '/information', headers=headers)
-
+         'https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/'
+         + recipe_id + '/information', headers=headers, params=querystring )
+    
     return info_response.json()
 
 
@@ -431,13 +433,14 @@ def recipe_info(recipe_id):
 #     return response
 
 
-def recommend_diet_based_on_cals1(target_calories, default_time="day"):
+def recommend_diet_based_on_cals1(target_calories, exclude, default_time="day"):
 
     url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/mealplans/generate"
     query_string = {
         "timeFrame": default_time,
         "targetCalories": target_calories,
-        "diet": "vegan"
+        "diet": "vegan",
+        "exclude": exclude
 
     }
     response = requests.request(
@@ -451,13 +454,14 @@ def recommend_diet_based_on_cals1(target_calories, default_time="day"):
     return response.json()
 
 
-def recommend_diet_based_on_cals2(target_calories, default_time="day"):
+def recommend_diet_based_on_cals2(target_calories, exclude, default_time="day"):
 
     url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/mealplans/generate"
     query_string = {
         "timeFrame": default_time,
         "targetCalories": target_calories,
-        "diet": "keto"
+        "diet": "keto",
+        "exclude": exclude
 
     }
     response = requests.request(
@@ -468,13 +472,14 @@ def recommend_diet_based_on_cals2(target_calories, default_time="day"):
     return response.json()
 
 
-def recommend_diet_based_on_cals3(target_calories, default_time="day"):
+def recommend_diet_based_on_cals3(target_calories,exclude, default_time="day"):
 
     url = "https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/mealplans/generate"
     query_string = {
         "timeFrame": default_time,
         "targetCalories": target_calories,
-        "diet": "gluten free"
+        "diet": "gluten free",
+        "exclude": exclude
 
     }
     response = requests.request(

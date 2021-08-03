@@ -183,10 +183,10 @@ def add_bookmark(user_id, recipe_id):
     return new_bookmark
 
 
-def add_meal(user_id, recipe_id):
-    """Adds recipe to Bookmarks table. Returns instantiated Bookmark object."""
+def add_meal(user_id, recipe_id, recipe_cals):
+    """Adds recipe to Planner table. Returns instantiated Planner object."""
 
-    new_meal = Planner(user_id=user_id, recipe_id=recipe_id)
+    new_meal = Planner(user_id=user_id, recipe_id=recipe_id, recipe_cals=recipe_cals)
 
     db.session.add(new_meal)
     db.session.commit()
