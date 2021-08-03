@@ -112,12 +112,12 @@
         <div class=list-ppt>
             <a href="{{ url_for('index2')}}" class="button">DISCOVER RECIPES</a>
             <br>
-            <button type="submit" class="stylebtn" onclick="{{ url_for('index')}}" id="search">DISCOVER RECIPES</button>
+            <!-- <button type="submit" class="stylebtn" onclick="{{ url_for('index')}}" id="search">DISCOVER RECIPES</button> -->
         </div>
         <div class='float'>
         <form method="POST" class="PantryList">
             {{ form.hidden_tag()}}
-            {{ form.search() }}
+            <!-- {{ form.search() }} -->
             {{ form.ing_name.label(class_='form-label text') }}
             {{ form.ing_name(class_='form-control length', placeholder="Enter an ingredient", onfocus="this.value=''", value="") }} <br>
             {{ form.add(class_='stylebtn') }}
