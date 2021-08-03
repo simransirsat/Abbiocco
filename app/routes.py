@@ -143,7 +143,6 @@ def quickView():
         bookmarks.append({
             'title': recipe.recipe_name,
             'image': recipe.img_url,
-            'servings': recipe.recipe_info_json['servings'],
             'id': recipe.recipe_id
         })
 
