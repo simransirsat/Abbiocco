@@ -45,3 +45,9 @@ db.session.commit()
 ```bash
 flask run
 ```
+
+
+
+#Please note: this is a fork
+#The master code is being mantained at RahulKeluskar/Abbiocco
+#This fork wont have any further updates
